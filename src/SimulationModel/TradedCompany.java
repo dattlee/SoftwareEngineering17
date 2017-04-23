@@ -2,6 +2,8 @@ package SimulationModel;
 
 /**
  * Created by Dattlee on 30/03/2017.
+ *
+ * NOTE: Must refactor the code for database implementation
  */
 public class TradedCompany {
     private String name;
@@ -49,7 +51,7 @@ public class TradedCompany {
      * @return
      */
     public double getShareValue() {
-        return 0;
+        return shareValue;
     }
 
     /**
@@ -63,7 +65,7 @@ public class TradedCompany {
     }
 
     /**
-     * To be completed
+     * To be completed. need trading exchange
      *
      * May need to change from double BigDecimal to return bigger numbers.
      * @return

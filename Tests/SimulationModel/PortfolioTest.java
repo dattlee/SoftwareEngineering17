@@ -44,18 +44,74 @@ public class PortfolioTest {
         assertEquals(port1.getRisk(),RiskLevel.HIGH);
     }
 
+    // No test method for any getShares methods
+
     @Test
-    public void getCash() throws Exception {
+    public void getSharesHashMap() throws Exception {
+        // need to assert that the hashmap returned contains all companies and shares added to it
+        assertTrue(1==0);
+    }
+
+    @Test
+    public void getSharesSinglecompany() throws Exception {
+        // Need to assert a singe number/ Integer is returned
         assertTrue(1==0);
     }
 
     @Test
     public void buyShares() throws Exception {
+        /*
+        Need to assert:
+        1. When buying shares you add the number of shares bought to the
+        */
         assertTrue(1==0);
     }
 
     @Test
     public void sellShares() throws Exception {
+        /*
+        Need to assert:
+        1. Can't sell more shares than owned for a company
+        2. Can't sell shares for a company not owned
+         */
+        assertTrue(1==0);
+    }
+
+    @Test
+    public void getCash() throws Exception {
+        /*
+        Need to assert:
+        1. Can't sell more shares than owned for a company
+        2. Can't sell shares for a company not owned
+         */
+        assertTrue(1==0);
+    }
+
+    @Test
+    public void addCash() throws Exception {
+        /*
+        Need to assert:
+        1. Cash total increases by exactly amount given
+         */
+        assertTrue(1==0);
+    }
+
+    @Test
+    public void removeCash() throws Exception {
+        /*
+        Need to assert:
+        1. Cash total decreases by exactly taken given
+         */
+        assertTrue(1==0);
+    }
+
+    @Test
+    public void getValue() throws Exception {
+        /*
+        Need to assert:
+        1. Cash is added to value of portfolio
+        2. Shares are added to the value of the portfolio
+         */
         assertTrue(1==0);
     }
 
