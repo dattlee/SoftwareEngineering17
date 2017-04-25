@@ -38,7 +38,6 @@ public abstract class Trader {
 
     /**
      * This is the method called by the simulation class. At each epoch (time step)
-     * this method should be called to act as the specified type of trader.
      */
     public abstract void act();
 

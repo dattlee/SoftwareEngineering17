@@ -19,14 +19,14 @@ public class TraderStateTest {
         TraderState b = TraderState.AGGBUYER;
         TraderState c = TraderState.AGGSELLER;
 
-        assertArrayEquals(a.getBuyProb(), new double[]{0,1}, 0);
-        assertArrayEquals(a.getSellProb(), new double[]{0,1}, 0);
+        assertArrayEquals(a.getBuyPerc(), new double[]{0,1}, 0);
+        assertArrayEquals(a.getSellPerc(), new double[]{0,1}, 0);
 
-        assertArrayEquals(b.getBuyProb(), new double[]{0,2}, 0);
-        assertArrayEquals(b.getSellProb(), new double[]{0,0.5}, 0);
+        assertArrayEquals(b.getBuyPerc(), new double[]{0,2}, 0);
+        assertArrayEquals(b.getSellPerc(), new double[]{0,0.5}, 0);
 
-//        assertArrayEquals(c.getBuyProb(), new double[]{0,0.5}, 0);
-//        assertArrayEquals(c.getSellProb(), new double[]{0,2}, 0);
+//        assertArrayEquals(c.getBuyPerc(), new double[]{0,0.5}, 0);
+//        assertArrayEquals(c.getSellPerc(), new double[]{0,2}, 0);
     }
 
 

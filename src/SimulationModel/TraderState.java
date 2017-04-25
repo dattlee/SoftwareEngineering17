@@ -16,24 +16,53 @@ package SimulationModel;
  *      Buys stocks using between 0% - 2% of it's available cash assets
  *      Sells stocks valued between 0% - 0.5% of it's total portfolio value
  *
+ *
+ *  Furthermore, at the end of each 15 minute period there is a chance that the state of a trader
+ *  will swap from one to another, this is determined by the current state based on these probabilities:
+ *
+ *  BALANCED
+ *      seller(40%), balanced(60%), buyer(0%)
+ *
+ *  AGGSELLER
+ *      seller(10%), balanced(80%), buyer(10%)
+ *
+ *  AGGBUYER
+ *      seller(0%), balanced(70%), buyer(30%)
+ *
  */
 public enum TraderState {
-    BALANCED ( new double[]{0,1}, new double[]{0,1} ),
-    AGGBUYER ( new double[]{0,2}, new double[]{0,0.5} ),
-    AGGSELLER ( new double[]{0,0.5}, new double[]{0,2} );
+    AGGSELLER ( new double[]{0,0.5}, new double[]{0,2}, 0.4, 0.6, 0 ),
+    BALANCED ( new double[]{0,1}, new double[]{0,1}, 0.1, 0.8, 0.1  ),
+    AGGBUYER ( new double[]{0,2}, new double[]{0,0.5}, 0, 0.7, 0.3 );
 
-    private double[] buyProb, sellProb;
+    private final double[] buyPerc, sellPerc;
+    private final double switchSell, switchBalance, switchBuy;
 
-    TraderState (double[] buyProb, double[] sellProb) {
-        this.buyProb = buyProb;
-        this.sellProb = sellProb;
+    TraderState(double[] buyPerc, double[] sellPerc, double switchSell, double switchBalance, double switchBuy) {
+        this.buyPerc = buyPerc;
+        this.sellPerc = sellPerc;
+        this.switchSell = switchSell;
+        this.switchBalance = switchBalance;
+        this.switchBuy = switchBuy;
     }
 
-    public double[] getBuyProb() {
-        return buyProb;
+    public double[] getBuyPerc() {
+        return buyPerc;
     }
 
-    public double[] getSellProb() {
-        return sellProb;
+    public double[] getSellPerc() {
+        return sellPerc;
+    }
+
+    public double getSwitchSell() {
+        return switchSell;
+    }
+
+    public double getSwitchBalance() {
+        return switchBalance;
+    }
+
+    public double getSwitchBuy() {
+        return switchBuy;
     }
 }

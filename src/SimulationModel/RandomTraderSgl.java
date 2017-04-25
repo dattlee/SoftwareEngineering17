@@ -14,7 +14,7 @@ public class RandomTraderSgl extends Trader {
      ****************************************************/
 
     public TraderState currentState;
-    public Portfolio portfolio;
+    public Portfolio client;
 
     /* **************************************************
      *
@@ -22,13 +22,13 @@ public class RandomTraderSgl extends Trader {
      *
      ****************************************************/
 
-    public RandomTraderSgl(String ID) {
-        super(ID);
+    public RandomTraderSgl(String ID, TradingExchange exchange) {
+        super(ID, exchange);
         currentState = TraderState.BALANCED;
     }
 
-    public RandomTraderSgl(String ID, Portfolio portfolio) {
-        super(ID);
+    public RandomTraderSgl(String ID, TradingExchange exchange, Portfolio portfolio) {
+        super(ID, exchange);
         currentState = TraderState.BALANCED;
         try {
             addPortfolio(portfolio);
@@ -47,25 +47,50 @@ public class RandomTraderSgl extends Trader {
      ****************************************************/
 
     public void addPortfolio(Portfolio portfolio) throws Exception {
-        if(this.portfolio == null){
-            this.portfolio = portfolio;
+        if(this.client == null){
+            this.client = portfolio;
         } else {
             throw new Exception("There is already a portfolio assigned to this trader.");
         }
     }
 
     public void removePortfolio() throws Exception {
-        if(this.portfolio == null){
+        if(this.client == null){
             throw new Exception("There is no portfolio assigned to this trader.");
         } else {
-            this.portfolio = null;
+            this.client = null;
         }
     }
 
     /**
      * used buy the simulation class of every 15 minute period
      */
+    @Override
     public void act() {
+        // either buy and/or sell stock, can not buy same stock that it is selling
+
+        // buy something
+        double buySomething = Math.random();
+        currentState.getBuyPerc();
+        //choose randome stuff to buy
+        //1st assess total wealth
+        // opt to puc
+
+        // sell something, remember you cant sell something your buying. that's just pointless.
+        double sellSomething = Math.random();
+        currentState.getSellPerc();
+        // choose random stuff to sell
+
+
+        //potentially change state
+        double changeState = Math.random();
+        if( changeState <= currentState.getSwitchBuy()){
+            currentState = TraderState.AGGBUYER;
+        }else if( changeState <= (currentState.getSwitchBuy()+currentState.getSwitchBalance())){
+            currentState = TraderState.BALANCED;
+        }else{
+            currentState = TraderState.AGGSELLER;
+        }
 
     }
 
@@ -76,17 +101,17 @@ public class RandomTraderSgl extends Trader {
      */
     @Override
     public void buyStock(TradedCompany company, Integer shares) {
-
+        exchange.buyShares(client,company,shares);
     }
 
     /**
-     * need to build trading exchange to contiue
+     * need to build trading exchange to continue
      * @param company
      * @param shares
      */
     @Override
     public void sellStock(TradedCompany company, Integer shares) {
-
+        exchange.sellStock(client,company,shares);
     }
 
     /**
