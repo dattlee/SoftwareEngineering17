@@ -10,6 +10,6 @@ package SimulationModel;
  * Created by Dattlee on 30/03/2017.
  */
 public enum ShareType {
-    // HDCMOD, ARE HARED COMODITIES
+    // HDCMOD, ARE HARD COMMODITIES
     FOOD,HITECH,HDCMOD,PROPERTY;
 }

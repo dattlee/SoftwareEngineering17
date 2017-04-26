@@ -5,5 +5,5 @@ package SimulationModel;
  */
 public class Simulation {
 
-    
+
 }

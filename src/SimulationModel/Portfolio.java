@@ -1,5 +1,7 @@
 package SimulationModel;
 
+import dattlee.usefuls.Pair;
+
 import java.util.HashMap;
 
 /**
@@ -24,6 +26,7 @@ public class Portfolio {
     private RiskLevel risk;
     private double cash;
     private HashMap<TradedCompany,Integer> companyShares;
+    private boolean liquidate;
 
 
     /* **************************************************
@@ -45,14 +48,47 @@ public class Portfolio {
     public Portfolio(String id){
         this.id = id;
         risk = RiskLevel.LOW;
+        companyShares = new HashMap<>();
+        liquidate = false;
     }
 
     public Portfolio(String id, RiskLevel risk) {
         this.id = id;
         this.risk = risk;
+        companyShares = new HashMap<>();
+        liquidate = false;
     }
 
-/* **************************************************
+    public void setLiquidate(boolean liquidate) {
+        this.liquidate = liquidate;
+    }
+
+    public boolean isLiquidate() {
+        return liquidate;
+    }
+
+    /**
+     * Constructor to create a portfolio with stocks.
+     * @param id
+     * @param risk
+     * @param stocks
+     */
+    public Portfolio(String id, RiskLevel risk, Pair<TradedCompany,Integer>[] stocks){
+        this.id = id;
+        this.risk = risk;
+        liquidate = false;
+
+
+        // upload all initial stocks
+        int size = stocks.length;
+        for (int i = 0; i < size; i++){
+            Integer shares = stocks[i].getSecond();
+            TradedCompany company = stocks[i].getFirst();
+            companyShares.put(company, shares);
+        }
+    }
+
+     /* **************************************************
      *
      *                  Methods
      *
@@ -88,6 +124,14 @@ public class Portfolio {
      */
     public Integer getShares(TradedCompany company) {
         return (companyShares.containsKey(company)) ? companyShares.get(company) : 0;
+    }
+
+    /**
+     * Returns a HashMap of all company shares
+     * @return
+     */
+    public HashMap<TradedCompany, Integer> getCompanyShares() {
+        return companyShares;
     }
 
     /**

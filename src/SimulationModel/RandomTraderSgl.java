@@ -1,5 +1,8 @@
 package SimulationModel;
 
+import java.util.HashMap;
+import java.util.Iterator;
+
 /**
  * Created by Dattlee on 21/04/2017.
  *
@@ -67,31 +70,49 @@ public class RandomTraderSgl extends Trader {
      */
     @Override
     public void act() {
-        // either buy and/or sell stock, can not buy same stock that it is selling
 
-        // buy something
-        double buySomething = Math.random();
-        currentState.getBuyPerc();
-        //choose randome stuff to buy
-        //1st assess total wealth
-        // opt to puc
-
-        // sell something, remember you cant sell something your buying. that's just pointless.
-        double sellSomething = Math.random();
-        currentState.getSellPerc();
-        // choose random stuff to sell
+        if(client.isLiquidate()) {
+            sellAllStock();
+        }else {
 
 
-        //potentially change state
-        double changeState = Math.random();
-        if( changeState <= currentState.getSwitchBuy()){
-            currentState = TraderState.AGGBUYER;
-        }else if( changeState <= (currentState.getSwitchBuy()+currentState.getSwitchBalance())){
-            currentState = TraderState.BALANCED;
-        }else{
-            currentState = TraderState.AGGSELLER;
+            // either buy and/or sell stock, can not buy same stock that it is selling
+
+            // buy something
+            double buySomething = Math.random();
+            currentState.getBuyPerc();
+            //choose randome stuff to buy
+            //1st assess total wealth
+            // opt to puc
+
+            // sell something, remember you cant sell something your buying. that's just pointless.
+            double sellSomething = Math.random();
+            currentState.getSellPerc();
+            // choose random stuff to sell
+
+
+            //potentially change state
+            double changeState = Math.random();
+            if (changeState <= currentState.getSwitchBuy()) {
+                currentState = TraderState.AGGBUYER;
+            } else if (changeState <= (currentState.getSwitchBuy() + currentState.getSwitchBalance())) {
+                currentState = TraderState.BALANCED;
+            } else {
+                currentState = TraderState.AGGSELLER;
+            }
         }
 
+    }
+
+
+    private void sellAllStock(){
+        Iterator it = client.getCompanyShares().entrySet().iterator();
+        while (it.hasNext()) {
+            HashMap.Entry pair = (HashMap.Entry)it.next();
+            sellStock((TradedCompany) pair.getKey(),(Integer) pair.getValue());
+            //System.out.println(pair.getKey() + " = " + pair.getValue());
+            it.remove(); // avoids a ConcurrentModificationException
+        }
     }
 
     /**

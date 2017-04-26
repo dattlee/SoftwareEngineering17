@@ -71,7 +71,7 @@ public class TradedCompany {
      * @return
      */
     public void issueShares(int noShares) {
-
+        sharesIssued += noShares;
     }
 
 
