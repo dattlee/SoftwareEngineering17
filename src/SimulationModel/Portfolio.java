@@ -52,20 +52,30 @@ public class Portfolio {
         liquidate = false;
     }
 
+
+    public Portfolio(String id, Pair<TradedCompany,Integer>[] stocks){
+        this.id = id;
+        risk = RiskLevel.LOW;
+        companyShares = new HashMap<>();
+        liquidate = false;
+
+        int size = stocks.length;
+        for (int i = 0; i < size; i++){
+            Integer shares = stocks[i].getSecond();
+            TradedCompany company = stocks[i].getFirst();
+            companyShares.put(company, shares);
+        }
+    }
+
     public Portfolio(String id, RiskLevel risk) {
         this.id = id;
         this.risk = risk;
         companyShares = new HashMap<>();
         liquidate = false;
+
+
     }
 
-    public void setLiquidate(boolean liquidate) {
-        this.liquidate = liquidate;
-    }
-
-    public boolean isLiquidate() {
-        return liquidate;
-    }
 
     /**
      * Constructor to create a portfolio with stocks.
@@ -93,6 +103,14 @@ public class Portfolio {
      *                  Methods
      *
      ****************************************************/
+
+    public void setLiquidate(boolean liquidate) {
+        this.liquidate = liquidate;
+    }
+
+    public boolean isLiquidate() {
+        return liquidate;
+    }
 
     public String getId() {
         return id;
@@ -135,16 +153,24 @@ public class Portfolio {
     }
 
     /**
-     * Adds a number of shares of the specified company to the portfolio
+     * Adds a number of shares of the specified company to the portfolio,
+     * And charges the account (cash)
      * @param company - the company which to add to the portfolio, or update
      * @param numOfShares - the number of shares of which to add
+     *
+     * Error Prevention: Stop it from puchacing if there aren't the funds
      */
     public void buyShares(TradedCompany company, int numOfShares) {
+
+        double cost = numOfShares * company.getShareValue();
+
         if (companyShares.containsKey(company)) {
             int total = companyShares.get(company) + numOfShares;
-            companyShares.replace(company,total);
+            cash -= cost;                                                   // Charge account
+            companyShares.replace(company,total);                           // Add shares
         } else {
-            companyShares.put(company, (numOfShares));
+            cash -= cost;                                                   // Charge account
+            companyShares.put(company, numOfShares);                        // Add shares
         }
     }
 
@@ -160,9 +186,11 @@ public class Portfolio {
             // If the number of shares you wish to sell are held by the account
             if (companyShares.get(company) <= numOfShares) {
 
+                double credit = company.getShareValue() * numOfShares;
                 // subtract the number of shares from the Portfolio
                 int total = companyShares.get(company) - numOfShares;
-                Integer integer = total > 0 ? companyShares.replace(company, total) : companyShares.remove(company);
+                cash += credit;                                             // Credit Account
+                companyShares.replace(company,total);                       // Remove Shares
 
             } else {
                 throw new Exception(String.format("Attempting to sell more Shares than that held of the company %s",company.getName()));

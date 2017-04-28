@@ -77,4 +77,12 @@ public class Orders {
         return supply;
     }
 
+    /**
+     * excess demand returns a positive value
+     * excess supply returns a negative value
+     * @return
+     */
+    public int excess(){
+        return demand - supply;
+    }
 }

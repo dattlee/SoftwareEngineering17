@@ -31,14 +31,13 @@ package SimulationModel;
  *
  */
 public enum TraderState {
-    AGGSELLER ( new double[]{0,0.005}, new double[]{0,0.02}, 0.4, 0.6, 0 ),
-    BALANCED ( new double[]{0,0.01}, new double[]{0,0.01}, 0.1, 0.8, 0.1  ),
-    AGGBUYER ( new double[]{0,0.02}, new double[]{0,0.005}, 0, 0.7, 0.3 );
+    AGGSELLER ( 0.005, 0.02, 0.4, 0.6, 0),
+    BALANCED ( 0.01, 0.01, 0.1, 0.8, 0.1  ),
+    AGGBUYER ( 0.02, 0.005, 0, 0.7, 0.3 );
 
-    private final double[] buyPerc, sellPerc;
-    private final double switchSell, switchBalance, switchBuy;
+    private final double buyPerc, sellPerc, switchSell, switchBalance, switchBuy;
 
-    TraderState(double[] buyPerc, double[] sellPerc, double switchSell, double switchBalance, double switchBuy) {
+    TraderState(double buyPerc, double sellPerc, double switchSell, double switchBalance, double switchBuy) {
         this.buyPerc = buyPerc;
         this.sellPerc = sellPerc;
         this.switchSell = switchSell;
@@ -50,7 +49,7 @@ public enum TraderState {
      * returns an array of size 2, the first number is the lowest amount as a percentage (number beween 0 and 1) that the the trader will buy and the second the largest.
      * @return
      */
-    public double[] getBuyPerc() {
+    public double getBuyPerc() {
         return buyPerc;
     }
 
@@ -58,7 +57,7 @@ public enum TraderState {
      * returns an array of size 2, the first number is the largest amount as a percentage (number beween 0 and 1) that the the trader will buy and the second the lowest.
      * @return
      */
-    public double[] getSellPerc() {
+    public double getSellPerc() {
         return sellPerc;
     }
 

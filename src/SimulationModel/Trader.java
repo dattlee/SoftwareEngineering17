@@ -39,11 +39,11 @@ public abstract class Trader {
     /**
      * This is the method called by the simulation class. At each epoch (time step)
      */
-    public abstract void act();
-
-    public abstract void buyStock(TradedCompany company, Integer shares);
-
-    public abstract void sellStock(TradedCompany company, Integer shares);
+      public abstract void act();
+//
+//    public abstract void buyStock(TradedCompany company, Integer shares);
+//
+//    public abstract void sellStock(TradedCompany company, Integer shares);
 
     /**
      * No idea why this was made... ¯\_(ツ)_/¯

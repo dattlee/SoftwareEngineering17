@@ -14,10 +14,11 @@ public class TradedCompany {
     /**
      * To be completed
      */
-    public TradedCompany(String name, ShareType shareType, int sharesIssued){
+    public TradedCompany(String name, ShareType shareType, int sharesIssued, double shareValue){
         this.name = name;
         this.shareType = shareType;
         this.sharesIssued = sharesIssued;
+        this.shareValue = shareValue;
     }
 
     /**
@@ -74,5 +75,16 @@ public class TradedCompany {
         sharesIssued += noShares;
     }
 
-
+    /**
+     * returns share value after inflate/deflating
+     * @param excessDemand
+     * @return
+     */
+    public double increaseShareValue(int excessDemand) {
+        shareValue += ((double)excessDemand/sharesIssued)*shareValue;
+        if (shareValue < 1) {
+            shareValue = 0;
+        }
+        return shareValue;
+    }
 }

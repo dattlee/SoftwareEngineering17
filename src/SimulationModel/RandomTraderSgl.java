@@ -1,7 +1,9 @@
 package SimulationModel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by Dattlee on 21/04/2017.
@@ -75,64 +77,98 @@ public class RandomTraderSgl extends Trader {
             sellAllStock();
         }else {
 
-
             // either buy and/or sell stock, can not buy same stock that it is selling
 
             // buy something
-            double buySomething = Math.random();
-            currentState.getBuyPerc();
-            //choose randome stuff to buy
-            //1st assess total wealth
-            // opt to puc
+            TradedCompany dontSell = buyStock();
 
             // sell something, remember you cant sell something your buying. that's just pointless.
-            double sellSomething = Math.random();
-            currentState.getSellPerc();
-            // choose random stuff to sell
+            sellStock(dontSell);
 
-
-            //potentially change state
-            double changeState = Math.random();
-            if (changeState <= currentState.getSwitchBuy()) {
-                currentState = TraderState.AGGBUYER;
-            } else if (changeState <= (currentState.getSwitchBuy() + currentState.getSwitchBalance())) {
-                currentState = TraderState.BALANCED;
-            } else {
-                currentState = TraderState.AGGSELLER;
-            }
         }
 
+        //potentially change state
+        double changeState = Math.random();
+        if (changeState <= currentState.getSwitchBuy()) {
+            currentState = TraderState.AGGBUYER;
+        } else if (changeState <= (currentState.getSwitchBuy() + currentState.getSwitchBalance())) {
+            currentState = TraderState.BALANCED;
+        } else {
+            currentState = TraderState.AGGSELLER;
+        }
     }
 
 
+    /**
+     * can be improved.
+     */
     private void sellAllStock(){
-        Iterator it = client.getCompanyShares().entrySet().iterator();
-        while (it.hasNext()) {
-            HashMap.Entry pair = (HashMap.Entry)it.next();
-            sellStock((TradedCompany) pair.getKey(),(Integer) pair.getValue());
-            //System.out.println(pair.getKey() + " = " + pair.getValue());
-            it.remove(); // avoids a ConcurrentModificationException
+
+        for (HashMap.Entry<TradedCompany, Integer> entry : client.getCompanyShares().entrySet())
+        {
+            exchange.sellShares(client, entry.getKey(),entry.getValue());
         }
     }
 
     /**
      * neeed to build trading excahnge to continue
-     * @param company
-     * @param shares
+     * Need to stop from buying the same stock that it is selling
      */
-    @Override
-    public void buyStock(TradedCompany company, Integer shares) {
-        exchange.buyShares(client,company,shares);
+    public TradedCompany buyStock() {
+        // choose a company stock
+        ArrayList<TradedCompany> allCompanies = exchange.getAllCompanies();
+        int picked = new Random().nextInt(allCompanies.size());
+        TradedCompany chosen = allCompanies.get(picked);
+
+        // choose number of shares
+        double buyingPercentage = currentState.getBuyPerc() * Math.random();
+        double maxPurchPrice = client.getValue() * buyingPercentage;
+        if(maxPurchPrice>client.getCash()){
+            maxPurchPrice = client.getCash();
+        }
+        int shares2buy = (int)(maxPurchPrice/chosen.getShareValue());                 // maximum number of shares the client can afford, int wrapping rounds down
+
+        // make the offer to the market the stock
+        exchange.buyShares(client,chosen,shares2buy);
+        return chosen;
+
     }
 
     /**
      * need to build trading exchange to continue
-     * @param company
-     * @param shares
      */
-    @Override
-    public void sellStock(TradedCompany company, Integer shares) {
-        exchange.sellStock(client,company,shares);
+    public void sellStock(TradedCompany dontSell) {
+        // choose a company stock
+        ArrayList<TradedCompany> allCompanies = new ArrayList<>();                                  // choose from share the client has
+
+        for(Map.Entry<TradedCompany,Integer> comp : client.getCompanyShares().entrySet()){
+            if (comp.getKey().equals(dontSell)){
+                System.out.println("already buying this item");
+            } else {
+                allCompanies.add(comp.getKey());
+            }
+        }
+
+
+        if(allCompanies.size()>0) { // prevent trying to buy when there is no stock
+
+            int picked = new Random().nextInt(allCompanies.size());
+            TradedCompany chosen = allCompanies.get(picked);
+
+            // choose number of shares
+            double sellPercentage = currentState.getSellPerc() * Math.random();
+            double maxSellPrice = client.getValue() * sellPercentage;
+
+            if (maxSellPrice >= chosen.getShareValue()) {
+                int numberSelling = (int) (maxSellPrice / chosen.getShareValue());
+                exchange.sellShares(client, chosen, numberSelling);                                   // offer shares to market
+            } else {
+                System.out.println("cant afford to by stock this time round");
+            }
+        } else {
+            System.out.println("no companies to buy shares in");
+        }
+
     }
 
     /**
