@@ -6,6 +6,8 @@ import java.util.*;
 
 /**
  * Created by Dattlee on 22/04/2017.
+ * ¯\_(ツ)_/¯
+ *
  */
 public class TradingExchange {
 
@@ -17,7 +19,7 @@ public class TradingExchange {
 
     // All of these fields must be reset at the end of each cycle
 
-    private ArrayList<TradedCompany> allCompanies;          // all companies available for purchace
+    private ArrayList<TradedCompany> allCompanies;          // all companies available for purchase
     private HashMap<TradedCompany,Orders> exchange;
     private ArrayList<Trader> allTraders;
     private int traderIds;

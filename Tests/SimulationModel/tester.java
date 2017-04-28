@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 /**
  * Created by Dattlee on 26/04/2017.
+ * ¯\_(ツ)_/¯
+ *
  */
 public class tester {
 //
@@ -158,7 +160,7 @@ public class tester {
 
 
 
-        for(int j = 0; j<10; j++) {
+        for(int j = 0; j<10000; j++) {
             london.act();
             a = london.allStockValues();
 

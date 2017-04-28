@@ -2,6 +2,9 @@ package SimulationModel;
 
 /**
  * Created by Dattlee on 21/04/2017.
+ * ¯\_(ツ)_/¯
+ *
+ *
  *  A Random Trader my have 1 of 3 states in any 15 minute period:
  *
  *  BALANCED
@@ -46,29 +49,41 @@ public enum TraderState {
     }
 
     /**
-     * returns an array of size 2, the first number is the lowest amount as a percentage (number beween 0 and 1) that the the trader will buy and the second the largest.
-     * @return
+     * Returns a double between 0 and 1 corresponding tho the percentage of the Asset wealth the trader will use to buy stocks when in a state.
+     * @return - Percentage of asset wealth to buy
      */
     public double getBuyPerc() {
         return buyPerc;
     }
 
     /**
-     * returns an array of size 2, the first number is the largest amount as a percentage (number beween 0 and 1) that the the trader will buy and the second the lowest.
-     * @return
+     * Returns a double between 0 and 1 corresponding tho the percentage of the Asset wealth the trader will use to buy stocks when in a state.
+     * @return - Percentage of asset wealth to Sell
      */
     public double getSellPerc() {
         return sellPerc;
     }
 
+    /**
+     * Returns the chance of swapping to an Aggressive Seller state
+     * @return - Chance of swapping to an Aggressive Seller
+     */
     public double getSwitchSell() {
         return switchSell;
     }
 
+    /**
+     * Returns the chance of swapping to an Balanced state
+     * @return - Chance of swapping to an Balanced Trader
+     */
     public double getSwitchBalance() {
         return switchBalance;
     }
 
+    /**
+     * Returns the chance of swapping to an Aggressive Buyer state
+     * @return - Chance of swapping to an Aggressive Buyer
+     */
     public double getSwitchBuy() {
         return switchBuy;
     }

@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 /**
  * Created by Dattlee on 30/03/2017.
- *
+ * ¯\_(ツ)_/¯
  *
  * NOTE: May need to refactor code such that the company shares field holds a string
  * instead of a Traded do
@@ -36,12 +36,11 @@ public class Portfolio {
      ****************************************************/
 
     /**
-     * Create a portfolio object.
+     * Create a portfolio for a client.
      *
      * By default:
-     * -    risk is set to 'LOW'
-     * -    no trader is assigned
-     * -    no shares are given
+     *  - risk is set to 'LOW'
+     *  - no shares are given
      *
      * @param id the unique identification number of this portfolio
      */
@@ -52,7 +51,14 @@ public class Portfolio {
         liquidate = false;
     }
 
-
+    /**
+     * Create a portfolio for a client, and give a list of Stocks.
+     *
+     * By default:
+     *  - risk is set to 'LOW'
+     *
+     * @param id the unique identification number of this portfolio
+     */
     public Portfolio(String id, Pair<TradedCompany,Integer>[] stocks){
         this.id = id;
         risk = RiskLevel.LOW;
@@ -67,6 +73,14 @@ public class Portfolio {
         }
     }
 
+    /**
+     * Create a portfolio for a client.
+     *
+     * By default:
+     * -    no shares are given
+     *
+     * @param id the unique identification number of this portfolio
+     */
     public Portfolio(String id, RiskLevel risk) {
         this.id = id;
         this.risk = risk;
@@ -78,7 +92,7 @@ public class Portfolio {
 
 
     /**
-     * Constructor to create a portfolio with stocks.
+     * Constructor to create a portfolio with stocks, and to set the risk Preference.
      * @param id
      * @param risk
      * @param stocks
@@ -104,26 +118,49 @@ public class Portfolio {
      *
      ****************************************************/
 
+    /**
+     * Change the state of the client to sell all stocks
+     * @param liquidate - Boolean
+     */
     public void setLiquidate(boolean liquidate) {
         this.liquidate = liquidate;
     }
 
+    /**
+     *
+     * @return - True if the client wants to sell all stocks
+     */
     public boolean isLiquidate() {
         return liquidate;
     }
 
+    /**
+     * Return the protfolio ID, used interchangeably with client Name
+     * @return id - String
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * Change the Portfolio ID to id
+     * @param id
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     * Returns the current risk level of the portfolio
+     * @return risk - RiskLevel
+     */
     public RiskLevel getRisk(){
         return risk;
     }
 
+    /**
+     * Change the risk of the profile to risk
+     */
     public void setRisk(RiskLevel risk){
         this.risk = risk;
     }
@@ -136,7 +173,7 @@ public class Portfolio {
     }
 
     /**
-     * Returns the number of shares of a specified company as an {@link Integer}.
+     * Returns the number of shares of a specified company as an {@link Integer} held by this portfolio.
      * @param company
      * @return
      */
@@ -221,10 +258,6 @@ public class Portfolio {
         }
     }
 
-    /* ---------------------------------------------------
-    /* ---------------------------------------------------
-
-     */
     /**
      * Returns the total cash value of the portfolio.
      * This includes the total amount of cash held in addition to

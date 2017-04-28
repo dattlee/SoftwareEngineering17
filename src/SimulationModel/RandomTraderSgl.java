@@ -7,8 +7,9 @@ import java.util.Random;
 
 /**
  * Created by Dattlee on 21/04/2017.
+ * ¯\_(ツ)_/¯
  *
- * Traders of this class can only hold 1 portfolio at a time
+ * Traders of this class can only hold and manage 1 portfolio at a time.
  */
 public class RandomTraderSgl extends Trader {
 
@@ -18,8 +19,8 @@ public class RandomTraderSgl extends Trader {
      *
      ****************************************************/
 
-    public TraderState currentState;
-    public Portfolio client;
+    private TraderState currentState;
+    private Portfolio client;
 
     /* **************************************************
      *
@@ -27,11 +28,25 @@ public class RandomTraderSgl extends Trader {
      *
      ****************************************************/
 
+    /**
+     * Create a trader and add it to the Trading Exchange
+     *
+     * @param ID - A unique ID assigned to a trader when they join a Trading Exchange
+     * @param exchange - A reference to the trading exchange that the Trader has joined
+     */
     public RandomTraderSgl(String ID, TradingExchange exchange) {
         super(ID, exchange);
         currentState = TraderState.BALANCED;
     }
 
+
+    /**
+     * Create a trader and add it to the Trading Exchange
+     *
+     * @param ID - A unique ID assigned to a trader when they join a Trading Exchange
+     * @param exchange - A reference to the trading exchange that the Trader has joined
+     * @param portfolio - The portfolio that the trader is responsible for.
+     */
     public RandomTraderSgl(String ID, TradingExchange exchange, Portfolio portfolio) {
         super(ID, exchange);
         currentState = TraderState.BALANCED;
@@ -51,6 +66,11 @@ public class RandomTraderSgl extends Trader {
      *
      ****************************************************/
 
+    /**
+     *
+     * @param portfolio
+     * @throws Exception - When a Trader is already responsible for a portfolio
+     */
     public void addPortfolio(Portfolio portfolio) throws Exception {
         if(this.client == null){
             this.client = portfolio;
@@ -59,16 +79,24 @@ public class RandomTraderSgl extends Trader {
         }
     }
 
-    public void removePortfolio() throws Exception {
-        if(this.client == null){
-            throw new Exception("There is no portfolio assigned to this trader.");
-        } else {
-            this.client = null;
-        }
-    }
+//    /**
+//     *
+//     * @throws Exception
+//     */
+//    public void removePortfolio() throws Exception {
+//        if(this.client == null){
+//            throw new Exception("There is no portfolio assigned to this trader.");
+//        } else {
+//            this.client = null;
+//        }
+//    }
 
     /**
-     * used buy the simulation class of every 15 minute period
+     * This method is called during every cycle. It follows this process:
+     *      - If the client wants to liquidate all of their stock, offer all stock on the market
+     *      - Else
+     *          > Buy all stock based on the state of the trader
+     *          > Then, Sell stock based on the state of the trader
      */
     @Override
     public void act() {
@@ -76,8 +104,6 @@ public class RandomTraderSgl extends Trader {
         if(client.isLiquidate()) {
             sellAllStock();
         }else {
-
-            // either buy and/or sell stock, can not buy same stock that it is selling
 
             // buy something
             TradedCompany dontSell = buyStock();
@@ -100,7 +126,7 @@ public class RandomTraderSgl extends Trader {
 
 
     /**
-     * can be improved.
+     * Method used by Trader to sell of a clients stock when they have asked for stocks to be liquidated.
      */
     private void sellAllStock(){
 
@@ -111,10 +137,11 @@ public class RandomTraderSgl extends Trader {
     }
 
     /**
-     * neeed to build trading excahnge to continue
-     * Need to stop from buying the same stock that it is selling
+     * Used buy the act method. It follows this process:
+     *      - Searches from all the available company stocks
+     *      - Purchase the Maximum amount of stock from one company that a portfolio can afford.
      */
-    public TradedCompany buyStock() {
+    private TradedCompany buyStock() {
         // choose a company stock
         ArrayList<TradedCompany> allCompanies = exchange.getAllCompanies();
         int picked = new Random().nextInt(allCompanies.size());
@@ -135,9 +162,10 @@ public class RandomTraderSgl extends Trader {
     }
 
     /**
-     * need to build trading exchange to continue
+     * Sell as much stock up to a maximum from company that is available on the stockmarket.
+     * EXCEPT for a given company 'dontSell'.
      */
-    public void sellStock(TradedCompany dontSell) {
+    private void sellStock(TradedCompany dontSell) {
         // choose a company stock
         ArrayList<TradedCompany> allCompanies = new ArrayList<>();                                  // choose from share the client has
 
@@ -171,11 +199,5 @@ public class RandomTraderSgl extends Trader {
 
     }
 
-    /**
-     * No idea why this was made... ¯\_(ツ)_/¯
-     */
-    @Override
-    public void removeStockFromMarket() {
 
-    }
 }
