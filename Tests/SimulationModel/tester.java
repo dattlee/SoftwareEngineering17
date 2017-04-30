@@ -88,7 +88,7 @@ public class tester {
     public void theWholeFuckingThing() {
         TradedCompany google = new TradedCompany("google", ShareType.HITECH, 10000, 100);
         TradedCompany unilever = new TradedCompany("unilever", ShareType.FOOD, 20000, 50);
-        TradedCompany tata = new TradedCompany("tataSteel", ShareType.HDCMOD, 10000, 30);
+        TradedCompany tata = new TradedCompany("tataSteel", ShareType.HARD, 10000, 30);
         TradedCompany mtm = new TradedCompany("mtm", ShareType.PROPERTY, 3000, 10);
 
         Pair<TradedCompany, Integer>[] alStock = new Pair[2];

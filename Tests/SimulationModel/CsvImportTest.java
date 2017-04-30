@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class CsvImportTest {
     CsvImport import1;
     ArrayList<Portfolio> ports;
+    TradedCompany company;
 
     @Before
     public void setUp() throws Exception {
@@ -34,14 +35,36 @@ public class CsvImportTest {
     }
 
     @Test
+    public void tradedCompanySetUpTest(){
+        company = import1.getTradedCompany("Pear Computing");
+        assertEquals(company.getName(), "Pear Computing");
+        assertEquals(company.getShareType(), ShareType.HITECH);
+        assertNotEquals(company.getShareType(), ShareType.HARD);
+        assertEquals(company.getSharesIssued(), 50000);
+        assertNotEquals(company.getSharesIssued(), 25000);
+        assertEquals(company.getShareValue(), 650, 0.00001);
+        assertNotEquals(company.getShareValue(), 300, 0.00001);
+
+        company = import1.getTradedCompany("Whizzer and Chipps");
+        assertEquals(company.getName(), "Whizzer and Chipps");
+        assertEquals(company.getShareType(), ShareType.FOOD);
+        assertNotEquals(company.getShareType(), ShareType.HITECH);
+        assertEquals(company.getSharesIssued(), 31000);
+        assertNotEquals(company.getSharesIssued(), 20000);
+        assertEquals(company.getShareValue(), 210, 0.000000001);
+        assertNotEquals(company.getShareValue(), 200, 0.000000001);
+    }
+
+    @Test
     public void portfolioSetUpTest(){
         /*ports = import1.allPortfolios;
         for (int i = 0; i < ports.size(); i++) {
             System.out.println(ports.get(i).getId());
-        }**/
+        }*/
 
         assertEquals(ports.get(0).getId(),"Norbert DaVinci");
         assertEquals(ports.get(3).getId(),"Sir Melvin Codd");
+        assertEquals(ports.get(9).getId(),"Xi Xian");
         assertNotEquals(ports.get(3).getId(),"Norbert DaVinci");
 
         assertEquals(ports.get(0).getCash(), 100000, 0.000000001);
