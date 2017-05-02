@@ -4,8 +4,8 @@ package dattlee.usefuls;
  * Created by Dattlee on 23/04/2017.
  *
  * Used to store pairs
- * @param <F>
- * @param <S>
+ * @param <F> Any class
+ * @param <S> Any Class
  */
 public class Pair<F, S> {
     private F first;

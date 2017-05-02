@@ -9,9 +9,8 @@ import static org.junit.Assert.assertEquals;
  */
 public class TraderStateTest {
 
-    /**
+    /*
      * This test Checks to see if the created enum contain the correct probablities.
-     * @throws Exception
      */
     @Test
     public void general() throws Exception {

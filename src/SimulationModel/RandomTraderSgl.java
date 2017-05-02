@@ -68,7 +68,7 @@ public class RandomTraderSgl extends Trader {
 
     /**
      *
-     * @param portfolio
+     * @param portfolio the portfolio to add
      * @throws Exception - When a Trader is already responsible for a portfolio
      */
     public void addPortfolio(Portfolio portfolio) throws Exception {
@@ -95,8 +95,8 @@ public class RandomTraderSgl extends Trader {
      * This method is called during every cycle. It follows this process:
      *      - If the client wants to liquidate all of their stock, offer all stock on the market
      *      - Else
-     *          > Buy all stock based on the state of the trader
-     *          > Then, Sell stock based on the state of the trader
+     *          - Buy all stock based on the state of the trader
+     *          - Then, Sell stock based on the state of the trader
      */
     @Override
     public void act() {

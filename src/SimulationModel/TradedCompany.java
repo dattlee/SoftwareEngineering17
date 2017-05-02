@@ -12,8 +12,13 @@ public class TradedCompany {
     private int sharesIssued;
     private double shareValue;
 
-    /**
-     * To be completed
+    /*
+     * Create a company:
+     *  define the name
+     *  define the shareType
+     *  set the number of shares initially issued
+     *  set the initial share value
+     *  @
      */
     public TradedCompany(String name, ShareType shareType, int sharesIssued, double shareValue){
         this.name = name;
@@ -23,63 +28,52 @@ public class TradedCompany {
     }
 
     /**
-     * To be completed
-     * @return
+     * Returns the name of the company
+     * @return Company Name
      */
     public String getName() {
         return name;
     }
 
     /**
-     * To be completed
-     * @return
+     * Returns the ShareType
+     * @return ShareType
      */
     public ShareType getShareType() {
         return shareType;
     }
 
     /**
-     * To be completed
-     * @return
+     * Returns number of Shares issued
+     * @return shares issued
      */
     public int getSharesIssued() {
         return sharesIssued;
     }
 
     /**
-     * To be completed
+     * Returns the value of a single share
      *
-     * May need to change from double BigDecimal to return bigger numbers.
-     * @return
+     * @return share value
      */
     public double getShareValue() {
         return shareValue;
     }
 
     /**
-     * To be completed
-     *
-     * May need to change from double BigDecimal to return bigger numbers.
-     * @return
+     * Returns the Total value of a company.
+     * @return value of sum of all shares issued
      */
     public double getValue() {
         return getShareValue() * sharesIssued;
     }
 
     /**
-     * To be completed. need trading exchange
+     * Adapt the share value based on demand, buy inputing the demand for a cycle
+     * Returns share value after inflate/deflating
      *
-     * May need to change from double BigDecimal to return bigger numbers.
-     * @return
-     */
-    public void issueShares(int noShares) {
-        sharesIssued += noShares;
-    }
-
-    /**
-     * returns share value after inflate/deflating
-     * @param excessDemand
-     * @return
+     * @param excessDemand the demand for the shares
+     * @return the share value after determining new value
      */
     public double increaseShareValue(int excessDemand) {
         shareValue += ((double)excessDemand/sharesIssued)*shareValue;
