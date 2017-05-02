@@ -73,7 +73,34 @@ public class Portfolio {
         }
     }
 
+<<<<<<< HEAD
     /*
+=======
+    /**
+     * Create a portfolio for a client, and give a list of Stocks an cash holding value.
+     *
+     * By default:
+     *  - risk is set to 'LOW'
+     *
+     * @param id the unique identification number of this portfolio
+     */
+    public Portfolio(String id, Pair<TradedCompany,Integer>[] stocks, Double cashHolding){
+        this.id = id;
+        risk = RiskLevel.LOW;
+        companyShares = new HashMap<>();
+        liquidate = false;
+        this.cash = cashHolding;
+
+        int size = stocks.length;
+        for (int i = 0; i < size; i++){
+            Integer shares = stocks[i].getSecond();
+            TradedCompany company = stocks[i].getFirst();
+            companyShares.put(company, shares);
+        }
+    }
+
+    /**
+>>>>>>> 7930b09ca3473f5830bd578132660e802e4d4e12
      * Create a portfolio for a client.
      *
      * By default:

@@ -105,7 +105,7 @@ public class Orders {
         return supply;
     }
 
-    /**
+    /*
      * Returns the difference in demand and supply as an integer.
      *
      *  excess demand returns a positive value.
