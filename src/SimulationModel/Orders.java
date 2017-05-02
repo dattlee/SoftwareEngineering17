@@ -8,7 +8,18 @@ import java.util.ArrayList;
  * Created by Dattlee on 26/04/2017.
  * ¯\_(ツ)_/¯
  *
- * This is a class to hold all Orders made in a cycle for a company, that is to be reset at the end of each cycle.
+ *
+ * This is a class to hold all Orders made in a cycle for a company. During each cycle traders submit "requests" to buy
+ * or sell shares in a company.
+ *
+ * This class then stores:
+ *  - the total supply of shares
+ *  - the a portfolios and number of shares each portfolio has offered to sell
+ *  - the total demand for shares
+ *  - the a portfolios and number of shares each portfolio has offered to buy
+ *
+ * At the end of each cycle, all sales and purchases that be fulfilled by the supply/demand
+ * are credited/charged to the appropriate portfolio accounts.
  */
 public class Orders {
 
@@ -32,6 +43,10 @@ public class Orders {
      *
      ****************************************************/
 
+    /**
+     * Creates an empty order object to be stored in a Traded company object,
+     * The initial demand and supply is set to 0.
+     */
     public Orders(){
         clientsBuying = new ArrayList<>();
         demand = 0;
@@ -46,20 +61,22 @@ public class Orders {
      *
      ****************************************************/
 
-    /*
-     * To make an offer for shares on the market for this cycle.
-     * @param client
-     * @param shares
+    /**
+     * Used by traders make an request to buy a number for shares for a company.
+     *
+     * @param client a portfolio to charge the account with if shares can be bought at the end of the cycle.
+     * @param shares the number of shares a client wishes to buy.
      */
     public void buy(Portfolio client, Integer shares){
         clientsBuying.add(new Pair<>(client, shares));
         demand += (int) shares;
     }
 
-    /*
-     * To offer shares for this cycle on the market.
-     * @param client
-     * @param shares
+    /**
+     * Used by traders make an request to sell a number for shares for a company.
+     *
+     * @param client a portfolio to credit the account with if shares can be sold at the end of a cycle.
+     * @param shares the number of shares a client wishes to sell.
      */
     public void sell(Portfolio client, Integer shares){
         clientsSelling.add(new Pair<>(client, shares));
@@ -67,7 +84,7 @@ public class Orders {
     }
 
     /**
-     * To be called at the end of every cycle, so to set all offers and orders to 0.
+     * To be called at the end of every cycle. It sets all of the orders to 0 and resets the supply and demand.
      */
     public void reset(){
         clientsBuying.clear();
@@ -77,41 +94,42 @@ public class Orders {
     }
 
 
-    /*
-     * Returns an ArrayList, of pairs of Each client buying stock and each selling stock
-     * @return
+    /**
+     * Returns an ArrayList of Pairs, containing each client buying shares and the number of shares they wish to buy.
+     * @return ArrayList of Pairs.
      */
     public ArrayList<Pair<Portfolio, Integer>> getClientsBuying() {
         return clientsBuying;
     }
 
-    /*
-     * Returns the current Demand for a stock, as an integer of the number of orders made
-     * @return demand
+    /**
+     * Returns the current demand for a stock, as an integer of the number of orders made.
+     * @return the number of shares requested as an int.
      */
     public int getDemand() {
         return demand;
     }
+
 
     public ArrayList<Pair<Portfolio, Integer>> getClientsSelling() {
         return clientsSelling;
     }
 
     /**
-     * Returns the current Supply for a stock, as an integer of the number of offers made
-     * @return supply
+     * Returns the current supply for a stock, as an integer of the number of offers made.
+     * @return the number of shares offered as an int.
      */
     public int getSupply() {
         return supply;
     }
 
-    /*
+    /**
      * Returns the difference in demand and supply as an integer.
      *
      *  excess demand returns a positive value.
      *  excess supply returns a negative value.
      *
-     * @return the difference
+     * @return the difference as an int.
      */
     public int excess(){
         return demand - supply;
