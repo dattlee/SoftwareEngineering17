@@ -46,7 +46,7 @@ public class Orders {
      *
      ****************************************************/
 
-    /**
+    /*
      * To make an offer for shares on the market for this cycle.
      * @param client
      * @param shares
@@ -56,7 +56,7 @@ public class Orders {
         demand += (int) shares;
     }
 
-    /**
+    /*
      * To offer shares for this cycle on the market.
      * @param client
      * @param shares
@@ -77,7 +77,7 @@ public class Orders {
     }
 
 
-    /**
+    /*
      * Returns an ArrayList, of pairs of Each client buying stock and each selling stock
      * @return
      */
@@ -85,7 +85,7 @@ public class Orders {
         return clientsBuying;
     }
 
-    /**
+    /*
      * Returns the current Demand for a stock, as an integer of the number of orders made
      * @return demand
      */
@@ -105,13 +105,13 @@ public class Orders {
         return supply;
     }
 
-    /**
+    /*
      * Returns the difference in demand and supply as an integer.
      *
      *  excess demand returns a positive value.
      *  excess supply returns a negative value.
      *
-     * @return
+     * @return the difference
      */
     public int excess(){
         return demand - supply;

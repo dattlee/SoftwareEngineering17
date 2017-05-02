@@ -60,12 +60,6 @@ public class TradingExchange {
         allTraders.add(new RandomTraderSgl(id, this, client));
     }
 
-    /**
-     *
-     * @param client
-     * @param company
-     * @param shares
-     */
     public void sellShares(Portfolio client, TradedCompany company, Integer shares){
         exchange.get(company).sell(client,shares);
     }
@@ -74,9 +68,9 @@ public class TradingExchange {
     /**
      * Clients must attempt to buy shares at each 15 minute interval. After an interval passes
      * if they have been unsucessful in buying the stock then their
-     * @param client
-     * @param company
-     * @param shares
+     * @param client client to sell shares for
+     * @param company company to sell
+     * @param shares number of shares to sell
      */
     public void buyShares(Portfolio client, TradedCompany company, Integer shares){
         exchange.get(company).buy(client,shares);

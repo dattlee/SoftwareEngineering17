@@ -35,7 +35,7 @@ public class Portfolio {
      *
      ****************************************************/
 
-    /**
+    /*
      * Create a portfolio for a client.
      *
      * By default:
@@ -51,7 +51,7 @@ public class Portfolio {
         liquidate = false;
     }
 
-    /**
+    /*
      * Create a portfolio for a client, and give a list of Stocks.
      *
      * By default:
@@ -73,6 +73,9 @@ public class Portfolio {
         }
     }
 
+<<<<<<< HEAD
+    /*
+=======
     /**
      * Create a portfolio for a client, and give a list of Stocks an cash holding value.
      *
@@ -97,6 +100,7 @@ public class Portfolio {
     }
 
     /**
+>>>>>>> 7930b09ca3473f5830bd578132660e802e4d4e12
      * Create a portfolio for a client.
      *
      * By default:
@@ -114,11 +118,11 @@ public class Portfolio {
     }
 
 
-    /**
+    /*
      * Constructor to create a portfolio with stocks, and to set the risk Preference.
-     * @param id
-     * @param risk
-     * @param stocks
+     * @param id Name of the client
+     * @param risk Risk of the portfolio
+     * @param stocks Shares to start with
      */
     public Portfolio(String id, RiskLevel risk, Pair<TradedCompany,Integer>[] stocks){
         this.id = id;
@@ -141,7 +145,7 @@ public class Portfolio {
      *
      ****************************************************/
 
-    /**
+    /*
      * Change the state of the client to sell all stocks
      * @param liquidate - Boolean
      */
@@ -149,15 +153,14 @@ public class Portfolio {
         this.liquidate = liquidate;
     }
 
-    /**
-     *
+    /*
      * @return - True if the client wants to sell all stocks
      */
     public boolean isLiquidate() {
         return liquidate;
     }
 
-    /**
+    /*
      * Return the protfolio ID, used interchangeably with client Name
      * @return id - String
      */
@@ -165,15 +168,15 @@ public class Portfolio {
         return id;
     }
 
-    /**
+    /*
      * Change the Portfolio ID to id
-     * @param id
+     * @param id name of the client
      */
     public void setId(String id) {
         this.id = id;
     }
 
-    /**
+    /*
      * Returns the current risk level of the portfolio
      * @return risk - RiskLevel
      */
@@ -181,38 +184,38 @@ public class Portfolio {
         return risk;
     }
 
-    /**
+    /*
      * Change the risk of the profile to risk
      */
     public void setRisk(RiskLevel risk){
         this.risk = risk;
     }
 
-    /**
+    /*
      * Returns a {@link HashMap}<{@link TradedCompany},{@link Integer} of all Traded Companies and the number of shares of each.
      */
     public HashMap<TradedCompany,Integer> getShares() {
         return companyShares;
     }
 
-    /**
+    /*
      * Returns the number of shares of a specified company as an {@link Integer} held by this portfolio.
      * @param company
-     * @return
+     * @return the amount nnumber of shares held for a company 'company'
      */
     public Integer getShares(TradedCompany company) {
         return (companyShares.containsKey(company)) ? companyShares.get(company) : 0;
     }
 
-    /**
+    /*
      * Returns a HashMap of all company shares
-     * @return
+     * @return All shares held buy the portfolio
      */
     public HashMap<TradedCompany, Integer> getCompanyShares() {
         return companyShares;
     }
 
-    /**
+    /*
      * Adds a number of shares of the specified company to the portfolio,
      * And charges the account (cash)
      * @param company - the company which to add to the portfolio, or update
@@ -234,7 +237,7 @@ public class Portfolio {
         }
     }
 
-    /**
+    /*
      * Removes a number of shares of the specified company to the portfolio
      * @param company - the company which to add to the portfolio, or update
      * @param numOfShares - the number of shares of which to add
@@ -261,17 +264,18 @@ public class Portfolio {
         }
     }
 
-    /**
+    /*
      * Returns the amount of cash in the portfolio
+     * @return the amount of cash held by portfolio
      */
     public double getCash() { return cash; }
 
-    /**
+    /*
      * Adds an x amount of cash to the portfolio
      */
     public void addCash(double x) { cash += x; }
 
-    /**
+    /*
      * Removes an x amount of cash from the portfolio
      */
     public void removeCash(double x) {
@@ -281,10 +285,11 @@ public class Portfolio {
         }
     }
 
-    /**
+    /*
      * Returns the total cash value of the portfolio.
      * This includes the total amount of cash held in addition to
      * the value of each share at the time the method is called.
+     * @return the total value of a Portfolio
      */
     public double getValue() {
         // The total amount of money
