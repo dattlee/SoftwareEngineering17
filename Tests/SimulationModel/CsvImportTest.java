@@ -54,10 +54,10 @@ public class CsvImportTest {
 
     @Test
     public void portfolioSetUpTest(){
-        /*ports = import1.allPortfolios;
+        ports = import1.allPortfolios;
         for (int i = 0; i < ports.size(); i++) {
             System.out.println(ports.get(i).getName());
-        }*/
+        }
 
         assertEquals(ports.get(0).getName(),"Norbert DaVinci");
         assertEquals(ports.get(3).getName(),"Sir Melvin Codd");
