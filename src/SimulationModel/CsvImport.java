@@ -20,6 +20,11 @@ import java.util.HashMap;
  */
 public class CsvImport {
 
+    /* **************************************************
+     *
+     *                  Fields
+     *
+     ****************************************************/
     BufferedReader tradedCompanyBR;
     String[] tradedCompanyEntries;
     ArrayList<TradedCompany> allCompanies = new ArrayList<>();
@@ -40,7 +45,6 @@ public class CsvImport {
     /**
      * Set tradedCompanyBR and portfolioBR Buffer readers to the .csv string path provided in the constructor param,
      * run the corresponding methods for processing the .csvs
-     *
      *
      * @param companyCSV String of the Traded Company .csv file path, portfolioCSV String of the Portfolio .csv file path
      * @Exception e throw exception is the .csv file cannot be read
@@ -67,6 +71,11 @@ public class CsvImport {
         }
     }
 
+    /* **************************************************
+     *
+     *                  Methods
+     *
+     ****************************************************/
     /**
      * For each line within the BufferedReader, split the line by ',' into tradedCompanyEntries String array,
      * Use string elements within String array to create new TradedCompany and put into tradedCompanies HashMap

@@ -5,11 +5,17 @@ package SimulationModel;
  * @version 1.0
  * @author SDocker
  */
+
 public class Clock {
+
+    /* **************************************************
+     *
+     *                  Fields
+     *
+     ****************************************************/
     protected TradingExchange trading;
     protected int hour;
     protected int minute;
-
     protected int dayDate;
     protected int monthDate;
     protected int year;
@@ -74,6 +80,11 @@ public class Clock {
         currentMonth = allMonths[monthDate-1];
     }
 
+    /* **************************************************
+     *
+     *                  Methods
+     *
+     ****************************************************/
     /**
      * Returns the date in the following format:
      * day of the week day/month/year HH:MM
@@ -85,6 +96,7 @@ public class Clock {
     }
 
     /**
+     * Method used to format any single digit integer to be started with a 0, ints are then formatted into a string and returned
      *
      * @param formatInt takes an int as parameter, formats single digits to lead with 0 = and returns the int as a string
      * @return The formatted int as a string
@@ -229,20 +241,20 @@ public class Clock {
         return false;
     }
     /**
-     * for loop that runs for
+     * for loop that runs for x amount of days and calls the act method on trading
+     * exchange when it is a valid training day
+     *
      * @param numberOfDays int for inputting number of days to run clock
      * @param trading the trading exchange object to commit act method on
      */
     public void runClock(int numberOfDays, TradingExchange trading){
         int incrementMinutes = 15;
         int numberOfRuns = numberOfDays*24*4;
-        int runCount = 0;
+
         for (int i = 0; i < numberOfRuns; i++){
             if (canTrade()){
                 trading.act();
             }
-            runCount++;
-            System.out.print("ran " + runCount + " amount of times\n");
             minuteIncrement(incrementMinutes);
         }
     }
