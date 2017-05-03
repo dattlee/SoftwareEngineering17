@@ -1,5 +1,6 @@
 package SimulationModel;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -15,6 +16,20 @@ import java.util.ArrayList;
 public class Simulation {
 
 	private TradingExchange exchange;
+	protected CsvImport import1;
+	protected Clock clock;
+	/**
+	 * This constructs the stock market simulation
+	 */
+	public Simulation(){
+		try {
+			this.import1 = new CsvImport("InitialDataV2.csv", "InitialDataV2portfolio.csv");
+		} catch (FileNotFoundException e) {
+			System.out.println("Files not found");
+		}
+		this.exchange = new TradingExchange(import1.getTradedCompanies(), import1.getPortfolios());
+
+	}
 
 	//Gets a traded company (necessary to get all traded companies)
 	public ArrayList<TradedCompany> getAllTradedCompanies(){
@@ -38,6 +53,24 @@ public class Simulation {
 	}
 
 	//Feel free to give these different names but let me know so I can tweak things
+
+	/**
+	 * Method to call the runClock method within clock object which handles all trading
+	 * @param days amount of days to run simulation for
+	 */
+	public void runXSteps(int days){
+		clock.runClock(days, this.exchange);
+	}
+
+	/**
+	 * Returns the date in the following format:
+	 * day of the week day/month/year HH:MM
+	 *
+	 * @return The current date found in clock object
+	 */
+	public String getDate(){
+		return clock.getDate();
+	}
 
 
 }
