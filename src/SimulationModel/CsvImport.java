@@ -2,6 +2,7 @@ package SimulationModel;
 
 import dattlee.usefuls.Pair;
 
+import javax.sound.sampled.Port;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -132,5 +133,21 @@ public class CsvImport {
             }
             allPortfolios.add(new Portfolio(clientName, clientPairs, cashHoldings));
         }
+    }
+
+    /**
+     * Returns the arraylist containing all traded companies
+     * @return arraylist of all traded companies
+     */
+    public ArrayList<TradedCompany> getTradedCompanies(){
+        return allCompanies;
+    }
+
+    /**
+     * Returns the arraylist containing all portfolios
+     * @return arraylist of all portfolios
+     */
+    public ArrayList<Portfolio> getPortfolios(){
+        return allPortfolios;
     }
 }
