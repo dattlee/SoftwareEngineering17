@@ -5,10 +5,6 @@ import dattlee.usefuls.Pair;
 import java.util.ArrayList;
 
 /**
- * Created by Dattlee on 26/04/2017.
- * ¯\_(ツ)_/¯
- *
- *
  * This is a class to hold all Orders made in a cycle for a company. During each cycle traders submit "requests" to buy
  * or sell shares in a company.
  *
@@ -20,6 +16,9 @@ import java.util.ArrayList;
  *
  * At the end of each cycle, all sales and purchases that be fulfilled by the supply/demand
  * are credited/charged to the appropriate portfolio accounts.
+ *
+ * @version 1.0
+ * @author Dattlee ¯\_(ツ)_/¯
  */
 public class Orders {
 
@@ -39,7 +38,7 @@ public class Orders {
 
     /* **************************************************
      *
-     *                  Consturctors
+     *                  Constructors
      *
      ****************************************************/
 

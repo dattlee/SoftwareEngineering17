@@ -4,12 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 import java.util.ArrayList;
+
+import static org.junit.Assert.*;
 
 /**
  * Created by Steven on 29/04/2017.
@@ -59,13 +56,13 @@ public class CsvImportTest {
     public void portfolioSetUpTest(){
         /*ports = import1.allPortfolios;
         for (int i = 0; i < ports.size(); i++) {
-            System.out.println(ports.get(i).getId());
+            System.out.println(ports.get(i).getName());
         }*/
 
-        assertEquals(ports.get(0).getId(),"Norbert DaVinci");
-        assertEquals(ports.get(3).getId(),"Sir Melvin Codd");
-        assertEquals(ports.get(9).getId(),"Xi Xian");
-        assertNotEquals(ports.get(3).getId(),"Norbert DaVinci");
+        assertEquals(ports.get(0).getName(),"Norbert DaVinci");
+        assertEquals(ports.get(3).getName(),"Sir Melvin Codd");
+        assertEquals(ports.get(9).getName(),"Xi Xian");
+        assertNotEquals(ports.get(3).getName(),"Norbert DaVinci");
 
         assertEquals(ports.get(0).getCash(), 100000, 0.000000001);
         assertEquals(ports.get(5).getCash(), 50000, 0.000000001);
