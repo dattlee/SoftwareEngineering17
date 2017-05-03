@@ -165,6 +165,12 @@ public class TradingExchange {
     }
 
 
+    /**
+     * If the demand is equal in a cycle complete all orders and requests for stocks.
+     *
+     * @param company The TradedCompany to complete orders for.
+     * @param orders The Orders to complete.
+     */
     private void equaldemand(TradedCompany company, Orders orders){
         for(Pair<Portfolio,Integer> order : orders.getClientsBuying()){
             order.getFirst().buyShares(company,order.getSecond());
@@ -178,6 +184,12 @@ public class TradingExchange {
         }
     }
 
+    /**
+     * If there is overdemand in a cycle complete all orders and distribute the requests.
+     *
+     * @param company The TradedCompany to complete orders for.
+     * @param orders The Orders to complete.
+     */
     private void overdemand(TradedCompany company, Orders orders) {
         int demand = orders.getDemand();
         int supply = orders.getSupply();
@@ -212,6 +224,12 @@ public class TradingExchange {
         }
     }
 
+    /**
+     * If there is over supply in a cycle complete all the requests and distribute the orders.
+     *
+     * @param company The TradedCompany to complete orders for.
+     * @param orders The Orders to complete.
+     */
     private void oversupply(TradedCompany company, Orders orders) {
         int demand = orders.getDemand();
         int supply = orders.getSupply();
@@ -242,6 +260,11 @@ public class TradingExchange {
         }
     }
 
+    /**
+     * Used to quickly assess market in testing.
+     *
+     * @return double array of the values of each company in no particular order.
+     */
     public double[] allStockValues(){
         Set<Map.Entry<TradedCompany,Orders>> all = exchange.entrySet();
         double[] values = new double[all.size()];
@@ -253,11 +276,20 @@ public class TradingExchange {
         return values;
     }
 
-
+    /**
+     * Returns traded a list of all Traders on the Tradingxchange
+     *
+     * @return an ArrayList of Traders
+     */
     public ArrayList<Trader> getAllTraders() {
         return allTraders;
     }
 
+    /**
+     * Returns an ArrayList of all the companies on the market.
+     *
+     * @return ArrayList of Traded companies
+     */
     public ArrayList<TradedCompany> getAllCompanies() {
         ArrayList<TradedCompany> allComps = new ArrayList<>();
         for (HashMap.Entry<TradedCompany,Orders> company:exchange.entrySet()) {
