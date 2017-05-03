@@ -95,6 +95,7 @@ public class Orders {
 
     /**
      * Returns an ArrayList of Pairs, containing each client buying shares and the number of shares they wish to buy.
+     *
      * @return ArrayList of Pairs.
      */
     public ArrayList<Pair<Portfolio, Integer>> getClientsBuying() {

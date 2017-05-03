@@ -41,7 +41,9 @@ public class CsvImport {
      * run the corresponding methods for processing the .csvs
      *
      *
-     * @param companyCSV String of the Traded Company .csv file path, portfolioCSV String of the Portfolio .csv file path
+     * @param companyCSV String of the Traded Company .csv file path
+     * @param portfolioCSV String of the Portfolio .csv file path
+     *
      * @Exception e throw exception is the .csv file cannot be read
      */
     public CsvImport(String companyCSV, String portfolioCSV) throws FileNotFoundException {

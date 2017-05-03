@@ -16,12 +16,6 @@ public class Simulation {
 
 	private TradingExchange exchange;
 
-	/**
-	 * This constructs the stock market simulation
-	 */
-	public Simulation(){};
-
-
 	//Gets a traded company (necessary to get all traded companies)
 	public ArrayList<TradedCompany> getAllTradedCompanies(){
 		return exchange.getAllCompanies();

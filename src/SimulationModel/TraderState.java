@@ -1,10 +1,6 @@
 package SimulationModel;
 
 /**
- * Created by Dattlee on 21/04/2017.
- * ¯\_(ツ)_/¯
- *
- *
  *  A Random Trader my have 1 of 3 states in any 15 minute period:
  *
  *  BALANCED
@@ -32,6 +28,8 @@ package SimulationModel;
  *  AGGBUYER
  *      seller(0%), balanced(70%), buyer(30%)
  *
+ * @version 1.0
+ * @author Dattlee ¯\_(ツ)_/¯
  */
 public enum TraderState {
     AGGSELLER ( 0.005, 0.02, 0.4, 0.6, 0),
