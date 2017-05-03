@@ -47,6 +47,31 @@ public class TradingExchange {
         }
     }
 
+    public TradingExchange(List<TradedCompany> companies, List<Portfolio> clients){
+        allCompanies = new ArrayList<>();
+        exchange = new HashMap<>();
+        allTraders = new ArrayList<>();
+        traderIds = 0;
+
+        // Add all Companies to Trading Exchange
+        Iterator it = companies.iterator();
+        while(it.hasNext()){
+            TradedCompany tc = (TradedCompany) it.next();
+            exchange.put(tc,new Orders());
+            if (tc.getShareValue()>=1){
+                allCompanies.add(tc);
+            }
+        }
+
+        for (TradedCompany company:companies) {
+            exchange.put(company,new Orders());
+        }
+
+        for (Portfolio client:clients) {
+            newRandTrader(client);
+        }
+    }
+
 
     /* **************************************************
      *
