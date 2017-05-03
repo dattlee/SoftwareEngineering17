@@ -6,12 +6,16 @@ import java.util.Map;
 import java.util.Random;
 
 /**
- * Created by Dattlee on 21/04/2017.
- * ¯\_(ツ)_/¯
+ * This Class holds the is is represents a random trader on the stock market that manages a Portfolio for a client. Each
+ * random trader created in this class is only capable of managing the affairs of one client.
  *
- * Traders of this class can only hold and manage 1 portfolio at a time.
+ * The manner in which a Random Trader manages a Portfolio differs depending on the current state. The state of a
+ * RandomTrader is updated with each cycle, see {@link SimulationModel.TraderState}.
+ *
+ * @version 1.0
+ * @author Dattlee ¯\_(ツ)_/¯
  */
-public class RandomTraderSgl extends Trader {
+public class RandomTrader extends Trader {
 
     /* **************************************************
      *
@@ -29,35 +33,32 @@ public class RandomTraderSgl extends Trader {
      ****************************************************/
 
     /**
-     * Create a trader and add it to the Trading Exchange
+     * Create a trader and add it to the Trading Exchange.
      *
-     * @param ID - A unique ID assigned to a trader when they join a Trading Exchange
+     * By default the state of the trader is set to {@link TraderState}.BALANCED.
+     *
+     * @param ID A unique ID assigned to a trader when they join a Trading Exchange
      * @param exchange - A reference to the trading exchange that the Trader has joined
      */
-    public RandomTraderSgl(String ID, TradingExchange exchange) {
+    public RandomTrader(String ID, TradingExchange exchange) {
         super(ID, exchange);
         currentState = TraderState.BALANCED;
     }
 
 
     /**
-     * Create a trader and add it to the Trading Exchange
+     * Create a trader and add it to the Trading Exchange.
      *
-     * @param ID - A unique ID assigned to a trader when they join a Trading Exchange
-     * @param exchange - A reference to the trading exchange that the Trader has joined
+     * By default the state of the trader is set to {@link TraderState}.BALANCED.
+     *
+     * @param ID A unique ID assigned to a trader when they join a Trading Exchange.
+     * @param exchange A reference to the trading exchange that the Trader has joined
      * @param portfolio - The portfolio that the trader is responsible for.
      */
-    public RandomTraderSgl(String ID, TradingExchange exchange, Portfolio portfolio) {
+    public RandomTrader(String ID, TradingExchange exchange, Portfolio portfolio) {
         super(ID, exchange);
         currentState = TraderState.BALANCED;
-        try {
-            addPortfolio(portfolio);
-        } catch (Exception e) {
-            System.out.println("Somehow there is already a portfolio associated with this " +
-                    "new trader... Fuck knows how that happened ¯\\_(ツ)_/¯");
-
-
-        }
+        client = portfolio;
     }
 
     /* **************************************************
@@ -67,9 +68,11 @@ public class RandomTraderSgl extends Trader {
      ****************************************************/
 
     /**
+     * To give a trader a new Portfolio to manage.
      *
-     * @param portfolio the portfolio to add
-     * @throws Exception - When a Trader is already responsible for a portfolio
+     * @param portfolio the portfolio to add.
+     *
+     * @exception Exception if a Trader is already responsible for a portfolio.
      */
     public void addPortfolio(Portfolio portfolio) throws Exception {
         if(this.client == null){
@@ -79,23 +82,24 @@ public class RandomTraderSgl extends Trader {
         }
     }
 
-//    /**
-//     *
-//     * @throws Exception
-//     */
-//    public void removePortfolio() throws Exception {
-//        if(this.client == null){
-//            throw new Exception("There is no portfolio assigned to this trader.");
-//        } else {
-//            this.client = null;
-//        }
-//    }
+    /**
+     * Removes the portfolio currently managed by the Random Trader.
+     *
+     * @exception Exception if the trader is not currently managing a portfolio.
+     */
+    public void removePortfolio() throws Exception {
+        if(this.client == null){
+            throw new Exception("There is no portfolio assigned to this trader.");
+        } else {
+            this.client = null;
+        }
+    }
 
     /**
      * This method is called during every cycle. It follows this process:
      *      - If the client wants to liquidate all of their stock, offer all stock on the market
      *      - Else
-     *          - Buy all stock based on the state of the trader
+     *          - Buy all stock from 1 company based on the state of the trader
      *          - Then, Sell stock based on the state of the trader
      */
     @Override
@@ -126,13 +130,13 @@ public class RandomTraderSgl extends Trader {
 
 
     /**
-     * Method used by Trader to sell of a clients stock when they have asked for stocks to be liquidated.
+     * Method used by a Trader to sell of a clients stock when they have asked for stocks to be liquidated.
      */
     private void sellAllStock(){
 
-        for (HashMap.Entry<TradedCompany, Integer> entry : client.getCompanyShares().entrySet())
+        for (HashMap.Entry<TradedCompany, Integer> entry : client.getShares().entrySet())
         {
-            exchange.sellShares(client, entry.getKey(),entry.getValue());
+            super.getExchange().sellShares(client, entry.getKey(),entry.getValue());
         }
     }
 
@@ -143,7 +147,7 @@ public class RandomTraderSgl extends Trader {
      */
     private TradedCompany buyStock() {
         // choose a company stock
-        ArrayList<TradedCompany> allCompanies = exchange.getAllCompanies();
+        ArrayList<TradedCompany> allCompanies = super.getExchange().getAllAvailableCompanies();
         int picked = new Random().nextInt(allCompanies.size());
         TradedCompany chosen = allCompanies.get(picked);
 
@@ -156,7 +160,7 @@ public class RandomTraderSgl extends Trader {
         int shares2buy = (int)(maxPurchPrice/chosen.getShareValue());                 // maximum number of shares the client can afford, int wrapping rounds down
 
         // make the offer to the market the stock
-        exchange.buyShares(client,chosen,shares2buy);
+        super.getExchange().buyShares(client,chosen,shares2buy);
         return chosen;
 
     }
@@ -169,7 +173,7 @@ public class RandomTraderSgl extends Trader {
         // choose a company stock
         ArrayList<TradedCompany> allCompanies = new ArrayList<>();                                  // choose from share the client has
 
-        for(Map.Entry<TradedCompany,Integer> comp : client.getCompanyShares().entrySet()){
+        for(Map.Entry<TradedCompany,Integer> comp : client.getShares().entrySet()){
             if (comp.getKey().equals(dontSell)){
                 System.out.println("already buying this item");
             } else {
@@ -189,7 +193,7 @@ public class RandomTraderSgl extends Trader {
 
             if (maxSellPrice >= chosen.getShareValue()) {
                 int numberSelling = (int) (maxSellPrice / chosen.getShareValue());
-                exchange.sellShares(client, chosen, numberSelling);                                   // offer shares to market
+                super.getExchange().sellShares(client, chosen, numberSelling);                                   // offer shares to market
             } else {
                 System.out.println("cant afford to by stock this time round");
             }

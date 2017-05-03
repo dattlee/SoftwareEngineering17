@@ -1,10 +1,11 @@
 package SimulationModel;
 
 /**
- * Created by Dattlee on 21/04/2017.
- * ¯\_(ツ)_/¯
+ * This is an Abstract class that defines the key attributes of any Trader in the Wolf and Gecko Simulation. It allows
+ * for the expansion of more complex traders, with new behaviours.
  *
- * Every trader can only care for one portfolio. However, this is subject to change.
+ * @version 1.0
+ * @author Dattlee ¯\_(ツ)_/¯
  */
 public abstract class Trader {
 
@@ -14,10 +15,8 @@ public abstract class Trader {
      *
      ****************************************************/
 
-    // THIS WILL BE REMOVED OF TRADERS CAN HAVE MORE THAN ONE CLIENT
-    //public Portfolio client;
-    public String ID;
-    public TradingExchange exchange;
+    private String ID;
+    private TradingExchange exchange;
 
     /* **************************************************
      *
@@ -38,8 +37,24 @@ public abstract class Trader {
      ****************************************************/
 
     /**
-     * This is the method called by the simulation class. At each epoch (time step)
+     * This is the method called by the simulation class at each cycle.
      */
-      public abstract void act();
+    public abstract void act();
 
+    /**
+     * Returns the unique ID assined to the Trader
+     * @return a String identification
+     */
+    public String getID() {
+        return ID;
+    }
+
+    /**
+     * The Trading exchange that the Trader is associated with.
+     *
+     * @return Trading Exchange object.
+     */
+    public TradingExchange getExchange() {
+        return exchange;
+    }
 }

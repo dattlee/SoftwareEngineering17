@@ -21,14 +21,14 @@ public class PortfolioTest {
 
     @Test
     public void getId() throws Exception {
-        assertEquals(port1.getId(),"1001");
+        assertEquals(port1.getName(),"1001");
     }
 
     @Test
     public void setId() throws Exception {
-        assertEquals(port1.getId(),"1001");
-        port1.setId("2001");
-        assertEquals(port1.getId(),"2001");
+        assertEquals(port1.getName(),"1001");
+        port1.setName("2001");
+        assertEquals(port1.getName(),"2001");
     }
 
     @Test

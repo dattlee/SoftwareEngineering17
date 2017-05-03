@@ -50,6 +50,7 @@ public enum TraderState {
 
     /**
      * Returns a double between 0 and 1 corresponding tho the percentage of the Asset wealth the trader will use to buy stocks when in a state.
+     *
      * @return - Percentage of asset wealth to buy
      */
     public double getBuyPerc() {
@@ -58,31 +59,35 @@ public enum TraderState {
 
     /**
      * Returns a double between 0 and 1 corresponding tho the percentage of the Asset wealth the trader will use to buy stocks when in a state.
-     * @return - Percentage of asset wealth to Sell
+     *
+     * @return - Percentage of asset wealth to Sell.
      */
     public double getSellPerc() {
         return sellPerc;
     }
 
     /**
-     * Returns the chance of swapping to an Aggressive Seller state
-     * @return - Chance of swapping to an Aggressive Seller
+     * Returns the chance of swapping to an Aggressive Seller state.
+     *
+     * @return a double representing chance of swapping to an Aggressive Seller.
      */
     public double getSwitchSell() {
         return switchSell;
     }
 
     /**
-     * Returns the chance of swapping to an Balanced state
-     * @return - Chance of swapping to an Balanced Trader
+     * Returns the chance of swapping to an Balanced state.
+     *
+     * @return a double representing chance of swapping to an Balanced Trader.
      */
     public double getSwitchBalance() {
         return switchBalance;
     }
 
     /**
-     * Returns the chance of swapping to an Aggressive Buyer state
-     * @return - Chance of swapping to an Aggressive Buyer
+     * Returns the chance of swapping to an Aggressive Buyer state.
+     *
+     * @return a double representing the percentage chance of swapping to an Aggressive Buyer.
      */
     public double getSwitchBuy() {
         return switchBuy;

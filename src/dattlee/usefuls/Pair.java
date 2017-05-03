@@ -1,11 +1,13 @@
 package dattlee.usefuls;
 
 /**
- * Created by Dattlee on 23/04/2017.
+ * Used to store pairs of Generic Classes, Useful in the storage of a set of 2 different classed objects.
  *
- * Used to store pairs
  * @param <F> Any class
  * @param <S> Any Class
+ *
+ * @version 1.0
+ * @author Dattlee
  */
 public class Pair<F, S> {
     private F first;
@@ -16,10 +18,18 @@ public class Pair<F, S> {
         this.second = second;
     }
 
+    /**
+     * Returns the first object F
+     * @return The first object F
+     */
     public F getFirst() {
         return first;
     }
 
+    /**
+     * Returns the second object S
+     * @return The second object S
+     */
     public S getSecond() {
         return second;
     }

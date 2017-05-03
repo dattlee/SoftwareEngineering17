@@ -5,24 +5,27 @@ import dattlee.usefuls.Pair;
 import java.util.HashMap;
 
 /**
- * Created by Dattlee on 30/03/2017.
- * ¯\_(ツ)_/¯
+ * This Class holds the information for each client in the simulation. It is managed by traders classes, which may buy
+ * and sell stock the their own discression. However there are parameters which may be adapted to control fow of funds
+ * and assets. These include 'risk' and 'liquidate'.
  *
- * NOTE: May need to refactor code such that the company shares field holds a string
- * instead of a Traded do
+ * The client must be given a name upon creation which is interchangeable with a unique ID.
  *
- * NOTE: Not associating portfolio with trader.
+ * Note: The currency of the cash held by a portfolio is not stored.
+ *
+ * @version 1.0
+ * @author Dattlee ¯\_(ツ)_/¯
  */
 public class Portfolio {
 
 
     /* **************************************************
      *
-     *                  Fields
+     *                      Fields
      *
      ****************************************************/
 
-    private String id;
+    private String name;
     private RiskLevel risk;
     private double cash;
     private HashMap<TradedCompany,Integer> companyShares;
@@ -31,36 +34,37 @@ public class Portfolio {
 
     /* **************************************************
      *
-     *                  Constructors
+     *                   Constructors
      *
      ****************************************************/
 
-    /*
+    /**
      * Create a portfolio for a client.
      *
      * By default:
      *  - risk is set to 'LOW'
      *  - no shares are given
      *
-     * @param id the unique identification number of this portfolio
+     * @param name the name, or unique identification.
      */
-    public Portfolio(String id){
-        this.id = id;
+    public Portfolio(String name){
+        this.name = name;
         risk = RiskLevel.LOW;
         companyShares = new HashMap<>();
         liquidate = false;
     }
 
-    /*
+    /**
      * Create a portfolio for a client, and give a list of Stocks.
      *
      * By default:
      *  - risk is set to 'LOW'
      *
-     * @param id the unique identification number of this portfolio
+     * @param name a String representitive of a name or unique identification.
+     * @param stocks an array of Pairs, containing Traded companies and an Integer number of shares.
      */
-    public Portfolio(String id, Pair<TradedCompany,Integer>[] stocks){
-        this.id = id;
+    public Portfolio(String name, Pair<TradedCompany,Integer>[] stocks){
+        this.name = name;
         risk = RiskLevel.LOW;
         companyShares = new HashMap<>();
         liquidate = false;
@@ -73,19 +77,19 @@ public class Portfolio {
         }
     }
 
-<<<<<<< HEAD
-    /*
-=======
+
     /**
      * Create a portfolio for a client, and give a list of Stocks an cash holding value.
      *
      * By default:
      *  - risk is set to 'LOW'
      *
-     * @param id the unique identification number of this portfolio
+     * @param name a String representitive of a name or unique identification.
+     * @param stocks an array of Pairs, containing Traded companies and an Integer number of shares.
+     * @param cashHolding a double, representing the amount of cash the portfolio starts with.
      */
-    public Portfolio(String id, Pair<TradedCompany,Integer>[] stocks, Double cashHolding){
-        this.id = id;
+    public Portfolio(String name, Pair<TradedCompany,Integer>[] stocks, Double cashHolding){
+        this.name = name;
         risk = RiskLevel.LOW;
         companyShares = new HashMap<>();
         liquidate = false;
@@ -99,45 +103,6 @@ public class Portfolio {
         }
     }
 
-    /**
->>>>>>> 7930b09ca3473f5830bd578132660e802e4d4e12
-     * Create a portfolio for a client.
-     *
-     * By default:
-     * -    no shares are given
-     *
-     * @param id the unique identification number of this portfolio
-     */
-    public Portfolio(String id, RiskLevel risk) {
-        this.id = id;
-        this.risk = risk;
-        companyShares = new HashMap<>();
-        liquidate = false;
-
-
-    }
-
-
-    /*
-     * Constructor to create a portfolio with stocks, and to set the risk Preference.
-     * @param id Name of the client
-     * @param risk Risk of the portfolio
-     * @param stocks Shares to start with
-     */
-    public Portfolio(String id, RiskLevel risk, Pair<TradedCompany,Integer>[] stocks){
-        this.id = id;
-        this.risk = risk;
-        liquidate = false;
-
-
-        // upload all initial stocks
-        int size = stocks.length;
-        for (int i = 0; i < size; i++){
-            Integer shares = stocks[i].getSecond();
-            TradedCompany company = stocks[i].getFirst();
-            companyShares.put(company, shares);
-        }
-    }
 
      /* **************************************************
      *
@@ -145,83 +110,88 @@ public class Portfolio {
      *
      ****************************************************/
 
-    /*
-     * Change the state of the client to sell all stocks
-     * @param liquidate - Boolean
+    /**
+     * Change the state of the client, such that a Trader would offer all stock to the market in each cycle, until
+     * changed back.
+     *
+     * @param liquidate a boolean.
      */
     public void setLiquidate(boolean liquidate) {
         this.liquidate = liquidate;
     }
 
-    /*
-     * @return - True if the client wants to sell all stocks
+    /**
+     * Returns the current state of the client, to be used by the tradi.
+     *
+     * @return a boolean, true if the client wants to sell all stocks in a cycle.
      */
     public boolean isLiquidate() {
         return liquidate;
     }
 
-    /*
-     * Return the protfolio ID, used interchangeably with client Name
-     * @return id - String
+    /**
+     * Return the protfolio name, used interchangeably with ID.
+     *
+     * @return the name of the client.
      */
-    public String getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    /*
-     * Change the Portfolio ID to id
-     * @param id name of the client
+    /**
+     * Change the name of the client.
+     *
+     * @param name a String, name of the client.
      */
-    public void setId(String id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    /*
-     * Returns the current risk level of the portfolio
-     * @return risk - RiskLevel
+    /**
+     * Returns the current risk level of the portfolio.
+     *
+     * @return RiskLevel enum
      */
     public RiskLevel getRisk(){
         return risk;
     }
 
-    /*
-     * Change the risk of the profile to risk
+    /**
+     * Update the current risk associated with the profile.
+     *
+     * @param risk an enum RiskLevel.
      */
     public void setRisk(RiskLevel risk){
         this.risk = risk;
     }
 
-    /*
-     * Returns a {@link HashMap}<{@link TradedCompany},{@link Integer} of all Traded Companies and the number of shares of each.
+    /**
+     * Returns a {@link HashMap}<{@link TradedCompany},{@link Integer} of all Traded Companies and the number of shares
+     * of each.
      */
     public HashMap<TradedCompany,Integer> getShares() {
         return companyShares;
     }
 
-    /*
+    /**
      * Returns the number of shares of a specified company as an {@link Integer} held by this portfolio.
-     * @param company
-     * @return the amount nnumber of shares held for a company 'company'
+     *
+     * @param company a TradedCompany
+     * @return the amount Integer number of shares held by the portfolio for a given company.
      */
     public Integer getShares(TradedCompany company) {
         return (companyShares.containsKey(company)) ? companyShares.get(company) : 0;
     }
 
-    /*
-     * Returns a HashMap of all company shares
-     * @return All shares held buy the portfolio
-     */
-    public HashMap<TradedCompany, Integer> getCompanyShares() {
-        return companyShares;
-    }
-
-    /*
-     * Adds a number of shares of the specified company to the portfolio,
-     * And charges the account (cash)
-     * @param company - the company which to add to the portfolio, or update
-     * @param numOfShares - the number of shares of which to add
+    /**
+     * Adds a number of shares of the specified company to the portfolio, and charges the account the current value of
+     * the shares.
      *
-     * Error Prevention: Stop it from puchacing if there aren't the funds
+     * This method does not have any error prevention, for the case in which a portfolio doesn't have the funds to
+     * purchase stock. So, the cash may fall to a negative value.
+     *
+     * @param company the company which to add/update in companyShares.
+     * @param numOfShares an int number of shares of which to add to the company.
      */
     public void buyShares(TradedCompany company, int numOfShares) {
 
@@ -237,12 +207,16 @@ public class Portfolio {
         }
     }
 
-    /*
-     * Removes a number of shares of the specified company to the portfolio
-     * @param company - the company which to add to the portfolio, or update
-     * @param numOfShares - the number of shares of which to add
+    /**
+     * Removes a number of shares of the specified company to the portfolio.
+     *
+     * @param company - the company which to add to the portfolio, or update.
+     * @param numOfShares - the number of shares of which to add.
+     *
+     * @exception IllegalArgumentException if attempting to sell more shares than that held by the portfolio.
+     * @exception IllegalArgumentException if attempting to sell shares for a company that is not held by the portfolio.
      */
-    public void sellShares(TradedCompany company, int numOfShares) throws Exception {
+    public void sellShares(TradedCompany company, int numOfShares) throws IllegalArgumentException {
         // If the company shares exist in the Portfolio
         if (companyShares.containsKey(company)) {
 
@@ -256,40 +230,46 @@ public class Portfolio {
                 companyShares.replace(company,total);                       // Remove Shares
 
             } else {
-                throw new Exception(String.format("Attempting to sell more Shares than that held of the company %s",company.getName()));
+                throw new IllegalArgumentException(String.format("Attempting to sell more Shares than that held of the company %s",company.getName()));
             }
 
         } else {
-            throw new Exception(String.format("No shares held for the company %s",company.getName()));
+            throw new IllegalArgumentException(String.format("No shares held for the company %s",company.getName()));
         }
     }
 
-    /*
-     * Returns the amount of cash in the portfolio
-     * @return the amount of cash held by portfolio
+    /**
+     * Returns the amount of cash in the portfolio.
+     *
+     * @return a double, representing the amount of cash held by portfolio.
      */
     public double getCash() { return cash; }
 
-    /*
-     * Adds an x amount of cash to the portfolio
+    /**
+     * Adds the given amount of cash to the portfolio.
+     *
+     * @param cash a double, representing an amount of cash.
      */
-    public void addCash(double x) { cash += x; }
+    public void addCash(double cash) { this.cash += cash; }
 
-    /*
-     * Removes an x amount of cash from the portfolio
+    /**
+     * Removes an the given amount of cash from the portfolio's cash.
+     *
+     * @param cash a double
      */
-    public void removeCash(double x) {
+    public void removeCash(double cash) {
         // Ensure can't remove more cash than profile holds
-        if (x <= cash ) {
-            cash -= x;
-        }
+        this.cash -= cash;
+
     }
 
-    /*
-     * Returns the total cash value of the portfolio.
-     * This includes the total amount of cash held in addition to
-     * the value of each share at the time the method is called.
-     * @return the total value of a Portfolio
+    /**
+     * Returns the total value of the portfolio, as a double.
+     *
+     * This includes the total amount of cash held in addition to the value of each share at the time the method is
+     * called.
+     *
+     * @return a double.
      */
     public double getValue() {
         // The total amount of money
