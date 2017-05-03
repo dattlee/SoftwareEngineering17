@@ -57,7 +57,7 @@ public class TradingExchange {
     public void newRandTrader(Portfolio client){
         ++ traderIds;
         String id = "" + traderIds;
-        allTraders.add(new RandomTraderSgl(id, this, client));
+        allTraders.add(new RandomTrader(id, this, client));
     }
 
     public void sellShares(Portfolio client, TradedCompany company, Integer shares){
@@ -87,7 +87,7 @@ public class TradingExchange {
     }
 
 
-    public ArrayList<TradedCompany> getAllCompanies() {
+    public ArrayList<TradedCompany> getAllAvailableCompanies() {
         return allCompanies;
     }
 
@@ -229,5 +229,16 @@ public class TradingExchange {
     }
 
 
+    public ArrayList<Trader> getAllTraders() {
+        return allTraders;
+    }
 
+    public ArrayList<TradedCompany> getAllCompanies() {
+        ArrayList<TradedCompany> allComps = new ArrayList<>();
+        for (HashMap.Entry<TradedCompany,Orders> company:exchange.entrySet()) {
+            allComps.add(company.getKey());
+        }
+
+        return allCompanies;
+    }
 }

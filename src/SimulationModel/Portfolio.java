@@ -255,7 +255,7 @@ public class Portfolio {
     /**
      * Removes an the given amount of cash from the portfolio's cash.
      *
-     * @param cash a double,
+     * @param cash a double
      */
     public void removeCash(double cash) {
         // Ensure can't remove more cash than profile holds
