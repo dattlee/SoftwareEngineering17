@@ -105,11 +105,11 @@ public class tester {
         elStock[0] = new Pair(tata, 5000);
         elStock[1] = new Pair(mtm, 1000);
 
-        Portfolio al = new Portfolio("al", alStock);
-        Portfolio bo = new Portfolio("bo", boStock);
-        Portfolio cat = new Portfolio("cat", catStock);
-        Portfolio doug = new Portfolio("doug", dougStock);
-        Portfolio el = new Portfolio("el", elStock);
+        Portfolio al = new Portfolio("al", alStock, (double)100);
+        Portfolio bo = new Portfolio("bo", boStock, (double)1000);
+        Portfolio cat = new Portfolio("cat", catStock, (double)2000);
+        Portfolio doug = new Portfolio("doug", dougStock, (double)1000);
+        Portfolio el = new Portfolio("el", elStock, (double) 10000);
 
         ArrayList<TradedCompany> all = new ArrayList<>();
         all.add(google);
@@ -124,10 +124,6 @@ public class tester {
         london.newRandTrader(doug);
         london.newRandTrader(el);
 
-
-
-
-
         System.out.println();
         System.out.println();
         System.out.println();
@@ -137,10 +133,6 @@ public class tester {
         System.out.println();
         System.out.println();
         System.out.println();
-
-
-
-
 
         london.act();
         double[] a = london.allStockValues();
@@ -160,7 +152,7 @@ public class tester {
 
 
 
-        for(int j = 0; j<10000; j++) {
+        for(int j = 0; j<100; j++) {
             london.act();
             a = london.allStockValues();
 
