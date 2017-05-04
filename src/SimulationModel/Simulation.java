@@ -15,11 +15,24 @@ import java.util.ArrayList;
  */
 public class Simulation {
 
+	/* **************************************************
+     *
+     *                  Fields
+     *
+     ****************************************************/
 	private TradingExchange exchange;
 	protected CsvImport import1;
 	protected Clock clock;
+
+	/* **************************************************
+     *
+     *                  Constructors
+     *
+     ****************************************************/
 	/**
-	 * This constructs the stock market simulation
+	 * Constructor  that initiates new instance of CsvImport using file paths to data already existent within the
+	 * project, data is then processed by the CsvImport object and passed to a new instance of trading exchange through
+	 * its params.
 	 */
 	public Simulation(){
 		try {
@@ -31,7 +44,28 @@ public class Simulation {
 
 		clock = new Clock(0,0,this.exchange);
 	}
+	/**
+	 * Constructor  that initiates new instance of CsvImport and uses the file path strings provided through the params,
+	 * data is then processed by the CsvImport object and passed to a new instance of trading exchange through the params.
+	 *
+	 * @param tradedCompanyCsvFilePath file path to traded company .csv file
+	 * @param portfolioCsvFilePath file path to portfolio .csv file
+	 */
+	public Simulation(String tradedCompanyCsvFilePath, String portfolioCsvFilePath){
+		try {
+			this.import1 = new CsvImport(tradedCompanyCsvFilePath,portfolioCsvFilePath);
+		} catch (FileNotFoundException e) {
+			System.out.println("Files not found");
+		}
+		this.exchange = new TradingExchange(import1.getTradedCompanies(), import1.getPortfolios());
 
+	}
+
+	/* **************************************************
+	 *
+	 *                  Methods
+	 *
+	 ****************************************************/
 	//Gets a traded company (necessary to get all traded companies)
 	public ArrayList<TradedCompany> getAllTradedCompanies(){
 		return exchange.getAllCompanies();
