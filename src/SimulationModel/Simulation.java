@@ -29,6 +29,7 @@ public class Simulation {
 		}
 		this.exchange = new TradingExchange(import1.getTradedCompanies(), import1.getPortfolios());
 
+		clock = new Clock(0,0,this.exchange);
 	}
 
 	//Gets a traded company (necessary to get all traded companies)
