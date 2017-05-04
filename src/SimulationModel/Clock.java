@@ -242,7 +242,7 @@ public class Clock {
                 trading.act();
             }
             runCount++;
-            System.out.print("ran " + runCount + " amount of times\n");
+            //System.out.print("ran " + runCount + " amount of times\n");
             minuteIncrement(incrementMinutes);
         }
     }

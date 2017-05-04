@@ -166,8 +166,10 @@ public class Portfolio {
     }
 
     /**
-     * Returns a {@link HashMap}<{@link TradedCompany},{@link Integer} of all Traded Companies and the number of shares
+     * Returns a {@link HashMap}{@literal <{@link TradedCompany},{@link Integer}>} of all Traded Companies and the number of shares
      * of each.
+     *
+     * @return A HashMap
      */
     public HashMap<TradedCompany,Integer> getShares() {
         return companyShares;
@@ -221,7 +223,7 @@ public class Portfolio {
         if (companyShares.containsKey(company)) {
 
             // If the number of shares you wish to sell are held by the account
-            if (companyShares.get(company) <= numOfShares) {
+            if (companyShares.get(company) >= numOfShares) {
 
                 double credit = company.getShareValue() * numOfShares;
                 // subtract the number of shares from the Portfolio
@@ -255,37 +257,38 @@ public class Portfolio {
     /**
      * Removes an the given amount of cash from the portfolio's cash.
      *
-     * @param cash a double
+     * @param cash A double units depend on the smallest denomination of the stock market.
      */
     public void removeCash(double cash) {
-        // Ensure can't remove more cash than profile holds
         this.cash -= cash;
 
     }
 
     /**
-     * Returns the total value of the portfolio, as a double.
+     * Returns the value of all shares held by the Portfolio.
+     *
+     * @return A double representing money.
+     */
+    public double getTotalSharesValue() {
+//        System.out.printf("Portfolio: Returning the total value of all shares held by %s.\n",name);
+        double total = 0;
+        for(HashMap.Entry<TradedCompany,Integer> company:companyShares.entrySet()){
+            total += company.getKey().getShareValue() * company.getValue();
+        }
+        return total;
+    }
+
+    /**
+     * Returns the total value of the portfolio, as a double.<br><br>
      *
      * This includes the total amount of cash held in addition to the value of each share at the time the method is
      * called.
      *
-     * @return a double.
+     * @return A double.
      */
     public double getValue() {
-        // The total amount of money
-        double total = 0;
-
-        // for each item multiply the number of shares by their value and add it to the total
-        for (HashMap.Entry<TradedCompany, Integer> entry : companyShares.entrySet()) {
-            TradedCompany company = entry.getKey();
-            Integer shares = entry.getValue();
-            total += shares * company.getShareValue();
-        }
-
-        // add held cash
-        total += getCash();
-
-        return total;
+//        System.out.printf("Portfolio: Returning the total value of the portfolio held by %s.\n",name);
+        return getCash()+getTotalSharesValue();
     }
 
 }

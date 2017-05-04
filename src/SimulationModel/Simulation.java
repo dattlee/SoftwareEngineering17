@@ -56,7 +56,8 @@ public class Simulation {
 	//Feel free to give these different names but let me know so I can tweak things
 
 	/**
-	 * Method to call the runClock method within clock object which handles all trading
+	 * Method to call the runClock method within clock object which handles all trading.
+	 *
 	 * @param days amount of days to run simulation for
 	 */
 	public void runXSteps(int days){

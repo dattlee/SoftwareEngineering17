@@ -15,8 +15,8 @@ public abstract class Trader {
      *
      ****************************************************/
 
-    private String ID;
-    private TradingExchange exchange;
+    protected String ID;
+    protected TradingExchange exchange;
 
     /* **************************************************
      *

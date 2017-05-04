@@ -76,7 +76,8 @@ public class TradedCompany {
      * @return the share value after determining new value
      */
     public double increaseShareValue(int excessDemand) {
-        shareValue += ((double)excessDemand/sharesIssued)*shareValue;
+        shareValue += (((double)excessDemand/sharesIssued)*shareValue);
+        System.out.printf("TradedCompany: Increasing the share value of %s by %s",name, (((double)excessDemand/sharesIssued)*shareValue));
         if (shareValue < 1) {
             shareValue = 0;
         }

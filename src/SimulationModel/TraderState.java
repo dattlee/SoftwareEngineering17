@@ -1,33 +1,33 @@
 package SimulationModel;
 
 /**
- *  A Random Trader my have 1 of 3 states in any 15 minute period:
- *
- *  BALANCED
- *      Buys stocks using between 0% - 1% of it's available cash assets
- *      Sells stocks valued between 0% - 1% of it's total portfolio value
- *
- *  AGGSELLER (Aggressive Seller)
- *      Buys stocks using between 0% - 0.5% of it's available cash assets
- *      Sells stocks valued between 0% - 2% of it's total portfolio value
- *
- *  AGGBUYER (Aggressive Buyer)
- *      Buys stocks using between 0% - 2% of it's available cash assets
- *      Sells stocks valued between 0% - 0.5% of it's total portfolio value
- *
- *
- *  Furthermore, at the end of each 15 minute period there is a chance that the state of a trader
- *  will swap from one to another, this is determined by the current state based on these probabilities:
- *
- *  BALANCED
- *      seller(40%), balanced(60%), buyer(0%)
- *
- *  AGGSELLER
- *      seller(10%), balanced(80%), buyer(10%)
- *
- *  AGGBUYER
- *      seller(0%), balanced(70%), buyer(30%)
- *
+ *  A Random Trader may have 1 of 3 states in any 15 minute cylce:<br>
+ *<br>
+ *  BALANCED<br>
+ *      Buys stocks using between 0% - 1% of it's available cash assets<br>
+ *      Sells stocks valued between 0% - 1% of it's total portfolio value<br>
+ *<br>
+ *  AGGSELLER (Aggressive Seller)<br>
+ *      Buys stocks using between 0% - 0.5% of it's available cash assets<br>
+ *      Sells stocks valued between 0% - 2% of it's total portfolio value<br>
+ *<br>
+ *  AGGBUYER (Aggressive Buyer)<br>
+ *      Buys stocks using between 0% - 2% of it's available cash assets<br>
+ *      Sells stocks valued between 0% - 0.5% of it's total portfolio value<br>
+ *<br>
+ *<br>
+ *  Furthermore, at the end of each 15 minute period there is a chance that the state of a trader<br>
+ *  will swap from one to another, this is determined by the current state based on these probabilities:<br>
+ *<br>
+ *  BALANCED<br>
+ *      seller(40%), balanced(60%), buyer(0%)<br>
+ *<br>
+ *  AGGSELLER<br>
+ *      seller(10%), balanced(80%), buyer(10%)<br>
+ *<br>
+ *  AGGBUYER<br>
+ *      seller(0%), balanced(70%), buyer(30%)<br>
+ *<br>
  * @version 1.0
  * @author Dattlee ¯\_(ツ)_/¯
  */

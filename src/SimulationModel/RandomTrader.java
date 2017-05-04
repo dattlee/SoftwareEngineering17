@@ -1,12 +1,11 @@
 package SimulationModel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import dattlee.usefuls.Pair;
+
+import java.util.*;
 
 /**
- * This Class holds the is is represents a random trader on the stock market that manages a Portfolio for a client. Each
+ * This Class represents a random trader on the stock market that manages a Portfolio for a client. Each
  * random trader created in this class is only capable of managing the affairs of one client.
  *
  * The manner in which a Random Trader manages a Portfolio differs depending on the current state. The state of a
@@ -42,6 +41,7 @@ public class RandomTrader extends Trader {
      */
     public RandomTrader(String ID, TradingExchange exchange) {
         super(ID, exchange);
+        System.out.printf("RandomTrader: Creating a new Random Trader with ID %s.\n",ID);
         currentState = TraderState.BALANCED;
     }
 
@@ -57,6 +57,7 @@ public class RandomTrader extends Trader {
      */
     public RandomTrader(String ID, TradingExchange exchange, Portfolio portfolio) {
         super(ID, exchange);
+        System.out.printf("RandomTrader: Creating a new Random Trader with ID %s, assigned to %s.\n",ID,portfolio.getName());
         currentState = TraderState.BALANCED;
         client = portfolio;
     }
@@ -75,6 +76,7 @@ public class RandomTrader extends Trader {
      * @exception Exception if a Trader is already responsible for a portfolio.
      */
     public void addPortfolio(Portfolio portfolio) throws Exception {
+        System.out.printf("RandomTrader: Adding the portfolio of %s for Trader (ID %s) to manage.\n",portfolio.getName(),ID);
         if(this.client == null){
             this.client = portfolio;
         } else {
@@ -88,6 +90,7 @@ public class RandomTrader extends Trader {
      * @exception Exception if the trader is not currently managing a portfolio.
      */
     public void removePortfolio() throws Exception {
+        System.out.printf("RandomTrader: Removing the portfolio of %s from Trader (ID %s)'s management.\n",client.getName(),ID);
         if(this.client == null){
             throw new Exception("There is no portfolio assigned to this trader.");
         } else {
@@ -104,13 +107,17 @@ public class RandomTrader extends Trader {
      */
     @Override
     public void act() {
+        System.out.printf("RandomTrader: Trader (ID %s) starting to make purchases and sales.\n",ID);
 
         if(client.isLiquidate()) {
             sellAllStock();
         }else {
 
             // buy something
-            TradedCompany dontSell = buyStock();
+            HashMap<String,TradedCompany> dontSell = new HashMap<>();
+            for (Pair<TradedCompany,Integer> p:buyStock()) {
+                dontSell.put(p.getFirst().getName(),p.getFirst());
+            }
 
             // sell something, remember you cant sell something your buying. that's just pointless.
             sellStock(dontSell);
@@ -133,7 +140,7 @@ public class RandomTrader extends Trader {
      * Method used by a Trader to sell of a clients stock when they have asked for stocks to be liquidated.
      */
     private void sellAllStock(){
-
+        System.out.printf("RandomTrader: Trader (ID %s) selling all stock for %s.\n",ID,client.getName());
         for (HashMap.Entry<TradedCompany, Integer> entry : client.getShares().entrySet())
         {
             super.getExchange().sellShares(client, entry.getKey(),entry.getValue());
@@ -145,61 +152,78 @@ public class RandomTrader extends Trader {
      *      - Searches from all the available company stocks
      *      - Purchase the Maximum amount of stock from one company that a portfolio can afford.
      */
-    private TradedCompany buyStock() {
-        // choose a company stock
-        ArrayList<TradedCompany> allCompanies = super.getExchange().getAllAvailableCompanies();
-        int picked = new Random().nextInt(allCompanies.size());
-        TradedCompany chosen = allCompanies.get(picked);
+    private ArrayList<Pair<TradedCompany,Integer>> buyStock() {
+        System.out.printf("RandomTrader: Trader (ID %s), offering to buy stock on TradingExchange for %s.\n",ID,client.getName());
 
-        // choose number of shares
+        // Get Available company stocks
+        ArrayList<TradedCompany> allCompanies = exchange.getAllAvailableCompanies();
+        Collections.shuffle(allCompanies);
+
+        // Get the max expenditure
         double buyingPercentage = currentState.getBuyPerc() * Math.random();
-        double maxPurchPrice = client.getValue() * buyingPercentage;
-        if(maxPurchPrice>client.getCash()){
-            maxPurchPrice = client.getCash();
-        }
-        int shares2buy = (int)(maxPurchPrice/chosen.getShareValue());                 // maximum number of shares the client can afford, int wrapping rounds down
+        double maxPurchPrice = client.getCash() * buyingPercentage;
+//        if(maxPurchPrice>client.getCash()){
+//            maxPurchPrice = client.getCash();
+//        }
 
-        // make the offer to the market the stock
-        super.getExchange().buyShares(client,chosen,shares2buy);
-        return chosen;
+        // List of Shares to buy
+        ArrayList<Pair<TradedCompany,Integer>> buying = new ArrayList<>();
+
+        for(TradedCompany company:allCompanies){                    // for each available company
+            double shareVal = company.getShareValue();                  // get the share value
+            if(shareVal < maxPurchPrice){                               // if they have enough money
+                int noShares = (int)(maxPurchPrice/shareVal);               // bid for x shares
+                maxPurchPrice -= noShares*shareVal;                         // subtract the cost from money availble for this round
+                buying.add(new Pair<>(company,noShares));                   // add shares to the buying list
+            }
+        }
+
+        // Make orders to exchange
+        exchange.buyShares(client,buying);
+
+        return buying;
 
     }
 
     /**
      * Sell as much stock up to a maximum from company that is available on the stockmarket.
-     * EXCEPT for a given company 'dontSell'.
+     *
+     * EXCEPT for a companies already puchasing stock for.
      */
-    private void sellStock(TradedCompany dontSell) {
-        // choose a company stock
-        ArrayList<TradedCompany> allCompanies = new ArrayList<>();                                  // choose from share the client has
+    private void sellStock(HashMap<String,TradedCompany> dontSell) {
+        System.out.printf("RandomTrader: Trader (ID %s), offering to sell stock on TradingExchange for %s.\n",ID,client.getName());
 
+        // The full list of Company stocks availabile
+        ArrayList<TradedCompany> allCompanies = new ArrayList<>();                                  // choose from share the client has
         for(Map.Entry<TradedCompany,Integer> comp : client.getShares().entrySet()){
-            if (comp.getKey().equals(dontSell)){
-                System.out.println("already buying this item");
-            } else {
+            TradedCompany company = comp.getKey();
+            if (!company.equals(dontSell.get(company.getName()))){
                 allCompanies.add(comp.getKey());
             }
         }
 
+        Collections.shuffle(allCompanies);
 
-        if(allCompanies.size()>0) { // prevent trying to buy when there is no stock
+        double sellPercentage = currentState.getSellPerc() * Math.random();
+        double maxSellPrice = client.getTotalSharesValue() * sellPercentage;
 
-            int picked = new Random().nextInt(allCompanies.size());
-            TradedCompany chosen = allCompanies.get(picked);
+        // List of Shares to buy
+        ArrayList<Pair<TradedCompany,Integer>> selling = new ArrayList<>();
 
-            // choose number of shares
-            double sellPercentage = currentState.getSellPerc() * Math.random();
-            double maxSellPrice = client.getValue() * sellPercentage;
-
-            if (maxSellPrice >= chosen.getShareValue()) {
-                int numberSelling = (int) (maxSellPrice / chosen.getShareValue());
-                super.getExchange().sellShares(client, chosen, numberSelling);                                   // offer shares to market
-            } else {
-                System.out.println("cant afford to by stock this time round");
+        for(TradedCompany company:allCompanies){                    // for each available company
+            double shareVal = company.getShareValue();                  // get the share value
+            if(shareVal < maxSellPrice){                               // if they have enough money
+                int noShares = (int)(maxSellPrice/shareVal);               // bid for x shares
+                if (noShares>client.getShares(company)){
+                    noShares = client.getShares(company);
+                }
+                maxSellPrice -= noShares*shareVal;                         // subtract the cost from money availble for this round
+                selling.add(new Pair<>(company,noShares));                   // add shares to the buying list
             }
-        } else {
-            System.out.println("no companies to buy shares in");
         }
+
+        // Make orders to exchange
+        exchange.sellShares(client,selling);
 
     }
 
