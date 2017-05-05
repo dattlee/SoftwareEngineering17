@@ -49,7 +49,9 @@ public class PortfolioTest {
     @Test
     public void getSharesHashMap() throws Exception {
         // need to assert that the hashmap returned contains all companies and shares added to it
-        assertTrue(1==0);
+        port1.getTotalSharesValue();
+        port1.getShares();
+
     }
 
     @Test

@@ -42,27 +42,27 @@ public class OverallTester {
             System.out.print(value+" ");
         }
 
-        example.runXSteps(11000);
+        example.runXSteps(20);
         System.out.println();
         System.out.println();
         System.out.println();
 
-
-        for(int j = 0; j<allsize; j++) {
-            values[j] = all.get(j).getValue();
-            names[j] = all.get(j).getName();
-        }
-
-        for(String name:names){
-            System.out.print(name+" ");
-        }
-
-        System.out.println("what");
-
-        for(double value:values) {
-            System.out.print(value+" ");
-        }
-        System.out.println("again");
+//
+//        for(int j = 0; j<allsize; j++) {
+//            values[j] = all.get(j).getValue();
+//            names[j] = all.get(j).getName();
+//        }
+//
+//        for(String name:names){
+//            System.out.print(name+" ");
+//        }
+//
+//        System.out.println("what");
+//
+//        for(double value:values) {
+//            System.out.print(value+" ");
+//        }
+//        System.out.println("again");
 
 
     }

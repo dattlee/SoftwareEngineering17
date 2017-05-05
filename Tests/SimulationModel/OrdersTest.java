@@ -17,6 +17,7 @@ public class OrdersTest {
     TradingExchange london;
     TradedCompany google, unilever, tata, mtm;
     Portfolio al, bo, cat, doug, el;
+    Orders one;
 
     @Before
     public void setUp() throws Exception {
@@ -64,45 +65,144 @@ public class OrdersTest {
         london.newRandTrader(doug);
         london.newRandTrader(el);
 
+
+        one = new Orders();
+
     }
 
     @Test
     public void buy() throws Exception {
+        // Check that Orders is empty
+        assert(one.getClientsBuying().size() == 0);
+        assert(one.getClientsSelling().size() == 0);
+        assert(one.getDemand() == 0);
+        assert(one.getSupply() == 0);
+
+        one.buy(al, 2);
+
+        // checks only buying has incremented
+        assert(one.getClientsBuying().size() == 1);
+        assert(one.getClientsSelling().size() == 0);
+        assert(one.getDemand() == 2);
+        assert(one.getSupply() == 0);
+
 
     }
 
     @Test
     public void sell() throws Exception {
+        // Check that Orders is empty
+        assert(one.getClientsBuying().size() == 0);
+        assert(one.getClientsSelling().size() == 0);
+        assert(one.getDemand() == 0);
+        assert(one.getSupply() == 0);
+
+        one.sell(al, 2);
+
+        // checks only selling has incremented
+        assert(one.getClientsBuying().size() == 0);
+        assert(one.getClientsSelling().size() == 1);
+        assert(one.getDemand() == 0);
+        assert(one.getSupply() == 2);
 
     }
 
     @Test
     public void testReset() throws Exception {
+        one.buy(al, 2);
+        one.sell(cat,10);
+
+        // checks only buying has incremented
+        assert(one.getClientsBuying().size() == 1);
+        assert(one.getClientsSelling().size() == 1);
+        assert(one.getDemand() == 2);
+        assert(one.getSupply() == 10);
+
+        one.reset();
+
+        // checks only buying has incremented
+        assert(one.getClientsBuying().size() == 0);
+        assert(one.getClientsSelling().size() == 0);
+        assert(one.getDemand() == 0);
+        assert(one.getSupply() == 0);
+
 
     }
 
     @Test
     public void testGetClientsBuying() throws Exception {
+        // Check that Orders is empty
+        assert(one.getClientsBuying().size() == 0);
+
+        one.buy(al, 2);
+        one.buy(cat,10);
+
+        // checks only buying has incremented
+        assert(one.getClientsBuying().size() == 2);
+
+        Pair<Portfolio,Integer> a  = one.getClientsBuying().get(0);
+        Pair<Portfolio,Integer> b  = one.getClientsBuying().get(1);
+
+        assert(a.getFirst().getName().equals("al"));
+        assert(a.getSecond().intValue() == 2);
+        assert(b.getFirst().equals(cat));
+        assert(b.getSecond().intValue() == 10);
+
 
     }
 
     @Test
     public void testGetDemand() throws Exception {
+        // Check that Orders is empty
+        assert(one.getDemand() == 0);
 
+        one.buy(al, 2);
+        one.buy(cat,10);
+
+        // checks only buying has incremented
+        assert(one.getDemand() == 12);
     }
 
     @Test
     public void testGetClientsSelling() throws Exception {
+        // Check that Orders is empty
+        assert(one.getClientsSelling().size() == 0);
 
+        one.sell(al, 2);
+        one.sell(cat,10);
+
+        // checks only buying has incremented
+        assert(one.getClientsSelling().size() == 2);
+
+        Pair<Portfolio,Integer> a  = one.getClientsSelling().get(0);
+        Pair<Portfolio,Integer> b  = one.getClientsSelling().get(1);
+
+        assert(a.getFirst().getName().equals("al"));
+        assert(a.getSecond().intValue() == 2);
+        assert(b.getFirst().equals(cat));
+        assert(b.getSecond().intValue() == 10);
     }
 
     @Test
     public void testGetSupply() throws Exception {
+        // Check that Orders is empty
+        assert(one.getSupply() == 0);
 
+        one.sell(al, 2);
+        one.sell(cat,10);
+
+        // checks only buying has incremented
+        assert(one.getSupply() == 12);
     }
 
     @Test
     public void testExcess() throws Exception {
+        one.sell(al,30);
+        one.buy(cat,40);
+        assert(one.excess() == 10);
+
+        one.sell(al,40);
+        assert(one.excess() ==-30);
 
     }
 }
