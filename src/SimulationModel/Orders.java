@@ -47,7 +47,7 @@ public class Orders {
      * The initial demand and supply is set to 0.
      */
     public Orders(){
-//        System.out.println("Orders: Creating a new Orders object.");
+        if(Log.debug){System.out.println("Orders: Creating a new Orders object.");}
         clientsBuying = new ArrayList<>();
         demand = 0;
         clientsSelling = new ArrayList<>();
@@ -89,7 +89,7 @@ public class Orders {
      * To be called at the end of every cycle. It sets all of the orders to 0 and resets the supply and demand.
      */
     public void reset(){
-//        System.out.println("Orders: Resetting all orders to 0.");
+        if(Log.debug){System.out.println("Orders: Resetting all orders to 0.");}
         clientsBuying.clear();
         demand = 0;
         clientsSelling.clear();
@@ -103,7 +103,7 @@ public class Orders {
      * @return ArrayList of Pairs.
      */
     public ArrayList<Pair<Portfolio, Integer>> getClientsBuying() {
-//        System.out.println("Orders: Returning list of clients buying stocks.");
+        if(Log.debug){System.out.println("Orders: Returning list of clients buying stocks.");}
         return clientsBuying;
     }
 
@@ -112,13 +112,13 @@ public class Orders {
      * @return the number of shares requested as an int.
      */
     public int getDemand() {
-//        System.out.println("Orders: Returning demand for stock");
+        if(Log.debug){System.out.println("Orders: Returning demand for stock");}
         return demand;
     }
 
 
     public ArrayList<Pair<Portfolio, Integer>> getClientsSelling() {
-//        System.out.println("Orders: Returning list of clients selling stocks.");
+        if(Log.debug){System.out.println("Orders: Returning list of clients selling stocks.");}
         return clientsSelling;
     }
 
@@ -127,7 +127,7 @@ public class Orders {
      * @return the number of shares offered as an int.
      */
     public int getSupply() {
-        System.out.println("Orders: Returning supply of stocks.");
+        if(Log.debug){System.out.println("Orders: Returning supply of stocks.");}
         return supply;
     }
 
@@ -140,7 +140,7 @@ public class Orders {
      * @return the difference as an int.
      */
     public int excess(){
-//        System.out.printf("Orders: Returning exess as %s.\n",demand-supply);
+        if(Log.debug){System.out.printf("Orders: Returning exess as %s.\n",demand-supply);}
         return demand - supply;
     }
 }
