@@ -68,7 +68,7 @@ public class Orders {
      * @param shares the number of shares a client wishes to buy.
      */
     public void buy(Portfolio client, Integer shares){
-//        System.out.printf("Orders: Making an offer to buy %s shares on behalf of %s.\n", shares, client.getName());
+        if(Log.debug){System.out.printf("Orders: Making an offer to buy %s shares on behalf of %s.\n", shares, client.getName());}
         clientsBuying.add(new Pair<>(client, shares));
         demand += (int) shares;
     }
@@ -80,7 +80,7 @@ public class Orders {
      * @param shares the number of shares a client wishes to sell.
      */
     public void sell(Portfolio client, Integer shares){
-//        System.out.printf("Orders: Making an offer to sell %s shares on behalf of %s.\n", shares, client.getName());
+        if(Log.debug){System.out.printf("Orders: Making an offer to sell %s shares on behalf of %s.\n", shares, client.getName());}
         clientsSelling.add(new Pair<>(client, shares));
         supply += (int) shares;
     }
