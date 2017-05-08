@@ -1,6 +1,7 @@
 package SimulationModel;
 
 import dattlee.usefuls.Pair;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -11,6 +12,53 @@ import java.util.ArrayList;
  *
  */
 public class tester {
+
+    TradedCompany google,unilever,tata,mtm;
+    Portfolio al, bo, cat, doug, el;
+    TradingExchange london;
+
+    @Before
+    public void setUp() throws Exception {
+        google = new TradedCompany("google", ShareType.HITECH, 10000, 100);
+        unilever = new TradedCompany("unilever", ShareType.FOOD, 20000, 50);
+        tata = new TradedCompany("tataSteel", ShareType.HARD, 10000, 30);
+        mtm = new TradedCompany("mtm", ShareType.PROPERTY, 3000, 10);
+
+        Pair<TradedCompany, Integer>[] alStock = new Pair[2];
+        alStock[0] = new Pair(google, 10000);
+        alStock[1] = new Pair(unilever, 10000);
+        Pair<TradedCompany, Integer>[] boStock = new Pair[1];
+        boStock[0] = new Pair(unilever, 10000);
+        Pair<TradedCompany, Integer>[] catStock = new Pair[2];
+        catStock[0] = new Pair(tata, 5000);
+        catStock[1] = new Pair(mtm, 1000);
+        Pair<TradedCompany, Integer>[] dougStock = new Pair[1];
+        dougStock[0] = new Pair(mtm, 1000);
+        Pair<TradedCompany, Integer>[] elStock = new Pair[2];
+        elStock[0] = new Pair(tata, 5000);
+        elStock[1] = new Pair(mtm, 1000);
+
+        al = new Portfolio("al", alStock, (double)100);
+        bo = new Portfolio("bo", boStock, (double)1000);
+        cat = new Portfolio("cat", catStock, (double)2000);
+        doug = new Portfolio("doug", dougStock, (double)1000);
+        el = new Portfolio("el", elStock, (double) 10000);
+
+        ArrayList<TradedCompany> all = new ArrayList<>();
+        all.add(google);
+        all.add(unilever);
+        all.add(tata);
+        all.add(mtm);
+
+        london = new TradingExchange(all);
+        london.newRandTrader(al);
+        london.newRandTrader(bo);
+        london.newRandTrader(cat);
+        london.newRandTrader(doug);
+        london.newRandTrader(el);
+
+    }
+
 //
 //    @Test
 //    public void what(){
@@ -86,43 +134,7 @@ public class tester {
 
     @Test
     public void theWholeFuckingThing() {
-        TradedCompany google = new TradedCompany("google", ShareType.HITECH, 10000, 100);
-        TradedCompany unilever = new TradedCompany("unilever", ShareType.FOOD, 20000, 50);
-        TradedCompany tata = new TradedCompany("tataSteel", ShareType.HARD, 10000, 30);
-        TradedCompany mtm = new TradedCompany("mtm", ShareType.PROPERTY, 3000, 10);
 
-        Pair<TradedCompany, Integer>[] alStock = new Pair[2];
-        alStock[0] = new Pair(google, 10000);
-        alStock[1] = new Pair(unilever, 10000);
-        Pair<TradedCompany, Integer>[] boStock = new Pair[1];
-        boStock[0] = new Pair(unilever, 10000);
-        Pair<TradedCompany, Integer>[] catStock = new Pair[2];
-        catStock[0] = new Pair(tata, 5000);
-        catStock[1] = new Pair(mtm, 1000);
-        Pair<TradedCompany, Integer>[] dougStock = new Pair[1];
-        dougStock[0] = new Pair(mtm, 1000);
-        Pair<TradedCompany, Integer>[] elStock = new Pair[2];
-        elStock[0] = new Pair(tata, 5000);
-        elStock[1] = new Pair(mtm, 1000);
-
-        Portfolio al = new Portfolio("al", alStock, (double)100);
-        Portfolio bo = new Portfolio("bo", boStock, (double)1000);
-        Portfolio cat = new Portfolio("cat", catStock, (double)2000);
-        Portfolio doug = new Portfolio("doug", dougStock, (double)1000);
-        Portfolio el = new Portfolio("el", elStock, (double) 10000);
-
-        ArrayList<TradedCompany> all = new ArrayList<>();
-        all.add(google);
-        all.add(unilever);
-        all.add(tata);
-        all.add(mtm);
-
-        TradingExchange london = new TradingExchange(all);
-        london.newRandTrader(al);
-        london.newRandTrader(bo);
-        london.newRandTrader(cat);
-        london.newRandTrader(doug);
-        london.newRandTrader(el);
 
         System.out.println();
         System.out.println();

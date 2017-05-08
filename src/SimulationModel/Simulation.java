@@ -2,6 +2,7 @@ package SimulationModel;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This Class that will run the entire simulation of the Stock Market.
@@ -20,7 +21,7 @@ public class Simulation {
      *                  Fields
      *
      ****************************************************/
-	private TradingExchange exchange;
+	private StockMarket market;
 	protected CsvImport import1;
 	protected Clock clock;
 
@@ -34,16 +35,11 @@ public class Simulation {
 	 * project, data is then processed by the CsvImport object and passed to a new instance of trading exchange through
 	 * its params.
 	 */
-	public Simulation(){
-		try {
-			this.import1 = new CsvImport("InitialDataV2.csv", "InitialDataV2portfolio.csv");
-		} catch (FileNotFoundException e) {
-			System.out.println("Files not found");
-		}
-		this.exchange = new TradingExchange(import1.getTradedCompanies(), import1.getPortfolios());
-
-		clock = new Clock(0,0,this.exchange);
+	public Simulation(List<TradedCompany> companies){
+		clock = new Clock(0,0);
+		market = new StockMarket(companies);
 	}
+
 	/**
 	 * Constructor  that initiates new instance of CsvImport and uses the file path strings provided through the params,
 	 * data is then processed by the CsvImport object and passed to a new instance of trading exchange through the params.
@@ -51,13 +47,14 @@ public class Simulation {
 	 * @param tradedCompanyCsvFilePath file path to traded company .csv file
 	 * @param portfolioCsvFilePath file path to portfolio .csv file
 	 */
-	public Simulation(String tradedCompanyCsvFilePath, String portfolioCsvFilePath){
+	public Simulation(String tradedCompanyCsvFilePath, String portfolioCsvFilePath) throws FileNotFoundException{
 		try {
 			this.import1 = new CsvImport(tradedCompanyCsvFilePath,portfolioCsvFilePath);
 		} catch (FileNotFoundException e) {
-			System.out.println("Files not found");
+			throw new FileNotFoundException("Files not found");
 		}
-		this.exchange = new TradingExchange(import1.getTradedCompanies(), import1.getPortfolios());
+
+		this.market = new StockMarket(import1.getTradedCompanies(), import1.getPortfolios());
 
 	}
 
@@ -68,23 +65,18 @@ public class Simulation {
 	 ****************************************************/
 	//Gets a traded company (necessary to get all traded companies)
 	public ArrayList<TradedCompany> getAllTradedCompanies(){
-		return exchange.getAllCompanies();
+		return market.getAllTradedCompanies();
 	}
 
 
 	public TradedCompany getCompany(String name) throws Exception {
-		for (TradedCompany company: getAllTradedCompanies()) {
-			if (company.getName() == name) {
-				return company;
-			}
-		}
-		throw new Exception("No company called "+name);
+		return market.getCompany(name);
 	}
 
 
 	//Gets a trader (necessary to get all traders)
 	public ArrayList<Trader> getAllTraders(){
-		return exchange.getAllTraders();
+		return market.getAllTraders();
 	}
 
 	//Feel free to give these different names but let me know so I can tweak things
@@ -95,7 +87,7 @@ public class Simulation {
 	 * @param days amount of days to run simulation for
 	 */
 	public void runXSteps(int days){
-		clock.runClock(days, this.exchange);
+		clock.runClock(days, market);
 	}
 
 	/**
@@ -109,4 +101,7 @@ public class Simulation {
 	}
 
 
+	public ArrayList<Portfolio> getAllPortfolios() {
+		return market.getAllPortfolios();
+	}
 }

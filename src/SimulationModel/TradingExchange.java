@@ -102,7 +102,9 @@ public class TradingExchange {
     /**
      * Create a new RandomTrader to manage the Portfolio of a client.
      *
-     * @param client a Portfolio
+     * @param client A Portfolio for a client.
+     *
+     * @return The Random Trader Created for the Client.
      */
     public RandomTrader newRandTrader(Portfolio client){
         if(Log.debug){System.out.printf("TradingExchange: Constructing new RandomTrader for Protfolio, named %s.\n", client.getName());}

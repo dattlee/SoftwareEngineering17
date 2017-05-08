@@ -78,6 +78,8 @@ public class PortfolioTest {
     /**
      * Need to assert:
      * 1. When buying shares you add the number of shares bought to the
+     *
+     * @throws Exception _
      */
     @Test
     public void buyShares() throws Exception {
@@ -91,6 +93,8 @@ public class PortfolioTest {
      * Asserts
      * 1. Can't sell more shares than owned for a company
      * 2. Can't sell shares for a company not owned
+     *
+     * @throws Exception _
      */
     @Test
     public void sellShares() throws Exception {
@@ -105,6 +109,8 @@ public class PortfolioTest {
      * Need to assert:
      * 1. Can't sell more shares than owned for a company
      * 2. Can't sell shares for a company not owned
+     *
+     * @throws Exception _
      */
     @Test
     public void getCash() throws Exception {
@@ -115,6 +121,8 @@ public class PortfolioTest {
     /**
      * Asserts:
      * 1. Cash total increases by exactly amount given
+     *
+     * @throws Exception _
      */
     @Test
     public void addCash() throws Exception {
@@ -127,6 +135,8 @@ public class PortfolioTest {
     /**
      * Need to assert:
      * 1. Cash total decreases by exactly taken given
+     *
+     * @throws Exception _
      */
     @Test
     public void removeCash() throws Exception {
@@ -139,6 +149,8 @@ public class PortfolioTest {
      * Assert:
      * 1. Cash is added to value of portfolio
      * 2. Shares are added to the value of the portfolio
+     *
+     * @throws Exception _
      */
     @Test
     public void getValue() throws Exception {

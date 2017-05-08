@@ -5,7 +5,7 @@ import dattlee.usefuls.Pair;
 import java.util.*;
 
 /**
- * This Class represents a random trader on the stock market that manages a Portfolio for a client. Each
+ * This Class represents a Random Trader on the stock market that manages a Portfolio for a client. Each
  * random trader created in this class is only capable of managing the affairs of one client.
  *
  * The manner in which a Random Trader manages a Portfolio differs depending on the current state. The state of a

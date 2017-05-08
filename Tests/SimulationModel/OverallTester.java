@@ -17,7 +17,7 @@ public class OverallTester {
 
     @Before
     public void setUp() throws Exception {
-        example = new Simulation();
+        //example = new Simulation();
     }
 
     @Test
@@ -63,6 +63,8 @@ public class OverallTester {
 //            System.out.print(value+" ");
 //        }
 //        System.out.println("again");
+        all = example.getAllTradedCompanies();
+
 
 
     }

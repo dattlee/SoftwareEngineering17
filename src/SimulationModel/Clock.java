@@ -13,7 +13,7 @@ public class Clock {
      *                  Fields
      *
      ****************************************************/
-    protected TradingExchange trading;
+//    protected TradingExchange trading;
     protected int hour;
     protected int minute;
     protected int dayDate;
@@ -41,10 +41,8 @@ public class Clock {
      *
      * @param hour hour of the day to start clock on
      * @param minute minute of the day to start clock on
-     * @param trading trading exchange object
      */
-    public Clock (int hour, int minute, TradingExchange trading) {
-        this.trading = trading;
+    public Clock (int hour, int minute) {
         this.hour = (hour >= 0 && hour < 24) ? hour : 0;
         this.minute = (minute >= 0 && minute < 60) ? minute : 0;
         this.year = 2017;
@@ -68,8 +66,8 @@ public class Clock {
      * @param monthDate month to start
      * @param daysOfTheWeekCounter choose which day of the week
      */
-    public Clock (int hour, int minute, int dayDate, int monthDate, int daysOfTheWeekCounter, TradingExchange trading) {
-        this.trading = trading;
+    public Clock (int hour, int minute, int dayDate, int monthDate, int daysOfTheWeekCounter) {
+//        this.trading = trading;
         this.hour = (hour >= 0 && hour < 24) ? hour : 0;
         this.minute = (minute >= 0 && minute < 60) ? minute : 0;
         this.dayDate = dayDate;
@@ -245,15 +243,15 @@ public class Clock {
      * exchange when it is a valid training day
      *
      * @param numberOfDays int for inputting number of days to run clock
-     * @param trading the trading exchange object to commit act method on
+     * @param market the Stock Market object to commit act method on
      */
-    public void runClock(int numberOfDays, TradingExchange trading){
+    public void runClock(int numberOfDays, StockMarket market){
         int incrementMinutes = 15;
         int numberOfRuns = numberOfDays*24*4;
 
         for (int i = 0; i < numberOfRuns; i++){
             if (canTrade()){
-                trading.act();
+                market.act();
             }
             minuteIncrement(incrementMinutes);
         }

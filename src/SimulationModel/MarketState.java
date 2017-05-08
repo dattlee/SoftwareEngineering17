@@ -7,4 +7,5 @@ package SimulationModel;
  * @version 1.0
  */
 public enum MarketState {
+    STABLE,BULL,BEAR,
 }

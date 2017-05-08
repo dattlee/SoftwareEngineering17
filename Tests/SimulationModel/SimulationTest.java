@@ -1,8 +1,7 @@
 package SimulationModel;
 
+import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 /**
  * Created 08/05/2017
@@ -12,9 +11,15 @@ import static org.junit.Assert.*;
  */
 public class SimulationTest {
 
+
+    @Before
+    public void setUp() throws Exception {
+
+
+    }
+
     @Test
     public void testGetAllTradedCompanies() throws Exception {
-
     }
 
     @Test
