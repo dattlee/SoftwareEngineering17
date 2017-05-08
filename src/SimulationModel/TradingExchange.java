@@ -24,6 +24,7 @@ public class TradingExchange {
     private HashMap<TradedCompany,Orders> exchange;
     private ArrayList<Trader> allTraders;
     private int traderIds;
+    private MarketState marketState;
 
     /* **************************************************
      *
@@ -44,6 +45,7 @@ public class TradingExchange {
         exchange = new HashMap<>();
         allTraders = new ArrayList<>();
         traderIds = 0;
+        marketState = MarketState.STABLE;
 
         // All companies
         Iterator it = companies.iterator();
@@ -69,6 +71,7 @@ public class TradingExchange {
         exchange = new HashMap<>();
         allTraders = new ArrayList<>();
         traderIds = 0;
+        marketState = MarketState.STABLE;
 
         // Add all Companies to Trading Exchange
         Iterator it = companies.iterator();
@@ -101,15 +104,26 @@ public class TradingExchange {
      *
      * @param client a Portfolio
      */
-    public void newRandTrader(Portfolio client){
-//        System.out.printf("TradingExchange: Constructing new RandomTrader for Protfolio, named %s.\n", client.getName());
+    public RandomTrader newRandTrader(Portfolio client){
+        if(Log.debug){System.out.printf("TradingExchange: Constructing new RandomTrader for Protfolio, named %s.\n", client.getName());}
         ++ traderIds;
         String id = "" + traderIds;
-        allTraders.add(new RandomTrader(id, this, client));
+        RandomTrader rt = new RandomTrader(id, this, client);
+        allTraders.add(rt);
+        return rt;
+    }
+
+    public IntelligentTrader newIntelTrader(Portfolio client){
+        if(Log.debug){System.out.printf("TradingExchange: Constructing new Intelligent Trader for Protfolio, named %s.\n", client.getName());}
+        ++ traderIds;
+        String id = "" + traderIds;
+        IntelligentTrader intelli = new IntelligentTrader(id, this, client);
+        allTraders.add(intelli);
+        return intelli;
     }
 
     public void sellShares(Portfolio client, TradedCompany company, Integer shares){
-//        System.out.printf("TradingExchange: Selling %s shares for %s on behalf of %s.\n",shares,company.getName(),client.getName());
+        if(Log.debug){System.out.printf("TradingExchange: Selling %s shares for %s on behalf of %s.\n",shares,company.getName(),client.getName());}
         exchange.get(company).sell(client,shares);
     }
 
@@ -120,7 +134,7 @@ public class TradingExchange {
      * @param sharesOffered a Pair of a TradedCompany and an Integer
      */
     public void sellShares(Portfolio client, ArrayList<Pair<TradedCompany,Integer>> sharesOffered){
-//        System.out.printf("TradingExchange: Selling a selection of %s shares on behalf of %s.\n", sharesOffered.size(),client.getName());
+        if(Log.debug){System.out.printf("TradingExchange: Selling a selection of %s shares on behalf of %s.\n", sharesOffered.size(),client.getName());}
         for(Pair<TradedCompany,Integer> order: sharesOffered) {
             exchange.get(order.getFirst()).sell(client, order.getSecond());
         }
@@ -135,7 +149,7 @@ public class TradingExchange {
      * @param shares number of shares to sell
      */
     public void buyShares(Portfolio client, TradedCompany company, Integer shares){
-//        System.out.printf("TradingExchange: Selling %s shares for %s on behalf of %s.\n",shares,company.getName(),client.getName());
+        if(Log.debug){System.out.printf("TradingExchange: Selling %s shares for %s on behalf of %s.\n",shares,company.getName(),client.getName());}
         exchange.get(company).buy(client,shares);
     }
 
@@ -146,7 +160,7 @@ public class TradingExchange {
      * @param sharesWanted a Pair of a TradedCompany and an Integer
      */
     public void buyShares(Portfolio client, ArrayList<Pair<TradedCompany,Integer>> sharesWanted){
-//        System.out.printf("TradingExchange: Buying a selection of %s shares on behalf of %s.\n", sharesWanted.size(),client.getName());
+        if(Log.debug){System.out.printf("TradingExchange: Buying a selection of %s shares on behalf of %s.\n", sharesWanted.size(),client.getName());}
         for(Pair<TradedCompany,Integer> order: sharesWanted) {
             exchange.get(order.getFirst()).buy(client, order.getSecond());
         }
@@ -156,7 +170,7 @@ public class TradingExchange {
      * Used to resets all of the orders each cycle.
      */
     private void reset(){
-//        System.out.println("TradingExchange: Resetting all Orders to 0");
+        if(Log.debug){System.out.println("TradingExchange: Resetting all Orders to 0");}
         for (HashMap.Entry<TradedCompany, Orders> entry : exchange.entrySet())
         {
             entry.getValue().reset();
@@ -165,7 +179,7 @@ public class TradingExchange {
 
 
     public ArrayList<TradedCompany> getAllAvailableCompanies() {
-//        System.out.printf("TradingExchange: Returning %s available companies for sale.\n",allCompanies.size());
+        if(Log.debug){System.out.printf("TradingExchange: Returning %s available companies for sale.\n",allCompanies.size());}
         return allCompanies;
     }
 
@@ -174,7 +188,7 @@ public class TradingExchange {
      * and then completes all possible transactions.
      */
     public void act(){
-        System.out.println("TradingExchange: Running a cycle.");
+        if(Log.debug){System.out.println("TradingExchange: Running a cycle.");}
         //_________________________
         //   traders make orders
         //_________________________
@@ -213,6 +227,10 @@ public class TradingExchange {
 
             // reset all orders
             orders.reset();
+
+            //Update market State and history
+
+
         }
 
     }
@@ -225,7 +243,7 @@ public class TradingExchange {
      * @param orders The Orders to complete.
      */
     private void equaldemand(TradedCompany company, Orders orders){
-//        System.out.printf("TradingExchange: Completing all orders for %s as demand = supply.\n",company.getName());
+        if(Log.debug){System.out.printf("TradingExchange: Completing all orders for %s as demand = supply.\n",company.getName());}
         // Complete all Sales
         for(Pair<Portfolio,Integer> order : orders.getClientsBuying()){
             order.getFirst().buyShares(company,order.getSecond());
@@ -248,7 +266,7 @@ public class TradingExchange {
      * @param orders The Orders to complete.
      */
     private void overdemand(TradedCompany company, Orders orders) {
-//        System.out.printf("TradingExchange: Completing some orders for %s as demand > supply.\n",company.getName());
+        if(Log.debug){System.out.printf("TradingExchange: Completing some orders for %s as demand > supply.\n",company.getName());}
         int demand = orders.getDemand();
         int supply = orders.getSupply();
         double distribution = (double) supply/demand;                       // this should always be a number between 0 and 1
@@ -291,7 +309,7 @@ public class TradingExchange {
      * @param orders The Orders to complete.
      */
     private void oversupply(TradedCompany company, Orders orders) {
-//        System.out.printf("TradingExchange: Completing some orders for %s as demand < supply.\n",company.getName());
+        if(Log.debug){System.out.printf("TradingExchange: Completing some orders for %s as demand < supply.\n",company.getName());}
 
         int demand = orders.getDemand();
         int supply = orders.getSupply();
@@ -329,7 +347,7 @@ public class TradingExchange {
      * @return double array of the values of each company in no particular order.
      */
     public double[] allStockValues(){
-//        System.out.println("TradingExchange: Returning the values of all the shares on the Trading Exchange.");
+        if(Log.debug){System.out.println("TradingExchange: Returning the values of all the shares on the Trading Exchange.");}
         Set<Map.Entry<TradedCompany,Orders>> all = exchange.entrySet();
         double[] values = new double[all.size()];
         int i = 0;
@@ -346,7 +364,7 @@ public class TradingExchange {
      * @return an ArrayList of Traders
      */
     public ArrayList<Trader> getAllTraders() {
-//        System.out.println("TradingExchange: Returning all Traders on the Trading Exchange");
+        if(Log.debug){System.out.println("TradingExchange: Returning all Traders on the Trading Exchange");}
         return allTraders;
     }
 
@@ -356,7 +374,7 @@ public class TradingExchange {
      * @return ArrayList of Traded companies
      */
     public ArrayList<TradedCompany> getAllCompanies() {
-//        System.out.println("TradingExchange: Returning all Companies on the Trading Exchange.");
+        if(Log.debug){System.out.println("TradingExchange: Returning all Companies on the Trading Exchange.");}
         ArrayList<TradedCompany> allComps = new ArrayList<>();
         for (HashMap.Entry<TradedCompany,Orders> company:exchange.entrySet()) {
             allComps.add(company.getKey());
@@ -364,4 +382,5 @@ public class TradingExchange {
 
         return allCompanies;
     }
+
 }

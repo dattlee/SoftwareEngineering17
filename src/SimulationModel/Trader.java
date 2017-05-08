@@ -1,5 +1,7 @@
 package SimulationModel;
 
+import java.util.ArrayList;
+
 /**
  * This is an Abstract class that defines the key attributes of any Trader in the Wolf and Gecko Simulation. It allows
  * for the expansion of more complex traders, with new behaviours.
@@ -57,4 +59,11 @@ public abstract class Trader {
     public TradingExchange getExchange() {
         return exchange;
     }
+
+    /**
+     * Returns a Collection of all the Portfolios the Trader manages.
+     *
+     * @return A Collection of all Portfolios
+     */
+    abstract public ArrayList<Portfolio> getAllClients();
 }

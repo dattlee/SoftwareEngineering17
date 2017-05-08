@@ -41,7 +41,7 @@ public class RandomTrader extends Trader {
      */
     public RandomTrader(String ID, TradingExchange exchange) {
         super(ID, exchange);
-        System.out.printf("RandomTrader: Creating a new Random Trader with ID %s.\n",ID);
+        if(Log.debug){System.out.printf("RandomTrader: Creating a new Random Trader with ID %s.\n",ID);}
         currentState = TraderState.BALANCED;
     }
 
@@ -57,7 +57,7 @@ public class RandomTrader extends Trader {
      */
     public RandomTrader(String ID, TradingExchange exchange, Portfolio portfolio) {
         super(ID, exchange);
-        System.out.printf("RandomTrader: Creating a new Random Trader with ID %s, assigned to %s.\n",ID,portfolio.getName());
+        if(Log.debug){System.out.printf("RandomTrader: Creating a new Random Trader with ID %s, assigned to %s.\n",ID,portfolio.getName());}
         currentState = TraderState.BALANCED;
         client = portfolio;
     }
@@ -76,11 +76,11 @@ public class RandomTrader extends Trader {
      * @exception Exception if a Trader is already responsible for a portfolio.
      */
     public void addPortfolio(Portfolio portfolio) throws Exception {
-        System.out.printf("RandomTrader: Adding the portfolio of %s for Trader (ID %s) to manage.\n",portfolio.getName(),ID);
+        if(Log.debug){System.out.printf("RandomTrader: Adding the portfolio of %s for Trader (ID %s) to manage.\n",portfolio.getName(),ID);}
         if(this.client == null){
             this.client = portfolio;
         } else {
-            throw new Exception("There is already a portfolio assigned to this trader.");
+            throw new Exception("RandomTrader: There is already a portfolio assigned to this trader.");
         }
     }
 
@@ -90,7 +90,7 @@ public class RandomTrader extends Trader {
      * @exception Exception if the trader is not currently managing a portfolio.
      */
     public void removePortfolio() throws Exception {
-        System.out.printf("RandomTrader: Removing the portfolio of %s from Trader (ID %s)'s management.\n",client.getName(),ID);
+        if(Log.debug){System.out.printf("RandomTrader: Removing the portfolio of %s from Trader (ID %s)'s management.\n",client.getName(),ID);}
         if(this.client == null){
             throw new Exception("There is no portfolio assigned to this trader.");
         } else {
@@ -107,7 +107,7 @@ public class RandomTrader extends Trader {
      */
     @Override
     public void act() {
-        System.out.printf("RandomTrader: Trader (ID %s) starting to make purchases and sales.\n",ID);
+        if(Log.debug){ System.out.printf("RandomTrader: Trader (ID %s) starting to make purchases and sales.\n",ID);}
 
         if(client.isLiquidate()) {
             sellAllStock();
@@ -140,7 +140,7 @@ public class RandomTrader extends Trader {
      * Method used by a Trader to sell of a clients stock when they have asked for stocks to be liquidated.
      */
     private void sellAllStock(){
-        System.out.printf("RandomTrader: Trader (ID %s) selling all stock for %s.\n",ID,client.getName());
+        if(Log.debug){ System.out.printf("RandomTrader: Trader (ID %s) selling all stock for %s.\n",ID,client.getName());}
         for (HashMap.Entry<TradedCompany, Integer> entry : client.getShares().entrySet())
         {
             super.getExchange().sellShares(client, entry.getKey(),entry.getValue());
@@ -153,7 +153,7 @@ public class RandomTrader extends Trader {
      *      - Purchase the Maximum amount of stock from one company that a portfolio can afford.
      */
     private ArrayList<Pair<TradedCompany,Integer>> buyStock() {
-        System.out.printf("RandomTrader: Trader (ID %s), offering to buy stock on TradingExchange for %s.\n",ID,client.getName());
+        if(Log.debug){ System.out.printf("RandomTrader: Trader (ID %s), offering to buy stock on TradingExchange for %s.\n",ID,client.getName());}
 
         // Get Available company stocks
         ArrayList<TradedCompany> allCompanies = exchange.getAllAvailableCompanies();
@@ -191,7 +191,7 @@ public class RandomTrader extends Trader {
      * EXCEPT for a companies already puchasing stock for.
      */
     private void sellStock(HashMap<String,TradedCompany> dontSell) {
-        System.out.printf("RandomTrader: Trader (ID %s), offering to sell stock on TradingExchange for %s.\n",ID,client.getName());
+        if(Log.debug){System.out.printf("RandomTrader: Trader (ID %s), offering to sell stock on TradingExchange for %s.\n",ID,client.getName());}
 
         // The full list of Company stocks availabile
         ArrayList<TradedCompany> allCompanies = new ArrayList<>();                                  // choose from share the client has
@@ -226,6 +226,14 @@ public class RandomTrader extends Trader {
         exchange.sellShares(client,selling);
 
     }
+
+    @Override
+    public ArrayList<Portfolio> getAllClients() {
+        ArrayList<Portfolio> a = new ArrayList<>();
+        if(!(client == null)){a.add(client);}
+        return a;
+    }
+
 
 
 }

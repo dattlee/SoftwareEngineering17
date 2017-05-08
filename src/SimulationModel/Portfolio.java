@@ -48,6 +48,7 @@ public class Portfolio {
      * @param name the name, or unique identification.
      */
     public Portfolio(String name){
+        if(Log.debug){System.out.printf("Portfolio: Creating portfolio with the name %s.\n",name);}
         this.name = name;
         risk = RiskLevel.LOW;
         companyShares = new HashMap<>();
@@ -64,6 +65,7 @@ public class Portfolio {
      * @param stocks an array of Pairs, containing Traded companies and an Integer number of shares.
      */
     public Portfolio(String name, Pair<TradedCompany,Integer>[] stocks){
+        if(Log.debug){System.out.printf("Portfolio: Creating portfolio with the name %s with %s stocks.\n",name,stocks.length);}
         this.name = name;
         risk = RiskLevel.LOW;
         companyShares = new HashMap<>();
@@ -89,6 +91,7 @@ public class Portfolio {
      * @param cashHolding a double, representing the amount of cash the portfolio starts with.
      */
     public Portfolio(String name, Pair<TradedCompany,Integer>[] stocks, Double cashHolding){
+        if(Log.debug){System.out.printf("Portfolio: Creating portfolio with the name %s with %s stocks and $%s.\n",name,stocks.length,cashHolding);}
         this.name = name;
         risk = RiskLevel.LOW;
         companyShares = new HashMap<>();
@@ -117,6 +120,7 @@ public class Portfolio {
      * @param liquidate a boolean.
      */
     public void setLiquidate(boolean liquidate) {
+        if(Log.debug){System.out.printf("Portfolio: Changing %s's liquidation status.\n",name);}
         this.liquidate = liquidate;
     }
 
@@ -126,6 +130,7 @@ public class Portfolio {
      * @return a boolean, true if the client wants to sell all stocks in a cycle.
      */
     public boolean isLiquidate() {
+        if(Log.debug){System.out.printf("Portfolio: Returning %s's liquidation status.\n",name);}
         return liquidate;
     }
 
@@ -135,6 +140,7 @@ public class Portfolio {
      * @return the name of the client.
      */
     public String getName() {
+        if(Log.debug){System.out.printf("Portfolio: Returning %s's name.\n",name);}
         return name;
     }
 
@@ -144,6 +150,7 @@ public class Portfolio {
      * @param name a String, name of the client.
      */
     public void setName(String name) {
+        if(Log.debug){System.out.printf("Portfolio: Changing %s's name to %s.\n",this.name,name);}
         this.name = name;
     }
 
@@ -153,6 +160,7 @@ public class Portfolio {
      * @return RiskLevel enum
      */
     public RiskLevel getRisk(){
+        if(Log.debug){System.out.printf("Portfolio: Returning %s's risk status.\n",name);}
         return risk;
     }
 
@@ -162,6 +170,7 @@ public class Portfolio {
      * @param risk an enum RiskLevel.
      */
     public void setRisk(RiskLevel risk){
+        if(Log.debug){System.out.printf("Portfolio: Changing %s's risk status.\n",name);}
         this.risk = risk;
     }
 
@@ -172,6 +181,7 @@ public class Portfolio {
      * @return A HashMap
      */
     public HashMap<TradedCompany,Integer> getShares() {
+        if(Log.debug){System.out.printf("Portfolio: Returning all of the shares for %s.\n",name);}
         return companyShares;
     }
 
@@ -182,6 +192,7 @@ public class Portfolio {
      * @return the amount Integer number of shares held by the portfolio for a given company.
      */
     public Integer getShares(TradedCompany company) {
+        if(Log.debug){System.out.printf("Portfolio: Returning number of shares from %s in %s portfolio.\n",name,company.getName());}
         return (companyShares.containsKey(company)) ? companyShares.get(company) : 0;
     }
 
@@ -196,6 +207,7 @@ public class Portfolio {
      * @param numOfShares an int number of shares of which to add to the company.
      */
     public void buyShares(TradedCompany company, int numOfShares) {
+        if(Log.debug){System.out.printf("Portfolio: Buying %s shares for %s in %s.\n",numOfShares,name,company.getName());}
 
         double cost = numOfShares * company.getShareValue();
 
@@ -219,6 +231,8 @@ public class Portfolio {
      * @exception IllegalArgumentException if attempting to sell shares for a company that is not held by the portfolio.
      */
     public void sellShares(TradedCompany company, int numOfShares) throws IllegalArgumentException {
+        if(Log.debug){System.out.printf("Portfolio: Selling %s shares for %s in %s.\n",numOfShares,name,company.getName());}
+
         // If the company shares exist in the Portfolio
         if (companyShares.containsKey(company)) {
 
@@ -245,14 +259,19 @@ public class Portfolio {
      *
      * @return a double, representing the amount of cash held by portfolio.
      */
-    public double getCash() { return cash; }
+    public double getCash() {
+        if(Log.debug){System.out.printf("Portfolio: Returning $%s held buy %s.\n",cash,name);}
+        return cash; }
 
     /**
      * Adds the given amount of cash to the portfolio.
      *
      * @param cash a double, representing an amount of cash.
      */
-    public void addCash(double cash) { this.cash += cash; }
+    public void addCash(double cash) {
+        if(Log.debug){System.out.printf("Portfolio: Adding $%s to %s's profile.\n",cash,name);}
+        this.cash += cash; }
+
 
     /**
      * Removes an the given amount of cash from the portfolio's cash.
@@ -260,8 +279,8 @@ public class Portfolio {
      * @param cash A double units depend on the smallest denomination of the stock market.
      */
     public void removeCash(double cash) {
+        if(Log.debug){System.out.printf("Portfolio: Charging $%s to %s.\n",cash,name);}
         this.cash -= cash;
-
     }
 
     /**
@@ -270,7 +289,7 @@ public class Portfolio {
      * @return A double representing money.
      */
     public double getTotalSharesValue() {
-//        System.out.printf("Portfolio: Returning the total value of all shares held by %s.\n",name);
+        if(Log.debug){System.out.printf("Portfolio: Returning the total value of all shares held by %s.\n",name);}
         double total = 0;
         for(HashMap.Entry<TradedCompany,Integer> company:companyShares.entrySet()){
             total += company.getKey().getShareValue() * company.getValue();
@@ -287,7 +306,7 @@ public class Portfolio {
      * @return A double.
      */
     public double getValue() {
-//        System.out.printf("Portfolio: Returning the total value of the portfolio held by %s.\n",name);
+        if(Log.debug){System.out.printf("Portfolio: Returning the total value of the portfolio held by %s.\n",name);}
         return getCash()+getTotalSharesValue();
     }
 

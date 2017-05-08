@@ -7,5 +7,5 @@ package SimulationModel;
  * @version 1.0
  */
 public class Log {
-    public static final boolean debug = true;
+    public static final boolean debug = false;
 }
