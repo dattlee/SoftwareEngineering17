@@ -188,7 +188,7 @@ public class RandomTrader extends Trader {
     /**
      * Sell as much stock up to a maximum from company that is available on the stockmarket.
      *
-     * EXCEPT for a companies already puchasing stock for.
+     * EXCEPT for a companies already purchasing stock for.
      */
     private void sellStock(HashMap<String,TradedCompany> dontSell) {
         if(Log.debug){System.out.printf("RandomTrader: Trader (ID %s), offering to sell stock on TradingExchange for %s.\n",ID,client.getName());}

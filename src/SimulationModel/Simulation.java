@@ -9,7 +9,7 @@ import java.util.List;
  *
  * It runs for a total of 365 days.
  * Trading occurs every 15 minutes between 9am and 5pm. Throughout this package we will refer to every 15 minute
- * interval as a cycle
+ * interval as a cycle.
  *
  * @version 1.0
  * @author Dattlee ¯\_(ツ)_/¯
@@ -22,7 +22,6 @@ public class Simulation {
      *
      ****************************************************/
 	private StockMarket market;
-	protected CsvImport import1;
 	protected Clock clock;
 
 	/* **************************************************
@@ -31,30 +30,35 @@ public class Simulation {
      *
      ****************************************************/
 	/**
-	 * Constructor  that initiates new instance of CsvImport using file paths to data already existent within the
-	 * project, data is then processed by the CsvImport object and passed to a new instance of trading exchange through
-	 * its params.
+	 * Constructs a news stock market with 1 trading exchange, and sets the starting date to 00:00:00 1/1/2017.
 	 */
 	public Simulation(List<TradedCompany> companies){
+		if(Log.debug){ System.out.printf("Simulation: Creating a new simulation.\n");}
+
 		clock = new Clock(0,0);
 		market = new StockMarket(companies);
 	}
 
 	/**
-	 * Constructor  that initiates new instance of CsvImport and uses the file path strings provided through the params,
+	 * Constructor that initiates new instance of CsvImport and uses the file path strings provided through the params,
 	 * data is then processed by the CsvImport object and passed to a new instance of trading exchange through the params.
 	 *
 	 * @param tradedCompanyCsvFilePath file path to traded company .csv file
 	 * @param portfolioCsvFilePath file path to portfolio .csv file
 	 */
 	public Simulation(String tradedCompanyCsvFilePath, String portfolioCsvFilePath) throws FileNotFoundException{
+		if(Log.debug){System.out.printf("Simulation: Creating a new simulation with imported data.\n");}
+
+		CsvImport import1;
+
 		try {
-			this.import1 = new CsvImport(tradedCompanyCsvFilePath,portfolioCsvFilePath);
+			import1 = new CsvImport(tradedCompanyCsvFilePath,portfolioCsvFilePath);
 		} catch (FileNotFoundException e) {
 			throw new FileNotFoundException("Files not found");
 		}
 
-		this.market = new StockMarket(import1.getTradedCompanies(), import1.getPortfolios());
+		clock = new Clock(0,0);
+		market = new StockMarket(import1.getTradedCompanies(), import1.getPortfolios());
 
 	}
 
@@ -63,19 +67,38 @@ public class Simulation {
 	 *                  Methods
 	 *
 	 ****************************************************/
-	//Gets a traded company (necessary to get all traded companies)
-	public ArrayList<TradedCompany> getAllTradedCompanies(){
+
+	/**
+	 * Returns an ArrayList of all the companies on the market
+	 *
+	 * @return a List of all the companies on the market
+     */
+	public ArrayList<TradedCompany> getAllTradedCompanies() {
+		if(Log.debug){ System.out.printf("Simulation: Returning all Traded Companies.\n");}
+
 		return market.getAllTradedCompanies();
 	}
 
-
+	/**
+	 * Returns a Traded Company object if there is one on the market with the id name.
+	 *
+	 * @param name the company to search for
+	 * @return the company needed
+	 * @throws Exception if there is no company with the ID name.
+     */
 	public TradedCompany getCompany(String name) throws Exception {
+		if(Log.debug){ System.out.printf("Simulation: Returning Traded Company %s.\n",name); }
+
 		return market.getCompany(name);
 	}
 
 
-	//Gets a trader (necessary to get all traders)
+	/**
+	 * An ArrayList of all the Traders on the market.
+	 * @return
+     */
 	public ArrayList<Trader> getAllTraders(){
+		if(Log.debug){ System.out.printf("Simulation: Returning all Random Traders.\n");}
 		return market.getAllTraders();
 	}
 
@@ -87,6 +110,7 @@ public class Simulation {
 	 * @param days amount of days to run simulation for
 	 */
 	public void runXSteps(int days){
+		if(Log.debug){ System.out.printf("Simulation: Returning all Traded Companies.\n");}
 		clock.runClock(days, market);
 	}
 

@@ -7,7 +7,8 @@ package SimulationModel;
  *      Hard Commodities    - HARD
  *      Property            - PROPERTY
  *
- * Created by Dattlee on 30/03/2017.
+ * @version 1.0
+ * @author Dattlee
  */
 public enum ShareType {
     FOOD,HITECH,HARD,PROPERTY;
