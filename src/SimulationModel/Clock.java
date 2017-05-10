@@ -35,16 +35,13 @@ public class Clock {
      * Constructor initiates clock to start from Monday 1st January, sets time based on ints provided in params and
      * initiates all fields needed to track and update days of the week, date and time.
      *
-     * set hour and day to ints provided in param, set day and month to 1, initiate dayOfTheWeekCounter for tracking
+     * set hour and minute to 00:00, set day and month to 1, initiate dayOfTheWeekCounter for tracking
      * day, set current day string equal to daysOfTheWeek String array element [dayOfTheWeekCounter] and set current
      * month String to allMonths String array element [month-1]
-     *
-     * @param hour hour of the day to start clock on
-     * @param minute minute of the day to start clock on
      */
-    public Clock (int hour, int minute) {
-        this.hour = (hour >= 0 && hour < 24) ? hour : 0;
-        this.minute = (minute >= 0 && minute < 60) ? minute : 0;
+    public Clock () {
+        this.hour = 0;
+        this.minute = 0;
         this.year = 2017;
         dayDate = 1;
         monthDate = 1;
@@ -56,20 +53,18 @@ public class Clock {
     /**
      * Constructor initiates clock to start from Monday 1st January, sets time, day of the month, month and
      *
-     * set hour and day to ints provided in param, set day and month to 1, initiate dayOfTheWeekCounter for tracking
+     * set hour and minute to 00:00, set day and month to 1, initiate dayOfTheWeekCounter for tracking
      * day, set current day string equal to daysOfTheWeek String array element [dayOfTheWeekCounter] and set current
      * month String to allMonths String array element [month-1]
      *
-     * @param hour hour of the day to start clock on
-     * @param minute minute of the day to start clock on
      * @param dayDate day of the month
      * @param monthDate month to start
      * @param daysOfTheWeekCounter choose which day of the week
      */
-    public Clock (int hour, int minute, int dayDate, int monthDate, int daysOfTheWeekCounter) {
+    public Clock (int dayDate, int monthDate, int daysOfTheWeekCounter) {
 //        this.trading = trading;
-        this.hour = (hour >= 0 && hour < 24) ? hour : 0;
-        this.minute = (minute >= 0 && minute < 60) ? minute : 0;
+        this.hour = 0;
+        this.minute = 0;
         this.dayDate = dayDate;
         this.monthDate = monthDate;
         this.year = 2017;

@@ -72,8 +72,8 @@ public class StockMarketTest {
 
 
 
-        Clock clock = new Clock(0,0);
-        clock.runClock(100,market);
+        Clock clock = new Clock();
+        clock.runXDays(100,market);
 
 
 

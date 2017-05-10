@@ -42,7 +42,7 @@ public class OverallTester {
             System.out.print(value+" ");
         }
 
-        example.runXSteps(20);
+        example.runXCycles(20);
         System.out.println();
         System.out.println();
         System.out.println();

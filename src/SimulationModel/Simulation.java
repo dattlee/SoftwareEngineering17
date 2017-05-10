@@ -1,7 +1,6 @@
 package SimulationModel;
 
 import java.io.FileNotFoundException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class Simulation {
 	public Simulation(List<TradedCompany> companies){
 		if(Log.debug){ System.out.printf("Simulation: Creating a new simulation.\n");}
 
-		clock = new Clock(0,0);
+		clock = new Clock();
 		market = new StockMarket(companies);
 	}
 
@@ -58,7 +57,7 @@ public class Simulation {
 			throw new FileNotFoundException("Files not found");
 		}
 
-		clock = new Clock(0,0);
+		clock = new Clock();
 		market = new StockMarket(import1.getTradedCompanies(), import1.getPortfolios());
 
 	}
