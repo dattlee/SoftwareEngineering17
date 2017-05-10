@@ -23,7 +23,7 @@ public class ClockTest {
     public void minuteIncrementTest(){
 
         // 1 minute increment test
-        clock = new Clock ();
+        clock = new Clock();
         clock.minuteIncrement(540);
         clock.minuteIncrement(1);
         assertEquals(clock.hour, 9);
