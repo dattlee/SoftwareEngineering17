@@ -110,9 +110,19 @@ public class Simulation {
 	 *
 	 * @param days amount of days to run simulation for
 	 */
-	public void runXSteps(int days){
+	public void runXDays(int days){
 		if(Log.debug){ System.out.printf("Simulation: Returning all Traded Companies.\n");}
-		clock.runClock(days, market);
+		clock.runXDays(days, market);
+	}
+
+	/**
+	 * Method to call the runClock method within clock object which handles all trading.
+	 *
+	 * @param numOfCycles number of 15 minute intervals to run
+	 */
+	public void runXCycles(int numOfCycles){
+		if(Log.debug){ System.out.printf("Simulation: Returning all Traded Companies.\n");}
+		clock.runXCycles(numOfCycles, market);
 	}
 
 	/**

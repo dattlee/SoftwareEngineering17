@@ -245,11 +245,29 @@ public class Clock {
      * @param numberOfDays int for inputting number of days to run clock
      * @param market the Stock Market object to commit act method on
      */
-    public void runClock(int numberOfDays, StockMarket market){
+    public void runXDays(int numberOfDays, StockMarket market){
         int incrementMinutes = 15;
         int numberOfRuns = numberOfDays*24*4;
 
         for (int i = 0; i < numberOfRuns; i++){
+            if (canTrade()){
+                market.act();
+            }
+            minuteIncrement(incrementMinutes);
+        }
+    }
+
+    /**
+     * for loop that runs for x amount of days and calls the act method on trading
+     * exchange when it is a valid training day
+     *
+     * @param numOfCycles int for inputting number of 15 minute intervals to run clock
+     * @param market the Stock Market object to commit act method on
+     */
+    public void runXCycles(int numOfCycles, StockMarket market){
+        int incrementMinutes = 15;
+
+        for (int i = 0; i < numOfCycles; i++){
             if (canTrade()){
                 market.act();
             }
