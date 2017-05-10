@@ -105,7 +105,7 @@ public class Clock {
     }
 
     /**
-     * Increments minutes passed by 1, if minutes == 60 then calculate hours past, adds to int hour and
+     * Increments minutes passed by param, if minutes == 60 then calculate hours past, adds to int hour and
      * resets counter to 0 and increments hour
      * if hour == 24 then resets hour counter to 0 and called dayPassed() method
      *
@@ -253,7 +253,7 @@ public class Clock {
     }
 
     /**
-     * for loop that runs for x amount of days and calls the act method on trading
+     * for loop that runs for x amount of cycles and calls the act method on trading
      * exchange when it is a valid training day
      *
      * @param numOfCycles int for inputting number of 15 minute intervals to run clock
