@@ -135,11 +135,8 @@ public class CsvImport {
             String[] clientPortfolio = this.portfolios.get(i); // get string array found in row(i) from portfolio arraylist
             clientName = clientPortfolio[0]; // client name equals element 0 in array clientPortfolio
             //System.out.println(clientName);
-            cashHoldings = Double.parseDouble(clientPortfolio[1]); // cash holdings equals element 1 in array clientPortfolio
-            //System.out.println(cashHoldings);
+            cashHoldings = (Double.parseDouble(clientPortfolio[1])*100); // cash holdings equals element 1 in array clientPortfolio
             for (int j = 2; j < clientPortfolio.length; j++) { // from element 2 (start of company names) to size of string array
-                //System.out.println(getTradedCompany(companyNames[j].replaceAll("\\s", "")));
-                //System.out.println(Integer.parseInt(clientPortfolio[j]));
                 clientPairs[j - 2] = new Pair(getTradedCompany(this.companyNames[j]), Integer.parseInt(clientPortfolio[j]));
             }
             allPortfolios.add(new Portfolio(clientName, clientPairs, cashHoldings));

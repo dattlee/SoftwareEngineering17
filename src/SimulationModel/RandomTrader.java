@@ -99,6 +99,26 @@ public class RandomTrader extends Trader {
     }
 
     /**
+     * Returns the portfolio value of the portfolio held by the trader
+     *
+     * @return the client portfolio value associated with the trader
+     */
+    @Override
+    public Double getPortfolioValue(){
+        return this.client.getValue();
+    }
+
+    /**
+     * Returns the client name held by the trader
+     *
+     * @return the client name
+     */
+    @Override
+    public String getClientName(){
+        return client.getName();
+    }
+
+    /**
      * This method is called during every cycle. It follows this process:
      *      - If the client wants to liquidate all of their stock, offer all stock on the market
      *      - Else

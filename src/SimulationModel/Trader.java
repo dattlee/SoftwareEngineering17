@@ -44,6 +44,16 @@ public abstract class Trader {
     public abstract void act();
 
     /**
+     * This is a method that is used for returning the portfolio value found within the trader object
+     */
+    public abstract Double getPortfolioValue();
+
+    /**
+     * This is a method that is used for returning the clients name
+     */
+    public abstract String getClientName();
+
+    /**
      * Returns the unique ID assined to the Trader
      * @return a String identification
      */

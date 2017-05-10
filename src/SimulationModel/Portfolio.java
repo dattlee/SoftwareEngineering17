@@ -307,7 +307,7 @@ public class Portfolio {
      */
     public double getValue() {
         if(Log.debug){System.out.printf("Portfolio: Returning the total value of the portfolio held by %s.\n",name);}
-        return getCash()+getTotalSharesValue();
+        return getCash() + getTotalSharesValue();
     }
 
 }

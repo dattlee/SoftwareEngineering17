@@ -148,6 +148,15 @@ public class StockMarket {
 
     }
 
+    /**
+     * Returns the trading exchange object within stock market
+     *
+     * @return the trading exchange object
+     */
+    public TradingExchange getExchange(){
+        return exchange;
+    }
+
     public void act() {
         exchange.act();
     }

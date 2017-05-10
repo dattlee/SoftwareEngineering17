@@ -64,9 +64,9 @@ public class CsvImportTest {
         assertEquals(ports.get(9).getName(),"Xi Xian");
         assertNotEquals(ports.get(3).getName(),"Norbert DaVinci");
 
-        assertEquals(ports.get(0).getCash(), 100000, 0.000000001);
-        assertEquals(ports.get(5).getCash(), 50000, 0.000000001);
-        assertNotEquals(ports.get(5).getCash(), 51000, 0.000000001);
+        assertEquals(ports.get(0).getCash(), 10000000, 0.000000001);
+        assertEquals(ports.get(5).getCash(), 5000000, 0.000000001);
+        assertNotEquals(ports.get(5).getCash(), 5100000, 0.000000001);
 
         TradedCompany company = import1.getTradedCompany("Pear Computing");
         assertTrue(ports.get(0).getShares(company)== 1505);

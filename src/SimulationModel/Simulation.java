@@ -1,6 +1,7 @@
 package SimulationModel;
 
 import java.io.FileNotFoundException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,7 +124,6 @@ public class Simulation {
 	public String getDate(){
 		return clock.getDate();
 	}
-
 
 	public ArrayList<Portfolio> getAllPortfolios() {
 		return market.getAllPortfolios();
