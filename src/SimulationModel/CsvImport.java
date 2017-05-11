@@ -36,6 +36,10 @@ public class CsvImport {
     String[] companyNames;
     ArrayList<Portfolio> allPortfolios = new ArrayList<>();
 
+    BufferedReader externalEventsBR;
+    ArrayList<String[]> allExternalEvents = new ArrayList<>();
+
+
     /* **************************************************
      *
      *                  Constructors
@@ -68,6 +72,46 @@ public class CsvImport {
 
         try {
             readDataPortfolio(portfolioBR);
+        } catch (IOException e) {
+            System.out.println("Failed to read file");
+        }
+    }
+
+    /**
+     * Set tradedCompanyBR, portfolioBR and externalEventsBR Buffer readers to the .csv string path provided in the constructor param,
+     * run the corresponding methods for processing the .csvs
+     *
+     *
+     * @param companyCSV String of the Traded Company .csv file path
+     * @param portfolioCSV String of the Portfolio .csv file path
+     * @param externalEventsCSV String of the External Events .csv file path
+     *
+     * @exception e throw exception is the .csv file cannot be read
+     */
+    public CsvImport(String companyCSV, String portfolioCSV, String externalEventsCSV) throws FileNotFoundException {
+        this.tradedCompanyBR = new BufferedReader(new FileReader(new File(companyCSV)));
+        this.portfolioBR = new BufferedReader(new FileReader(new File(portfolioCSV)));
+        this.externalEventsBR = new BufferedReader(new FileReader(new File(externalEventsCSV)));
+
+        try {
+            readDataTradedCompanies(tradedCompanyBR);
+        } catch (IOException e) {
+            System.out.println("Failed to read file");
+        }
+
+        // For each entry in tradedCompanies HashMap, add TradedCompany value to allCompanies ArrayList
+        for (HashMap.Entry <String, TradedCompany> entry : tradedCompanies.entrySet()){
+            allCompanies.add(entry.getValue());
+        }
+
+        try {
+            readDataPortfolio(portfolioBR);
+        } catch (IOException e) {
+            System.out.println("Failed to read file");
+        }
+
+        try {
+            readDataExternalEvents(externalEventsBR);
         } catch (IOException e) {
             System.out.println("Failed to read file");
         }
@@ -144,6 +188,19 @@ public class CsvImport {
     }
 
     /**
+     * For each line within the BufferedReader, split the line by ',' into externalEventEntries String array,
+     * put String[] within ArrayList of string[].
+     *
+     * @param externals BufferedReader object pointing to External Events .csv file
+     */
+    public void readDataExternalEvents(BufferedReader externals) throws IOException {
+        while ((line = externals.readLine()) != null) {
+            String[] externalEventEntries = line.split(",");
+            allExternalEvents.add(externalEventEntries);
+        }
+    }
+
+    /**
      * Returns the arraylist containing all traded companies
      * @return arraylist of all traded companies
      */
@@ -157,5 +214,13 @@ public class CsvImport {
      */
     public ArrayList<Portfolio> getPortfolios(){
         return allPortfolios;
+    }
+
+    /**
+     * Returns the arraylist containing all external events
+     * @return arraylist of all external events
+     */
+    public ArrayList<String[]> getExternalEvents(){
+        return allExternalEvents;
     }
 }
