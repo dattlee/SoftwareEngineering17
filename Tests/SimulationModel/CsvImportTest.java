@@ -16,10 +16,11 @@ public class CsvImportTest {
     CsvImport import1;
     ArrayList<Portfolio> ports;
     TradedCompany company;
+    ArrayList<String[]> events;
 
     @Before
     public void setUp() throws Exception {
-        import1 = new CsvImport("InitialDataV2.csv", "InitialDataV2portfolio.csv");
+        import1 = new CsvImport("InitialDataV2.csv", "InitialDataV2portfolio.csv", "ExternalEventData.csv");
     }
 
     /**
@@ -94,5 +95,31 @@ public class CsvImportTest {
         assertTrue(ports.get(0).getShares(company)== 1505);
         assertTrue(ports.get(9).getShares(company)== 8284);
         assertFalse(ports.get(9).getShares(company)== 1);
+    }
+
+    @Test
+    public void readDataExternalEventsTest(){
+        events = import1.allExternalEvents;
+        for (int i = 0; i < events.size(); i++) {
+            String[] test = events.get(i);
+            System.out.println(test[0]);
+            System.out.println(test[1]);
+            System.out.println(test[2]);
+            System.out.println(test[3]);
+            System.out.println(test[4]);
+        }
+        String[] test = events.get(0);
+        assertEquals(test[0], "08.02.2017 09:00");
+        assertEquals(test[1], "2");
+        assertEquals(test[2], "TradedCompany");
+        assertEquals(test[3], "Q1Q tech");
+        assertEquals(test[4], "buy");
+
+        String[] test2 = events.get(6);
+        assertEquals(test2[0], "04.10.2017 09:00");
+        assertEquals(test2[1], "4");
+        assertEquals(test2[2], "ShareType");
+        assertEquals(test2[3], "PROPERTY");
+        assertEquals(test2[4], "buy");
     }
 }

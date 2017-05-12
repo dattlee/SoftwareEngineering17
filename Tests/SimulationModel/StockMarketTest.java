@@ -72,9 +72,8 @@ public class StockMarketTest {
         System.out.println(market.getAllTradedCompanies().size());
 
 
-
-        Clock clock = new Clock(0,0);
-        clock.runClock(1,market);
+        Clock clock = new Clock();
+        clock.runXDays(100,market);
 
         System.out.println();
         System.out.println();

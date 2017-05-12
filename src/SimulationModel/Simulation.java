@@ -1,7 +1,6 @@
 package SimulationModel;
 
 import java.io.FileNotFoundException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class Simulation {
 	public Simulation(List<TradedCompany> companies){
 		if(Log.debug){ System.out.printf("Simulation: Creating a new simulation.\n");}
 
-		clock = new Clock(0,0);
+		clock = new Clock();
 		market = new StockMarket(companies);
 	}
 
@@ -58,7 +57,7 @@ public class Simulation {
 			throw new FileNotFoundException("Files not found");
 		}
 
-		clock = new Clock(0,0);
+		clock = new Clock();
 		market = new StockMarket(import1.getTradedCompanies(), import1.getPortfolios());
 
 	}
@@ -106,13 +105,23 @@ public class Simulation {
 	//Feel free to give these different names but let me know so I can tweak things
 
 	/**
-	 * Method to call the runClock method within clock object which handles all trading.
+	 * Method to call the runXDays method within clock object which handles all trading.
 	 *
 	 * @param days amount of days to run simulation for
 	 */
-	public void runXSteps(int days){
+	public void runXDays(int days){
 		if(Log.debug){ System.out.printf("Simulation: Returning all Traded Companies.\n");}
-		clock.runClock(days, market);
+		clock.runXDays(days, market);
+	}
+
+	/**
+	 * Method to call the runXCycles method within clock object which handles all trading.
+	 *
+	 * @param numOfCycles number of 15 minute intervals to run
+	 */
+	public void runXCycles(int numOfCycles){
+		if(Log.debug){ System.out.printf("Simulation: Returning all Traded Companies.\n");}
+		clock.runXCycles(numOfCycles, market);
 	}
 
 	/**

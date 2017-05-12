@@ -25,6 +25,8 @@ public class Clock {
     protected String[] daysOfTheWeek = {"Monday", "Tuesday", "Wednesday","Thursday", "Friday", "Saturday", "Sunday"};
     protected String[] allMonths = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     protected int[] daysPerMonth = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    protected int EasterSundayDay;
+    protected int EasterSundayMonth;
 
     /* **************************************************
      *
@@ -32,50 +34,48 @@ public class Clock {
      *
      ****************************************************/
     /**
-     * Constructor initiates clock to start from Monday 1st January, sets time based on ints provided in params and
+     * Constructor initiates clock to start from Monday 1st January, calculates Easter Holiday dates for the year and
      * initiates all fields needed to track and update days of the week, date and time.
      *
-     * set hour and day to ints provided in param, set day and month to 1, initiate dayOfTheWeekCounter for tracking
+     * set hour and minute to 00:00, set day and month to 1, initiate dayOfTheWeekCounter for tracking
      * day, set current day string equal to daysOfTheWeek String array element [dayOfTheWeekCounter] and set current
      * month String to allMonths String array element [month-1]
      *
-     * @param hour hour of the day to start clock on
-     * @param minute minute of the day to start clock on
      */
-    public Clock (int hour, int minute) {
-        this.hour = (hour >= 0 && hour < 24) ? hour : 0;
-        this.minute = (minute >= 0 && minute < 60) ? minute : 0;
+    public Clock () {
+        this.hour = 0;
+        this.minute = 0;
         this.year = 2017;
         dayDate = 1;
         monthDate = 1;
         daysOfTheWeekCounter = 6;
         currentDay = daysOfTheWeek[daysOfTheWeekCounter];
         currentMonth = allMonths[monthDate-1];
+        calculateEasterHoliday(this.year);
     }
 
     /**
-     * Constructor initiates clock to start from Monday 1st January, sets time, day of the month, month and
+     * Constructor initiates clock to start from the date provided in params
      *
-     * set hour and day to ints provided in param, set day and month to 1, initiate dayOfTheWeekCounter for tracking
-     * day, set current day string equal to daysOfTheWeek String array element [dayOfTheWeekCounter] and set current
-     * month String to allMonths String array element [month-1]
+     * set hour and minute to 00:00, initiate dayOfTheWeekCounter for tracking day, set current day string equal to
+     * daysOfTheWeek String array element [dayOfTheWeekCounter] and set current month String to allMonths String array
+     * element [month-1]
      *
-     * @param hour hour of the day to start clock on
-     * @param minute minute of the day to start clock on
      * @param dayDate day of the month
      * @param monthDate month to start
      * @param daysOfTheWeekCounter choose which day of the week
      */
-    public Clock (int hour, int minute, int dayDate, int monthDate, int daysOfTheWeekCounter) {
+    public Clock (int dayDate, int monthDate, int daysOfTheWeekCounter) {
 //        this.trading = trading;
-        this.hour = (hour >= 0 && hour < 24) ? hour : 0;
-        this.minute = (minute >= 0 && minute < 60) ? minute : 0;
+        this.hour = 0;
+        this.minute = 0;
         this.dayDate = dayDate;
         this.monthDate = monthDate;
         this.year = 2017;
         this.daysOfTheWeekCounter = daysOfTheWeekCounter;
         currentDay = daysOfTheWeek[daysOfTheWeekCounter];
         currentMonth = allMonths[monthDate-1];
+        calculateEasterHoliday(this.year);
     }
 
     /* **************************************************
@@ -110,7 +110,31 @@ public class Clock {
     }
 
     /**
-     * Increments minutes passed by 1, if minutes == 60 then calculate hours past, adds to int hour and
+     * Method used to calculate easter Sunday date based on the current year, formula obtained from:
+     * https://dzone.com/articles/algorithm-calculating-date
+     */
+    public void calculateEasterHoliday(int year){
+        int Y = year;
+        int a = Y % 19;
+        int b = Y / 100;
+        int c = Y % 100;
+        int d = b / 4;
+        int e = b % 4;
+        int f = (b + 8) / 25;
+        int g = (b - f + 1) / 3;
+        int h = (19 * a + b - d - g + 15) % 30;
+        int i = c / 4;
+        int k = c % 4;
+        int l = (32 + 2 * e + 2 * i - h - k) % 7;
+        int m = (a + 11 * h + 22 * l) / 451;
+        int month = (h + l - 7 * m + 114) / 31;
+        int day = ((h + l - 7 * m + 114) % 31) + 1;
+        this.EasterSundayDay = day;
+        this.EasterSundayMonth = month;
+    }
+
+    /**
+     * Increments minutes passed by param, if minutes == 60 then calculate hours past, adds to int hour and
      * resets counter to 0 and increments hour
      * if hour == 24 then resets hour counter to 0 and called dayPassed() method
      *
@@ -155,6 +179,7 @@ public class Clock {
             if (monthDate > 12){
                 monthDate = 1;
                 year++;
+                calculateEasterHoliday(this.year);
             }
             currentMonth = allMonths[monthDate-1];
         }
@@ -192,13 +217,13 @@ public class Clock {
     }
 
     /**
-     * Returns whether the current date falls on 2017 good Friday/Easter Monday or Christmas/Boxing day
+     * Returns whether the current date falls on good Friday/Easter Monday or Christmas/Boxing day
      *
      * @return a boolean, true if the date is good friday/easter monday or Christmas/Boxing day
      */
     public boolean isPublicHoliday(){
-        if (monthDate == 4){
-            if (dayDate == 14 || dayDate == 17){
+        if (monthDate == EasterSundayMonth){
+            if (dayDate == EasterSundayDay+1 || dayDate == EasterSundayDay-2){
                 return true;
             }
         } else if (monthDate == 12){
@@ -245,11 +270,29 @@ public class Clock {
      * @param numberOfDays int for inputting number of days to run clock
      * @param market the Stock Market object to commit act method on
      */
-    public void runClock(int numberOfDays, StockMarket market){
+    public void runXDays(int numberOfDays, StockMarket market){
         int incrementMinutes = 15;
         int numberOfRuns = numberOfDays*24*4;
 
         for (int i = 0; i < numberOfRuns; i++){
+            if (canTrade()){
+                market.act();
+            }
+            minuteIncrement(incrementMinutes);
+        }
+    }
+
+    /**
+     * for loop that runs for x amount of cycles and calls the act method on trading
+     * exchange when it is a valid training day
+     *
+     * @param numOfCycles int for inputting number of 15 minute intervals to run clock
+     * @param market the Stock Market object to commit act method on
+     */
+    public void runXCycles(int numOfCycles, StockMarket market){
+        int incrementMinutes = 15;
+
+        for (int i = 0; i < numOfCycles; i++){
             if (canTrade()){
                 market.act();
             }
