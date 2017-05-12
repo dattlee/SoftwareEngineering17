@@ -19,6 +19,11 @@ public class ClockTest {
      market = new StockMarket(import1.getTradedCompanies(), import1.getPortfolios());
     }
 
+    /**
+     * Test 1 - checks time has incremented by 1 minute
+     * Test 2 - checks time has incremented by 15 minutes
+     * Test 3 - checks time has incremented by 1 hour
+     */
     @Test
     public void minuteIncrementTest(){
 
@@ -39,6 +44,17 @@ public class ClockTest {
         assertEquals(clock.minute, 16);
     }
 
+    /**
+     * Test 1 - checks date formats into Sunday 01/01/2017 00:00
+     * Test 2 - increment time by 1 day, check day of the week increases and formats into Monday 02/01/2017 00:00
+     * Test 3 - increment time by 1 month, check month increases and formats into Wednesday 01/02/2017 00:00
+     * Test 4 - increments time by 1 year, check year increases and formats into Monday 01/01/2018 00:00
+     * Test 5 - increment time by 159 minutes and check hour increases and minutes equals 59
+     * Test 6 - increment time by 25 hour and check day of the week, day and hour has increased, increment by 47 hours and
+     * check hour, day of the week and day has increased
+     * Test 7 - increment by 1 year and 5 hours and confirm day, day of the week, month, hour and minute increase, increment
+     * by 31 days and check month and day of the week increased
+     */
     @Test
     public void getDateAndDaysPassedTest(){
         // Start date test
@@ -98,6 +114,10 @@ public class ClockTest {
         assertEquals(clock.currentDay,"Thursday");
     }
 
+    /**
+     * Test 1 - check boolean to confirm its Saturday-Sunday
+     * Test 2 - check boolean to confirm if its Monday-Friday
+     */
     @Test
     public void isWeekdayTest(){
 
@@ -110,6 +130,10 @@ public class ClockTest {
         assertEquals(clock.isWeekday(), true);
     }
 
+    /**
+     * Test 1 - check that time is not within 15 minute intervals 00/15/30/45 and boolean returns false
+     * Test 2 - increase time to 15 minute interval and test boolean returns true
+     */
     @Test
     public void fifteenMinuteIntervalTest(){
         clock = new Clock (9,6);
@@ -118,6 +142,14 @@ public class ClockTest {
         assertEquals(clock.fifteenMinuteInterval(), true);
     }
 
+    /**
+     * Test 1 - set date to good Friday (2017) and check if boolean returns true for public holiday, increment by 24
+     * hours and check boolean returns false
+     * Test 2 - set date to easter monday and check if boolean returns true, increment by 24 hours and check boolean
+     * returns false
+     * Test 3 - Set date to christmas and check boolean returns true, increment by 24 hours to boxing day and check
+     * boolean returns true, increment by 24 hours and check boolean returns false for 27/12/2017
+     */
     @Test
     public void isPublicHolidayTest(){
         // Good Friday Test
@@ -141,6 +173,11 @@ public class ClockTest {
         assertEquals(clock.isPublicHoliday(), false);
     }
 
+    /**
+     * Test 1 - set time to 08:00 and check boolean returns false for time being 09:00-16:00, increment to 08:59 and
+     * check boolean still returns false, increment by 1 minute to 09:00 and check boolean returns true, increment by
+     *  6:59 to 15:59 and check boolean still returns true, increment by 1 minute and confirm boolean returns false
+     */
     @Test
     public void isTradingHoursTest(){
         clock = new Clock(8,0);
@@ -155,6 +192,12 @@ public class ClockTest {
         assertEquals(clock.isTradingHours(), false);
     }
 
+    /**
+     * Confirm method that uses all previous booleans can recognise weekends and working hours
+     * Test 1 - check boolean returns false for being able to trade as day is Sunday, increment by 23:59 hours and
+     * confirm boolean returns false for being able to trade as outside of working hours, increment by 1 minute and
+     * confirm being able to trade at 09:00 on a non holiday Monday
+     */
     @Test
     public void canTradeTest(){
         // Sunday
@@ -166,11 +209,5 @@ public class ClockTest {
         //9am Monday
         clock.minuteIncrement(1);
         assertEquals(clock.canTrade(), true);
-    }
-
-    @Test
-    public void runClockTest(){
-        clock = new Clock(0, 0);
-        clock.runClock(2, market);
     }
 }

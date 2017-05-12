@@ -65,25 +65,28 @@ public class StockMarketTest {
         String values = "";
         for(TradedCompany company:market.getAllTradedCompanies()) {
             companies += "" + company.getName().substring(0, 6) + " | ";
-            values += "  " + company.getShareValue() + " |";
+            values += "  " +  (int)company.getShareValue() + " |";
         }
         System.out.println(companies);
         System.out.println(values);
+        System.out.println(market.getAllTradedCompanies().size());
 
 
 
         Clock clock = new Clock(0,0);
-        clock.runClock(100,market);
+        clock.runClock(1,market);
 
-
+        System.out.println();
+        System.out.println();
 
         companies = "";
         values = "";
         for(TradedCompany company:market.getAllTradedCompanies()) {
             companies += "" + company.getName().substring(0, 6) + " | ";
-            values += "  " + company.getShareValue() + " |";
+            values += "  " + (int) company.getShareValue() + " |";
         }
         System.out.println(companies);
         System.out.println(values);
+        System.out.println(market.getAllTradedCompanies().size());
     }
 }
