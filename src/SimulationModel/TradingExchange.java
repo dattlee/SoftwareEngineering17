@@ -39,7 +39,7 @@ public class TradingExchange {
      * @param companies a List of Traded Company objects
      */
     public TradingExchange(List<TradedCompany> companies){
-        System.out.printf("TradingExchange: Constructing TradingExchange with %s companies.\n", companies.size());
+        if(Log.debug) {System.out.printf("TradingExchange: Constructing TradingExchange with %s companies.\n", companies.size());}
 
         allCompanies = new ArrayList<>();
         exchange = new HashMap<>();
@@ -65,7 +65,7 @@ public class TradingExchange {
      * @param clients A {@link List} of Portfolio objects
      */
     public TradingExchange(List<TradedCompany> companies, List<Portfolio> clients){
-        System.out.printf("TradingExchange: Constructing TradingExchange with %s companies and %s clients.\n", companies.size(), clients.size());
+        if(Log.debug) {System.out.printf("TradingExchange: Constructing TradingExchange with %s companies and %s clients.\n", companies.size(), clients.size());}
 
         allCompanies = new ArrayList<>();
         exchange = new HashMap<>();
