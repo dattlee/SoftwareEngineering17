@@ -45,11 +45,15 @@ public abstract class Trader {
 
     /**
      * This is a method that is used for returning the portfolio value found within the trader object
+     *
+     * @return A double representing the total value of the client
      */
     public abstract Double getPortfolioValue();
 
     /**
      * This is a method that is used for returning the clients name
+     *
+     * @return A string representing the clients name.
      */
     public abstract String getClientName();
 

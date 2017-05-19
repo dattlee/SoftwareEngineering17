@@ -19,6 +19,7 @@ public class RandomTraderTest {
     TradedCompany google,unilever,tata,mtm;
     Portfolio al, bo, cat, doug, el;
     TradingExchange london;
+    RandomTrader r1,r2,r3,r4;
 
     @Before
     public void setUp() throws Exception {
@@ -54,14 +55,26 @@ public class RandomTraderTest {
         all.add(mtm);
 
         london = new TradingExchange(all);
-        london.newRandTrader(al);
-        london.newRandTrader(bo);
-        london.newRandTrader(cat);
-        london.newRandTrader(doug);
+        r1 = london.newRandTrader(al);
+        r2 = london.newRandTrader(bo);
+        r3 = london.newRandTrader(cat);
+        r4 = london.newRandTrader(doug);
 
     }
 
-    @Test//(expected = Exception.class)
+    /**
+     * Asserts adding of portolios is legal.
+     *
+     * Checks made:
+     *  - If a trader
+     *  - That cash held can be negative (if a client in debt)
+     *
+     * Test requirements:
+     *  - RandomTrader.getAllClients()
+     *
+     * @throws Exception Standard Exceptions
+     */
+    @Test
     public void testAddPortfolio() throws Exception {
         RandomTrader rt = new RandomTrader("123",london);
         rt.addPortfolio(el);
@@ -75,7 +88,17 @@ public class RandomTraderTest {
 
     }
 
-
+    /**
+     * Asserts removal of portfolio.
+     *
+     * Checks made:
+     *  - The portfolio is removed
+     *
+     * Test requirements:
+     *  - RandomTrader.getAllClients()
+     *
+     * @throws Exception Standard Exceptions
+     */
     @Test
     public void testRemovePortfolio() throws Exception {
         RandomTrader rt = new RandomTrader("123",london,el);
@@ -92,15 +115,41 @@ public class RandomTraderTest {
 
     }
 
+    /**
+     * Asserts that when act is called that a random trader swaps between all possible states,
+     * at least once in every 20 cycles.
+     *
+     * @throws Exception Standard Exceptions
+     */
     @Test
-    public void testAct() throws Exception {
+    public void testChangeState() throws Exception {
+        int i = 0;
+        boolean buyer = false,seller = false,balanced = false;
+        while(i<20){
+            r1.act();
+            switch (r1.getCurrentState()){
+                case AGGBUYER:
+                    buyer = true;
+                    break;
+                case AGGSELLER:
+                    seller = true;
+                    break;
+                case BALANCED:
+                    balanced = true;
+                    break;
+            }
+            if(buyer && seller && balanced){
+                break;
+            }
+        }
+        assertTrue(buyer && seller && balanced);
     }
 
     /**
      * Asserts that if there is no client that an empty ArrayList is returned.
      * Otherwise an arraylist of one client is returned.
      *
-     * @throws Exception _
+     * @throws Exception Standard Exceptions
      */
     @Test
     public void testGetAllClients() throws Exception {

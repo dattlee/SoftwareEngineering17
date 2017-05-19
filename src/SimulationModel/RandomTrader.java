@@ -144,6 +144,14 @@ public class RandomTrader extends Trader {
 
         }
 
+        changeState();
+    }
+
+
+    /**
+     * Used to change the state of the Trader at each cycle.
+     */
+    private void changeState(){
         //potentially change state
         double changeState = Math.random();
         if (changeState <= currentState.getSwitchBuy()) {
@@ -155,6 +163,9 @@ public class RandomTrader extends Trader {
         }
     }
 
+    public TraderState getCurrentState() {
+        return currentState;
+    }
 
     /**
      * Method used by a Trader to sell of a clients stock when they have asked for stocks to be liquidated.

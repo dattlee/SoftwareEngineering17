@@ -106,6 +106,24 @@ public class Portfolio {
         }
     }
 
+    /**
+     * Create a portfolio for a client, and give only Cash holding.
+     *
+     * By default:
+     *  - risk is set to 'LOW'
+     *
+     * @param name a String representitive of a name or unique identification.
+     * @param cashHolding a double, representing the amount of cash the portfolio starts with.
+     */
+    public Portfolio(String name, Double cashHolding){
+        if(Log.debug){System.out.printf("Portfolio: Creating portfolio with the name %s with $%s.\n",name,cashHolding);}
+        this.name = name;
+        risk = RiskLevel.LOW;
+        companyShares = new HashMap<>();
+        liquidate = false;
+        this.cash = cashHolding;
+    }
+
 
      /* **************************************************
      *

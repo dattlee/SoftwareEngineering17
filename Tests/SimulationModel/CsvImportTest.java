@@ -9,7 +9,14 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 /**
- * Created by Steven on 29/04/2017.
+ * This Test Class ensures that all 3 CSV's can be imported and are transfered to the correct data types.
+ * The 3 CSV's being:
+ *  - Companies
+ *  - Clients
+ *  - Events
+ *
+ * @author sdocker
+ * @version 1.0
  */
 
 public class CsvImportTest {
@@ -28,7 +35,7 @@ public class CsvImportTest {
      * added to the HashMap and that the key exists equal to the company names, check that company that has not been
      * imported returns false
      *
-     * @throws IOException
+     * @throws IOException when no CSV is detected
      */
     @Test
     public void tradedCompanyExistsTest() throws IOException {

@@ -1,7 +1,8 @@
 package SimulationModel;
 
 /**
- * This class creates a clock object that starts on Monday 1st January 2017
+ * This class creates a clock object that starts on Monday 1st January 2017.
+ *
  * @version 1.0
  * @author SDocker
  */
@@ -112,6 +113,8 @@ public class Clock {
     /**
      * Method used to calculate easter Sunday date based on the current year, formula obtained from:
      * https://dzone.com/articles/algorithm-calculating-date
+     *
+     * @param year the year that you wanna know when easter is.
      */
     public void calculateEasterHoliday(int year){
         int Y = year;
@@ -274,12 +277,15 @@ public class Clock {
         int incrementMinutes = 15;
         int numberOfRuns = numberOfDays*24*4;
 
+        int totalTrades = 0;
         for (int i = 0; i < numberOfRuns; i++){
             if (canTrade()){
                 market.act();
+                totalTrades++;
             }
             minuteIncrement(incrementMinutes);
         }
+        System.out.printf("There was a total of %s Trades\n", totalTrades);
     }
 
     /**

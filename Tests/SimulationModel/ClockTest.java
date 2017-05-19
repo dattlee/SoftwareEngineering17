@@ -6,7 +6,11 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by Steven on 03/05/2017.
+ * This Test Class ensures the Clock Class increments in accordance with the StockMarket. Such that all public holidays
+ * are acknowledged, etc.
+ *
+ * @author sdocker
+ * @version 1.0
  */
 public class ClockTest {
     Clock clock;

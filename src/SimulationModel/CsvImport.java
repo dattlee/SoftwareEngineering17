@@ -45,7 +45,7 @@ public class CsvImport {
      *                  Constructors
      *
      ****************************************************/
-    /**
+    /*
      * Set tradedCompanyBR and portfolioBR Buffer readers to the .csv string path provided in the constructor param,
      * run the corresponding methods for processing the .csvs
      *
@@ -77,7 +77,7 @@ public class CsvImport {
         }
     }
 
-    /**
+    /*
      * Set tradedCompanyBR, portfolioBR and externalEventsBR Buffer readers to the .csv string path provided in the constructor param,
      * run the corresponding methods for processing the .csvs
      *
@@ -122,7 +122,7 @@ public class CsvImport {
      *                  Methods
      *
      ****************************************************/
-    /**
+    /*
      * For each line within the BufferedReader, split the line by ',' into tradedCompanyEntries String array,
      * Use string elements within String array to create new TradedCompany and put into tradedCompanies HashMap
      *
@@ -135,7 +135,7 @@ public class CsvImport {
         }
     }
 
-    /**
+    /*
      * Returns whether the traded company key exists within tradedCompanies HashMap
      *
      * @return a boolean, true if the key exists within tradedCompanies HashMap
@@ -144,7 +144,7 @@ public class CsvImport {
         return tradedCompanies.containsKey(key);
     }
 
-    /**
+    /*
      * Return the traded company object matching the String key within HashMap
      *
      * @return the HashMap value corresponding to company name or null if key does not exist
@@ -156,7 +156,7 @@ public class CsvImport {
         return null;
     }
 
-    /**
+    /*
      * For each line within the BufferedReader, split the line by ',' into portfolioEntries String array and add to
      * ArrayList of strings.
      * Get first element of ArrayList containing all company names and iterate through remaining elements to obtain
@@ -187,7 +187,7 @@ public class CsvImport {
         }
     }
 
-    /**
+    /*
      * For each line within the BufferedReader, split the line by ',' into externalEventEntries String array,
      * put String[] within ArrayList of string[].
      *
@@ -200,7 +200,7 @@ public class CsvImport {
         }
     }
 
-    /**
+    /*
      * Returns the arraylist containing all traded companies
      * @return arraylist of all traded companies
      */
@@ -208,7 +208,7 @@ public class CsvImport {
         return allCompanies;
     }
 
-    /**
+    /*
      * Returns the arraylist containing all portfolios
      * @return arraylist of all portfolios
      */
@@ -216,7 +216,7 @@ public class CsvImport {
         return allPortfolios;
     }
 
-    /**
+    /*
      * Returns the arraylist containing all external events
      * @return arraylist of all external events
      */

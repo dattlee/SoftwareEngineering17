@@ -5,7 +5,7 @@ import dattlee.usefuls.Pair;
 import java.util.*;
 
 /**
- * This class is used as a platform for all Traders to buy and sell shares for their clients
+ * This class is used as a platform for all Traders to buy and sell shares for their clients.
  *
  * @version 1.0
  * @author Dattlee
@@ -24,7 +24,6 @@ public class TradingExchange {
     private HashMap<TradedCompany,Orders> exchange;
     private ArrayList<Trader> allTraders;
     private int traderIds;
-    private MarketState marketState;
 
     /* **************************************************
      *
@@ -45,7 +44,6 @@ public class TradingExchange {
         exchange = new HashMap<>();
         allTraders = new ArrayList<>();
         traderIds = 0;
-        marketState = MarketState.STABLE;
 
         // All companies
         Iterator it = companies.iterator();
@@ -71,7 +69,6 @@ public class TradingExchange {
         exchange = new HashMap<>();
         allTraders = new ArrayList<>();
         traderIds = 0;
-        marketState = MarketState.STABLE;
 
         // Add all Companies to Trading Exchange
         Iterator it = companies.iterator();
@@ -361,7 +358,7 @@ public class TradingExchange {
     }
 
     /**
-     * Returns traded a list of all Traders on the Tradingxchange
+     * Returns traded a list of all Traders on the Trading Exchange
      *
      * @return an ArrayList of Traders
      */

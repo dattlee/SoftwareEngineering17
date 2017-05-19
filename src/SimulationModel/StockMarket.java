@@ -21,6 +21,8 @@ public class StockMarket {
     private TradingExchange exchange;
     private HashMap<String,TradedCompany> allCompanies;
     private HashMap<String,Portfolio> allClients;
+    private MarketState marketState;
+
 
 
 	/* **************************************************
@@ -32,6 +34,8 @@ public class StockMarket {
      * Constructor  that initiates new instance of CsvImport using file paths to data already existent within the
      * project, data is then processed by the CsvImport object and passed to a new instance of trading exchange through
      * its params.
+     *
+     * @param companies a list of companies to initialise the market with.
      */
     public StockMarket(List<TradedCompany> companies){
         if(Log.debug){System.out.printf("StockMarket: Creating a new StockMarket with %s companies.\n",companies.size());}
@@ -43,10 +47,19 @@ public class StockMarket {
         }
 
         allClients = new HashMap<>();
+
+        marketState = MarketState.STABLE;
     }
 
 
-
+    /**
+     * Constructor  that initiates new instance of CsvImport using file paths to data already existent within the
+     * project, data is then processed by the CsvImport object and passed to a new instance of trading exchange through
+     * its params.
+     *
+     * @param companies a list of companies to initialise the market with.
+     * @param portfolios a list of clients to initialise the market with.
+     */
     public StockMarket(List<TradedCompany> companies, List<Portfolio> portfolios){
         if(Log.debug){System.out.printf("StockMarket: Creating a new StockMarket with %s companies & %s clients.\n",companies.size(), portfolios.size());}
         exchange = new TradingExchange(companies,portfolios);
@@ -61,30 +74,9 @@ public class StockMarket {
         for(Portfolio port:portfolios){
             allClients.put(port.getName(),port);
         }
+
+        marketState = MarketState.STABLE;
     }
-
-
-
-    /*public StockMarket(List<TradedCompany> companies, List<Portfolio> portfolios, List<Portfolio> intelliPortfolios){
-        if(Log.debug){System.out.printf("StockMarket: Creating a new StockMarket with %s companies & %s clients.\n",companies.size(), portfolios.size());}
-        exchange = new TradingExchange(companies,portfolios,intelliPortfolios);
-
-        // Used to track alll
-        allCompanies = new HashMap<>(companies.size()*2);
-        for(TradedCompany company:companies){
-            allCompanies.put(company.getName(),company);
-        }
-
-        allClients = new HashMap<>(portfolios.size()*2);
-        for(Portfolio port:portfolios){
-            allClients.put(port.getName(),port);
-        }
-
-        for(Portfolio port:intelliPortfolios){
-            allClients.put(port.getName(),port);
-        }
-    }*/
-
 
 
     /* **************************************************

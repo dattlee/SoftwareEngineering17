@@ -31,6 +31,8 @@ public class Simulation {
      ****************************************************/
 	/**
 	 * Constructs a news stock market with 1 trading exchange, and sets the starting date to 00:00:00 1/1/2017.
+	 *
+	 * @param companies A list of companies to initialise the stock market with.
 	 */
 	public Simulation(List<TradedCompany> companies){
 		if(Log.debug){ System.out.printf("Simulation: Creating a new simulation.\n");}
@@ -43,8 +45,12 @@ public class Simulation {
 	 * Constructor that initiates new instance of CsvImport and uses the file path strings provided through the params,
 	 * data is then processed by the CsvImport object and passed to a new instance of trading exchange through the params.
 	 *
+	 * Constructs a news stock market with 1 trading exchange, and sets the starting date to 00:00:00 1/1/2017.
+	 *
 	 * @param tradedCompanyCsvFilePath file path to traded company .csv file
 	 * @param portfolioCsvFilePath file path to portfolio .csv file
+	 *
+	 * @exception FileNotFoundException when there is no file at the specified path.
 	 */
 	public Simulation(String tradedCompanyCsvFilePath, String portfolioCsvFilePath) throws FileNotFoundException{
 		if(Log.debug){System.out.printf("Simulation: Creating a new simulation with imported data.\n");}
@@ -95,7 +101,7 @@ public class Simulation {
 
 	/**
 	 * An ArrayList of all the Traders on the market.
-	 * @return
+	 * @return A List of all the traders on the market
      */
 	public ArrayList<Trader> getAllTraders(){
 		if(Log.debug){ System.out.printf("Simulation: Returning all Random Traders.\n");}
@@ -134,6 +140,11 @@ public class Simulation {
 		return clock.getDate();
 	}
 
+	/**
+	 * Returns a list of all clients active on the market.
+	 *
+	 * @return a List of Portfolios
+     */
 	public ArrayList<Portfolio> getAllPortfolios() {
 		return market.getAllPortfolios();
 	}
